@@ -1,0 +1,113 @@
+/**
+ *
+ *    Copyright 2018 the original author or authors.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package com.github.chhorz.javadoc;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import com.github.chhorz.javadoc.tags.Tag;
+
+/**
+ *
+ * @author chhorz
+ *
+ */
+public final class JavaDocParser {
+
+	private OutputType outputType = OutputType.PLAIN;
+	private List<Tag> tags = new ArrayList<>();
+
+	public JavaDoc parse(final String javaDocString) {
+		String description = "";
+		List<Tag> tags = new ArrayList<>();
+
+		if (javaDocString != null && !javaDocString.isEmpty()) {
+			description = convertOutputType(parseDescription(javaDocString));
+			tags = parseTags(javaDocString);
+		}
+
+		return new JavaDoc(description, tags);
+	}
+
+	private String parseDescription(final String javaDocString) {
+		String[] lines = javaDocString.split("\\n");
+
+		StringBuilder stringBuilder = new StringBuilder();
+		for (String line : lines) {
+			if (line.trim().startsWith("@")) {
+				break;
+			}
+			stringBuilder.append(line).append("\\n");
+		}
+		return stringBuilder.toString().trim();
+	}
+
+	private List<Tag> parseTags(final String javaDocString) {
+		List<Tag> tagList = new ArrayList<>();
+
+		String allTagNames = tags.stream()
+				.map(tag -> tag.getTagName())
+				.map(tag -> String.format("@%s", tag))
+				// .map(tag -> Pattern.quote(tag))
+				.collect(Collectors.joining("|", "(?=", "|$)"));
+
+		for (Tag tag : tags) {
+
+			StringBuilder sb = new StringBuilder();
+			for (String segmentName : tag.getSegmentNames()) {
+				sb.append("\\s+?(?<" + segmentName + ">.+?)");
+			}
+			String parts = sb.toString();
+
+			Pattern pattern = Pattern.compile(".*@" + tag.getTagName() + parts + "\\s*" + allTagNames);
+			Matcher matcher = pattern.matcher(javaDocString);
+			// System.out.println(pattern);
+
+			while (matcher.find()) {
+				for (String segmentName : tag.getSegmentNames()) {
+					tag.putValue(segmentName, convertOutputType(matcher.group(segmentName)));
+					// System.out.println("segmentName=" + segmentName + ", found=" + tag.getValues().get(segmentName));
+				}
+
+				// System.out.println("Tag:" + tag);
+				tagList.add(tag);
+			}
+		}
+
+		return tagList;
+	}
+
+	private String convertOutputType(final String input) {
+		if (OutputType.PLAIN.equals(outputType)) {
+			return input;
+		}
+		return input;
+	}
+
+	public void setOutputType(final OutputType outputType) {
+		this.outputType = outputType;
+	}
+
+	public void addTag(final Tag tag) {
+		tags.add(tag);
+	}
+
+}

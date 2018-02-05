@@ -1,0 +1,34 @@
+= Javadoc Parser
+
+== About
+http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[Javadoc Tool]
+http://www.oracle.com/technetwork/articles/java/index-137868.html
+
+== Features
+
+== Usage
+The usage is divided into two steps.
+First, the Javadoc has to be parsed from an input string into a corresponding object.
+The parser can be
+
+
+.Parsing
+[source,java]
+----
+JavaDocParser parser = JavaDocParserBuilder.withBasicTags().build();
+
+JavaDoc javaDoc = parser.parse("Javadoc as String");
+----
+
+.Getting data
+[source,java]
+----
+List<AuthorTag> tags = javaDoc.getTags(AuthorTag.class);
+
+Optional<String> authorName = tags(0).getName();
+----
+
+== Snapshots
+
+== License
+Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].

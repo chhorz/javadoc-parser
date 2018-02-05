@@ -1,0 +1,13 @@
+# Eclipse
+.classpath
+.project
+.settings
+
+# IntelliJ
+
+# Build
+/target/
+/bin/
+
+# MacOS
+.DS_Store

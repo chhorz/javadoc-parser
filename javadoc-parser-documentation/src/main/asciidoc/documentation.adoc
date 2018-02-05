@@ -1,0 +1,47 @@
+= Javadoc parser documentation
+:author: Christian Horz
+:version: {project-version}
+:source-highlighter: highlightjs
+
+== About
+
+
+== Extendibility
+To extend the basic functionality of the Javadoc parser, the creation of an custom tag might be a good start.
+All internal used basic Javadoc tags have the same structure.
+
+[source,java]
+----
+/**
+ * @custom tagValue1 tagValue2
+ */
+public class CustomTag extends Tag { //<1>
+
+    private static final String TAG_NAME = "custom";
+    private static final String TAG_VALUE_1 = "tagValue1";
+    private static final String TAG_VALUE_2 = "tagValue2";
+
+    public CustomTag() { // <2>
+        super(TAG_NAME, TAG_VALUE_1, TAG_VALUE_2);
+    }
+
+    public String getTagValue1() {
+        return getValues().get(TAG_VALUE_1);
+    }
+
+    // ...
+}
+----
+<1> custom tags need to extend `com.github.chhorz.javadoc.tags.Tag`
+<2> super contstructor has to be called with tag name and tag segments
+
+After the creation of the custom Javadoc tag, the tag has to be registered at the parser.
+
+[source,java]
+----
+JavaDocParser parser = JavaDocParserBuilder
+    .withBasicTags()
+    .withCustomTag(new CustomTag())
+    .withOutputType(OutputType.PLAIN)
+    .build();
+----
