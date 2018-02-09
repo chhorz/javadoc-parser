@@ -45,3 +45,7 @@ JavaDocParser parser = JavaDocParserBuilder
     .withOutputType(OutputType.PLAIN)
     .build();
 ----
+
+== License
+Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
+

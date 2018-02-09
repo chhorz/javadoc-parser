@@ -106,7 +106,6 @@
 					<artifactId>license-maven-plugin</artifactId>
 					<version>${license.maven.plugin.version}</version>
 					<configuration>
-						<header>LICENSE.txt</header>
 						<excludes>
 							<exclude>**/*.adoc</exclude>
 							<exclude>**/LICENSE.txt</exclude>

@@ -1,0 +1,7 @@
+= Contributing to javadoc-parser
+
+== Note
+First of all - any help on this project is welcome.
+
+Because the project is still in the beginning, it might not make much sense to contribute at the moment.
+After adding more documentation and test-cases I will open the _Issues_ tab to provide a way of interaction.
