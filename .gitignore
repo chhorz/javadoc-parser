@@ -6,7 +6,7 @@
 # IntelliJ
 
 # Build
-/target/
+/**/target/
 /bin/
 
 # MacOS
