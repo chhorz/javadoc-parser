@@ -24,6 +24,12 @@ import org.junit.jupiter.api.Test;
 
 import com.github.chhorz.javadoc.tags.CategoryTag;
 
+/**
+ * Test class to validate parsing of the {@code @category} tag.
+ * 
+ * @author chhorz
+ * 
+ */
 @DisplayName("Tests for JavaDoc category tag")
 class CategoryParserTest extends AbstractParserTest {
 

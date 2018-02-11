@@ -25,6 +25,12 @@ import org.junit.jupiter.api.Test;
 
 import com.github.chhorz.javadoc.tags.ParamTag;
 
+/**
+ * Test class to validate parsing of the {@code @param} tag.
+ * 
+ * @author chhorz
+ * 
+ */
 @DisplayName("Tests for JavaDoc param tag")
 class ParamParserTest extends AbstractParserTest {
 

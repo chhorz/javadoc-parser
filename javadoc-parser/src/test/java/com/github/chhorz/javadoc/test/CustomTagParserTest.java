@@ -27,6 +27,12 @@ import com.github.chhorz.javadoc.JavaDocParser;
 import com.github.chhorz.javadoc.JavaDocParserBuilder;
 import com.github.chhorz.javadoc.test.tags.CustomTag;
 
+/**
+ * Test class to validate parsing of a custom tag.
+ * 
+ * @author chhorz
+ * 
+ */
 @DisplayName("Tests for JavaDoc category tag")
 class CustomTagParserTest {
 

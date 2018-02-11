@@ -4,8 +4,38 @@
 :source-highlighter: highlightjs
 
 == About
+This library can be used to parse Javadoc information from an plain java string.
+The parser can be created by the following fluent api:
 
+[source,java]
+----
+JavaDocParser parser = JavaDocParserBuilder
+    .withBasicTags()
+    .withOutputType(OutputType.PLAIN)
+    .build();
+----
 
+All `Tags` that are registered as basic tags can be found in the package `com.github.chhorz.javadoc.tags.*`.
+The creation of custom tags is described <<here,extendibility>>.
+
+[source,java]
+----
+JavaDoc javaDoc = parser.parse(inputString); //<1>
+
+List<AuthorTag> authors = javaDoc.getTags(AuthorTag.class); // <2>
+
+AuthorTag authorTag = authors.get(0);
+String authorName = authorTag.getAuthorName(); // <3>
+----
+<1> Parsing input string into Pojo
+<2> Reading a specifict tag from `JavaDoc` object
+<3> Getting information from the current tag
+
+== Output format
+In the future different output-formats will be supported.
+Currently only `OutputType.PLAIN` is working.
+
+[[extendibility]]
 == Extendibility
 To extend the basic functionality of the Javadoc parser, the creation of an custom tag might be a good start.
 All internal used basic Javadoc tags have the same structure.
@@ -45,6 +75,8 @@ JavaDocParser parser = JavaDocParserBuilder
     .withOutputType(OutputType.PLAIN)
     .build();
 ----
+
+Getting the custom tag date from the Javadoc works as shown above.
 
 == License
 Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].

@@ -24,6 +24,12 @@ import org.junit.jupiter.api.Test;
 
 import com.github.chhorz.javadoc.tags.AuthorTag;
 
+/**
+ * Test class to validate parsing of the {@code @author} tag.
+ * 
+ * @author chhorz
+ * 
+ */
 @DisplayName("Tests for JavaDoc author tag")
 class AuthorParserTest extends AbstractParserTest {
 

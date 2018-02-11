@@ -24,7 +24,13 @@ import org.junit.jupiter.api.Test;
 
 import com.github.chhorz.javadoc.tags.ReturnTag;
 
-@DisplayName("Tests for JavaDoc return tag")
+/**
+ * Test class to validate parsing of the {@code @return} tag.
+ * 
+ * @author chhorz
+ * 
+ */
+@DisplayName("Tests for Javadoc return tag")
 class ReturnParserTest extends AbstractParserTest {
 
 	@Test

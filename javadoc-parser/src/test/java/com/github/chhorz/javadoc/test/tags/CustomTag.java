@@ -20,7 +20,8 @@ package com.github.chhorz.javadoc.test.tags;
 import com.github.chhorz.javadoc.tags.Tag;
 
 /**
- *
+ * Custom tag to test extendibility of the javadoc parser.
+ * 
  * @author chhorz
  *
  */
