@@ -2,7 +2,7 @@
 :author: Christian Horz
 :icons: font
 
-image:https://travis-ci.org/chhorz/spring-boot-monitor.svg?branch=master["Build Status", link="https://travis-ci.org/chhorz/spring-boot-monitor"]
+image:https://travis-ci.org/chhorz/javadoc-parser.svg?branch=master["Build Status", link="https://travis-ci.org/chhorz/javadoc-parser"]
 
 == About
 http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[Javadoc Tool]
