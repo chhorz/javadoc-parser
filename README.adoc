@@ -1,4 +1,8 @@
 = Javadoc Parser
+:author: Christian Horz
+:icons: font
+
+image:https://travis-ci.org/chhorz/spring-boot-monitor.svg?branch=master["Build Status", link="https://travis-ci.org/chhorz/spring-boot-monitor"]
 
 == About
 http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[Javadoc Tool]
