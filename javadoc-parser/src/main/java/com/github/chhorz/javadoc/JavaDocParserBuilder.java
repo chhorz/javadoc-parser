@@ -66,8 +66,18 @@ public class JavaDocParserBuilder {
 	}
 
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
-		javaDocParser.setOutputType(outputType);
+        if (OutputType.ASCIIDOC.equals(outputType)) {
+            // TODO
+        } else if  (OutputType.MARKDOWN.equals(outputType)) {
+            javaDocParser.addReplacement("", "");
+            
+        }
 		return this;
+	}
+	
+	public JavaDocParserBuilder withReplacement(final String regex, final String replacement) {
+	    javaDocParser.addReplacement(regex, replacement);
+	    return this;
 	}
 
 	public JavaDocParser build() {

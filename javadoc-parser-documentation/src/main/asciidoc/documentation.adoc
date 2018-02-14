@@ -16,7 +16,7 @@ JavaDocParser parser = JavaDocParserBuilder
 ----
 
 All `Tags` that are registered as basic tags can be found in the package `com.github.chhorz.javadoc.tags.*`.
-The creation of custom tags is described <<here,extendibility>>.
+The creation of custom tags is described <<extendibility,here>>.
 
 [source,java]
 ----

@@ -18,7 +18,10 @@
 package com.github.chhorz.javadoc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -32,15 +35,15 @@ import com.github.chhorz.javadoc.tags.Tag;
  */
 public final class JavaDocParser {
 
-	private OutputType outputType = OutputType.PLAIN;
 	private List<Tag> tags = new ArrayList<>();
+	private Map<String, String> replacements = new HashMap<>();
 
 	public JavaDoc parse(final String javaDocString) {
 		String description = "";
 		List<Tag> tags = new ArrayList<>();
 
 		if (javaDocString != null && !javaDocString.isEmpty()) {
-			description = convertOutputType(parseDescription(javaDocString));
+			description = performReplacements(parseDescription(javaDocString));
 			tags = parseTags(javaDocString);
 		}
 
@@ -79,11 +82,11 @@ public final class JavaDocParser {
 
 			Pattern pattern = Pattern.compile(".*@" + tag.getTagName() + parts + "\\s*" + allTagNames);
 			Matcher matcher = pattern.matcher(javaDocString);
-			// System.out.println(pattern);
+			System.out.println(pattern);
 
 			while (matcher.find()) {
 				for (String segmentName : tag.getSegmentNames()) {
-					tag.putValue(segmentName, convertOutputType(matcher.group(segmentName)));
+					tag.putValue(segmentName, performReplacements(matcher.group(segmentName)));
 					// System.out.println("segmentName=" + segmentName + ", found=" + tag.getValues().get(segmentName));
 				}
 
@@ -95,15 +98,17 @@ public final class JavaDocParser {
 		return tagList;
 	}
 
-	private String convertOutputType(final String input) {
-		if (OutputType.PLAIN.equals(outputType)) {
-			return input;
-		}
+	private String performReplacements(final String input) {
+		for (Entry<String, String> replacement : replacements.entrySet()) {
+            input.replaceAll(replacement.getKey(), replacement.getValue());           
+        }
 		return input;
 	}
-
-	public void setOutputType(final OutputType outputType) {
-		this.outputType = outputType;
+	
+	public void addReplacement(final String regex, final String replacement){
+	     if (regex != null && !regex.isEmpty() && replacement != null) {
+            replacements.put(regex, replacement);
+        }
 	}
 
 	public void addTag(final Tag tag) {
