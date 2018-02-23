@@ -82,7 +82,7 @@ public final class JavaDocParser {
 
 			Pattern pattern = Pattern.compile(".*@" + tag.getTagName() + parts + "\\s*" + allTagNames);
 			Matcher matcher = pattern.matcher(javaDocString);
-			System.out.println(pattern);
+			// System.out.println(pattern);
 
 			while (matcher.find()) {
 				for (String segmentName : tag.getSegmentNames()) {
@@ -100,15 +100,15 @@ public final class JavaDocParser {
 
 	private String performReplacements(final String input) {
 		for (Entry<String, String> replacement : replacements.entrySet()) {
-            input.replaceAll(replacement.getKey(), replacement.getValue());           
-        }
+			input.replaceAll(replacement.getKey(), replacement.getValue());           
+	}
 		return input;
 	}
 	
 	public void addReplacement(final String regex, final String replacement){
-	     if (regex != null && !regex.isEmpty() && replacement != null) {
-            replacements.put(regex, replacement);
-        }
+		if (regex != null && !regex.isEmpty() && replacement != null) {
+			replacements.put(regex, replacement);
+		}
 	}
 
 	public void addTag(final Tag tag) {

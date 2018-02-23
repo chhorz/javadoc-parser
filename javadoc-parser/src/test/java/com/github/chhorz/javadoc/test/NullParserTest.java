@@ -33,7 +33,7 @@ class NullParserTest extends AbstractParserTest {
 
 	@Test
 	void nullTest() {
-		javaDoc = parser.parse(nullJavaDoc);
+		javaDoc = basicPlainParser.parse(nullJavaDoc);
 		
 		assertThat(javaDoc.getTags())
 			.isEmpty();
@@ -41,7 +41,7 @@ class NullParserTest extends AbstractParserTest {
 
 	@Test
 	void emptyTest() {
-		javaDoc = parser.parse(emptyJavaDoc);
+		javaDoc = basicPlainParser.parse(emptyJavaDoc);
 		
 		assertThat(javaDoc.getTags())
 			.isEmpty();

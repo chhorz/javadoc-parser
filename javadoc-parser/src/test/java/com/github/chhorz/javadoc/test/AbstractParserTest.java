@@ -24,7 +24,7 @@ import com.github.chhorz.javadoc.OutputType;
 
 abstract class AbstractParserTest {
 
-	JavaDocParser parser = JavaDocParserBuilder
+	JavaDocParser basicPlainParser = JavaDocParserBuilder
 			.withBasicTags()
 			.withOutputType(OutputType.PLAIN)
 			.build();
@@ -41,6 +41,11 @@ abstract class AbstractParserTest {
 			"@since 0.1\n" +
 			"@author name\n" +
 			"@category some-category\n" +
+			"@deprecated use xyz instead\n" +
+			"@version 1.2.3\n" +
+			"@see documentation in section abc\n" +
+			"@throws NullpointerException when something is null\n" +
+			"@exception RuntimeException may occur always\n" +
 			"@param test value\n" +
 			"@return the result";
 
@@ -55,6 +60,11 @@ abstract class AbstractParserTest {
 			"@param test Lorem ipsum\n" +
 			"@since 0.1\n" +
 			"@category some-category\n" +
+			"@deprecated since version 42, use xyz instead\n" +
+			"@version 1.2.3-SNAPSHOT\n" +
+			"@see documentation in section abc at link.org\n" +
+			"@throws NullpointerException when something is null\n" +
+			"@exception RuntimeException may occur always\n" +
 			"@author name\n" +
 			"@return the result";
 	// @formatter:on

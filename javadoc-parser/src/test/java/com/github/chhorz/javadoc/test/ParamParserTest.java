@@ -36,7 +36,7 @@ class ParamParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleTest() {
-		javaDoc = parser.parse(simpleJavaDoc);
+		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
 		assertThat(javaDoc.getTags(ParamTag.class))
 			.hasSize(1)
@@ -46,7 +46,7 @@ class ParamParserTest extends AbstractParserTest {
 
 	@Test
 	void complexTest() {
-		javaDoc = parser.parse(complexJavaDoc);
+		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
 		assertThat(javaDoc.getTags(ParamTag.class))
 			.hasSize(1)

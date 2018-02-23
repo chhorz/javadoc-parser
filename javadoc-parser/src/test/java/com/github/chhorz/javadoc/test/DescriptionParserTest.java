@@ -33,7 +33,7 @@ class DescriptionParserTest extends AbstractParserTest {
 
 	@Test
 	void nullTest() {
-		javaDoc = parser.parse(nullJavaDoc);
+		javaDoc = basicPlainParser.parse(nullJavaDoc);
 		
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", "");
@@ -41,7 +41,7 @@ class DescriptionParserTest extends AbstractParserTest {
 
 	@Test
 	void emptyTest() {
-		javaDoc = parser.parse(emptyJavaDoc);
+		javaDoc = basicPlainParser.parse(emptyJavaDoc);
 		
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", "");
@@ -49,7 +49,7 @@ class DescriptionParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleTest() {
-		javaDoc = parser.parse(simpleJavaDoc);
+		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 		
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", "Test\\n");
@@ -57,7 +57,7 @@ class DescriptionParserTest extends AbstractParserTest {
 
 	@Test
 	void complexTest() {
-		javaDoc = parser.parse(complexJavaDoc);
+		javaDoc = basicPlainParser.parse(complexJavaDoc);
 		
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", 

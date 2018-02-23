@@ -35,7 +35,7 @@ class CategoryParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleCategory() {
-		javaDoc = parser.parse(simpleJavaDoc);
+		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
 		assertThat(javaDoc.getTags(CategoryTag.class))
 			.hasSize(1)
@@ -45,7 +45,7 @@ class CategoryParserTest extends AbstractParserTest {
 
 	@Test
 	void multipleCategories() {
-		javaDoc = parser.parse(complexJavaDoc);
+		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
 		assertThat(javaDoc.getTags(CategoryTag.class))
 			.hasSize(1)

@@ -44,15 +44,15 @@ public class JavaDocParserBuilder {
 		this.javaDocParser = new JavaDocParser();
 
 		Stream.of(new AuthorTag(),
-				new CategoryTag(),
-				new DeprecatedTag(),
-				new ExceptionTag(),
-				new ParamTag(),
-				new ReturnTag(),
-				new SeeTag(),
-				new SinceTag(),
-				new ThrowsTag(),
-				new VersionTag())
+			     new CategoryTag(),
+			     new DeprecatedTag(),
+			     new ExceptionTag(),
+			     new ParamTag(),
+			     new ReturnTag(),
+			     new SeeTag(),
+			     new SinceTag(),
+			     new ThrowsTag(),
+			     new VersionTag())
 			.forEach(javaDocParser::addTag);
 	}
 
@@ -66,12 +66,11 @@ public class JavaDocParserBuilder {
 	}
 
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
-        if (OutputType.ASCIIDOC.equals(outputType)) {
-            // TODO
-        } else if  (OutputType.MARKDOWN.equals(outputType)) {
-            javaDocParser.addReplacement("", "");
-            
-        }
+	if (OutputType.ASCIIDOC.equals(outputType)) {
+		// TODO
+	} else if (OutputType.MARKDOWN.equals(outputType)) {
+		javaDocParser.addReplacement("", "");
+	}
 		return this;
 	}
 	

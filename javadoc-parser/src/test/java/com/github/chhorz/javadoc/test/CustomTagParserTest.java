@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import com.github.chhorz.javadoc.JavaDoc;
 import com.github.chhorz.javadoc.JavaDocParser;
 import com.github.chhorz.javadoc.JavaDocParserBuilder;
+import com.github.chhorz.javadoc.OutputType;
 import com.github.chhorz.javadoc.test.tags.CustomTag;
 
 /**
@@ -46,7 +47,11 @@ class CustomTagParserTest {
 			"@return the result";
 	// @formatter:on
 
-	JavaDocParser parser = JavaDocParserBuilder.withBasicTags().withCustomTag(new CustomTag()).build();
+	JavaDocParser parser = JavaDocParserBuilder
+	       .withBasicTags()
+	       .withCustomTag(new CustomTag())
+	       .withOutputType(OutputType.PLAIN)
+	       .build();
 
 	JavaDoc javaDoc;
 

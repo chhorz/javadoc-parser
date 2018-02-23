@@ -34,11 +34,11 @@ public class ExceptionTag extends Tag {
 		super(TAG_NAME, CLASS_NAME, DESCRIPTION);
 	}
 
-	public String getExceptionClass() {
+	public String getClassName() {
 		return getValues().get(CLASS_NAME);
 	}
 
-	public String getExceptionDescription() {
+	public String getDescription() {
 		return getValues().get(DESCRIPTION);
 	}
 
