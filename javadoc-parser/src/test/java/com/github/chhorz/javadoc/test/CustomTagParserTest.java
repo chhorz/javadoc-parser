@@ -18,6 +18,7 @@
 package com.github.chhorz.javadoc.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ import com.github.chhorz.javadoc.JavaDoc;
 import com.github.chhorz.javadoc.JavaDocParser;
 import com.github.chhorz.javadoc.JavaDocParserBuilder;
 import com.github.chhorz.javadoc.OutputType;
+import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.test.tags.CustomTag;
 
 /**
@@ -48,10 +50,10 @@ class CustomTagParserTest {
 	// @formatter:on
 
 	JavaDocParser parser = JavaDocParserBuilder
-	       .withBasicTags()
-	       .withCustomTag(new CustomTag())
-	       .withOutputType(OutputType.PLAIN)
-	       .build();
+		.withBasicTags()
+		.withCustomTag(new CustomTag())
+		.withOutputType(OutputType.PLAIN)
+		.build();
 
 	JavaDoc javaDoc;
 
@@ -64,4 +66,15 @@ class CustomTagParserTest {
 			.extracting(CustomTag::getValue)
 			.contains("this is the custom tag value");
 	}
+	
+	@Test
+	void duplicateTags(){
+		assertThatThrownBy(() -> JavaDocParserBuilder.withBasicTags()
+						.withCustomTag(new CustomTag())
+						.withCustomTag(new CustomTag())
+						.build())
+			.isInstanceOf(DuplicateTagException.class)
+			.hasMessage("The parser contains a tag '@custom'.");
+	}
+
 }

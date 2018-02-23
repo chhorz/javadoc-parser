@@ -22,10 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.tags.Tag;
 
 /**
@@ -100,18 +102,32 @@ public final class JavaDocParser {
 
 	private String performReplacements(final String input) {
 		for (Entry<String, String> replacement : replacements.entrySet()) {
-			input.replaceAll(replacement.getKey(), replacement.getValue());           
-	}
+			input.replaceAll(replacement.getKey(), replacement.getValue());
+		}
 		return input;
 	}
 	
 	public void addReplacement(final String regex, final String replacement){
+		Objects.requireNonNull(regex, "The given regex must not be null!");
+		Objects.requireNonNull(replacement, "The given replacement must not be null!");
+
+		if (regex.isEmpty()) {
+			throw new IllegalArgumentException("The given regex must not be empty!");
+		}
+		
 		if (regex != null && !regex.isEmpty() && replacement != null) {
 			replacements.put(regex, replacement);
 		}
 	}
 
 	public void addTag(final Tag tag) {
+		Objects.requireNonNull(tag, "The given tag must not be null!");
+		
+		// check that each tag is only registered once
+		if (tags.stream().anyMatch(t -> t.getClass().equals(tag.getClass()))){
+			throw new DuplicateTagException(tag);	
+		}
+		// add tag
 		tags.add(tag);
 	}
 

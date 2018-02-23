@@ -8,13 +8,13 @@ image:https://travis-ci.org/chhorz/javadoc-parser.svg?branch=master["Build Statu
 This library provides a parsing mechanism for *Javadoc* comments within java files.
 An initial documentation of the Javadoc tool can be found on the pages of Oracle: link:http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html[Javadoc Tool].
 
-To get the parsing mechanism work properly the Javadoc comment has to follow a specific structure.
-The structure should be as close as possible to the link:http://www.oracle.com/technetwork/articles/java/index-137868.html[Writers Guide] from Oracle.
+To get the parsing mechanism work properly the Javadoc comment has to follow a specific structure.
+The structure should be as close as possible to the link:http://www.oracle.com/technetwork/articles/java/index-137868.html[Writers Guide] from Oracle.
 
 == Usage
 
 === Javadoc comment structure
-_work in progress
+_work in progress_
 
 === Parser configuration
 
