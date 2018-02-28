@@ -66,17 +66,18 @@ public class JavaDocParserBuilder {
 	}
 
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
-	if (OutputType.ASCIIDOC.equals(outputType)) {
-		// TODO
-	} else if (OutputType.MARKDOWN.equals(outputType)) {
-		javaDocParser.addReplacement("", "");
-	}
+		if (OutputType.ASCIIDOC.equals(outputType)) {
+			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
+			javaDocParser.addReplacement("\\{@literal ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
+		} else if (OutputType.MARKDOWN.equals(outputType)) {
+			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
+		}
 		return this;
 	}
-	
+
 	public JavaDocParserBuilder withReplacement(final String regex, final String replacement) {
-	    javaDocParser.addReplacement(regex, replacement);
-	    return this;
+		javaDocParser.addReplacement(regex, replacement);
+		return this;
 	}
 
 	public JavaDocParser build() {

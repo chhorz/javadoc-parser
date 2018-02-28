@@ -101,12 +101,13 @@ public final class JavaDocParser {
 	}
 
 	private String performReplacements(final String input) {
+		String convertedString = input;
 		for (Entry<String, String> replacement : replacements.entrySet()) {
-			input.replaceAll(replacement.getKey(), replacement.getValue());
+			convertedString = convertedString.replaceAll(replacement.getKey(), replacement.getValue());
 		}
-		return input;
+		return convertedString;
 	}
-	
+
 	public void addReplacement(final String regex, final String replacement){
 		Objects.requireNonNull(regex, "The given regex must not be null!");
 		Objects.requireNonNull(replacement, "The given replacement must not be null!");
@@ -114,7 +115,7 @@ public final class JavaDocParser {
 		if (regex.isEmpty()) {
 			throw new IllegalArgumentException("The given regex must not be empty!");
 		}
-		
+
 		if (regex != null && !regex.isEmpty() && replacement != null) {
 			replacements.put(regex, replacement);
 		}
@@ -122,10 +123,10 @@ public final class JavaDocParser {
 
 	public void addTag(final Tag tag) {
 		Objects.requireNonNull(tag, "The given tag must not be null!");
-		
+
 		// check that each tag is only registered once
 		if (tags.stream().anyMatch(t -> t.getClass().equals(tag.getClass()))){
-			throw new DuplicateTagException(tag);	
+			throw new DuplicateTagException(tag);
 		}
 		// add tag
 		tags.add(tag);

@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class to validate parsing of the javadoc description.
- * 
+ *
  * @author chhorz
- * 
+ *
  */
 @DisplayName("Tests for JavaDoc description")
 class DescriptionParserTest extends AbstractParserTest {
@@ -34,7 +34,7 @@ class DescriptionParserTest extends AbstractParserTest {
 	@Test
 	void nullTest() {
 		javaDoc = basicPlainParser.parse(nullJavaDoc);
-		
+
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", "");
 	}
@@ -42,7 +42,7 @@ class DescriptionParserTest extends AbstractParserTest {
 	@Test
 	void emptyTest() {
 		javaDoc = basicPlainParser.parse(emptyJavaDoc);
-		
+
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", "");
 	}
@@ -50,7 +50,7 @@ class DescriptionParserTest extends AbstractParserTest {
 	@Test
 	void simpleTest() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
-		
+
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description", "Test\\n");
 	}
@@ -58,11 +58,26 @@ class DescriptionParserTest extends AbstractParserTest {
 	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
-		
+
 		assertThat(javaDoc)
-			.hasFieldOrPropertyWithValue("description", 
+			.hasFieldOrPropertyWithValue("description",
 					"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\\n" +
 					"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\\n" +
+					"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.\\n" +
+					"\\n" +
+					"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\\n" +
+					"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n" +
+					"\\n");
+	}
+
+	@Test
+	void asciidocTest() {
+		javaDoc = basicAsciidocParser.parse(javaDocWithInlineTags);
+
+		assertThat(javaDoc)
+			.hasFieldOrPropertyWithValue("description",
+					"Lorem ipsum dolor `sit` amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\\n" +
+					"ut labore et dolore magna `aliqua`. Ut enim ad minim veniam, quis nostrud exercitation ullamco\\n" +
 					"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.\\n" +
 					"\\n" +
 					"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\\n" +

@@ -10,9 +10,9 @@ import com.github.chhorz.javadoc.tags.ThrowsTag;
 
 /**
  * Test class to validate parsing of the {@code @throws} tag.
- * 
+ *
  * @author chhorz
- * 
+ *
  */
 @DisplayName("Tests for JavaDoc throws tag")
 class ThrowsParserTest extends AbstractParserTest {
@@ -35,5 +35,15 @@ class ThrowsParserTest extends AbstractParserTest {
 			.hasSize(1)
 			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
 			.contains(tuple("NullpointerException", "when something is null"));
+	}
+
+	@Test
+	void asciidocTest() {
+		javaDoc = basicAsciidocParser.parse(javaDocWithInlineTags);
+
+		assertThat(javaDoc.getTags(ThrowsTag.class))
+			.hasSize(1)
+			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
+			.contains(tuple("NullpointerException", "when something is `null`"));
 	}
 }
