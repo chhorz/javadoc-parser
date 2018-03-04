@@ -87,16 +87,25 @@ public final class JavaDocParser {
 			// System.out.println(pattern);
 
 			while (matcher.find()) {
+				Tag currentTag;
+				try {
+					currentTag = tag.getClass().newInstance();
+				} catch (InstantiationException | IllegalAccessException e) {
+					currentTag = tag;
+					e.printStackTrace();
+				}
+
 				for (String segmentName : tag.getSegmentNames()) {
-					tag.putValue(segmentName, performReplacements(matcher.group(segmentName)));
+					currentTag.putValue(segmentName, performReplacements(matcher.group(segmentName)));
 					// System.out.println("segmentName=" + segmentName + ", found=" + tag.getValues().get(segmentName));
 				}
 
-				// System.out.println("Tag:" + tag);
-				tagList.add(tag);
+				// System.out.println("Tag:" + currentTag);
+				tagList.add(currentTag);
 			}
 		}
 
+		// System.out.println(tagList);
 		return tagList;
 	}
 

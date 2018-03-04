@@ -65,6 +65,7 @@ abstract class AbstractParserTest {
 			"@param test Lorem ipsum\n" +
 			"@since 0.1\n" +
 			"@category some-category\n" +
+			"@category another-category\n" +
 			"@deprecated since version 42, use xyz instead\n" +
 			"@version 1.2.3-SNAPSHOT\n" +
 			"@see documentation in section abc at link.org\n" +

@@ -78,6 +78,10 @@ JavaDocParser parser = JavaDocParserBuilder
 
 Getting the custom tag date from the Javadoc works as shown above.
 
+[WARNING]
+====
+The parsing of custom should be tested with unit tests.
+====
+
 == License
 Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
-

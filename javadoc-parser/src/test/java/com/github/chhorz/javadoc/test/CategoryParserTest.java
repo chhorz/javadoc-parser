@@ -48,8 +48,8 @@ class CategoryParserTest extends AbstractParserTest {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
 		assertThat(javaDoc.getTags(CategoryTag.class))
-			.hasSize(1)
+			.hasSize(2)
 			.extracting(CategoryTag::getCategoryName)
-			.contains("some-category");	
+			.contains("some-category", "another-category");	
 	}
 }
