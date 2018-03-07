@@ -53,14 +53,14 @@ public final class JavaDocParser {
 	}
 
 	private String parseDescription(final String javaDocString) {
-		String[] lines = javaDocString.split("\\n");
+		String[] lines = javaDocString.split("\n");
 
 		StringBuilder stringBuilder = new StringBuilder();
 		for (String line : lines) {
 			if (line.trim().startsWith("@")) {
 				break;
 			}
-			stringBuilder.append(line).append("\\n");
+			stringBuilder.append(line).append("\n");
 		}
 		return stringBuilder.toString().trim();
 	}

@@ -52,7 +52,7 @@ class DescriptionParserTest extends AbstractParserTest {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
 		assertThat(javaDoc)
-			.hasFieldOrPropertyWithValue("description", "Test\\n");
+			.hasFieldOrPropertyWithValue("description", "Test");
 	}
 
 	@Test
@@ -61,13 +61,12 @@ class DescriptionParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description",
-					"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\\n" +
-					"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\\n" +
-					"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.\\n" +
-					"\\n" +
-					"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\\n" +
-					"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n" +
-					"\\n");
+					"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n" +
+					"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n" +
+					"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.\n" +
+					"\n" +
+					"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\n" +
+					"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 	}
 
 	@Test
@@ -76,12 +75,11 @@ class DescriptionParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("description",
-					"Lorem ipsum dolor `sit` amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\\n" +
-					"ut labore et dolore magna `aliqua`. Ut enim ad minim veniam, quis nostrud exercitation ullamco\\n" +
-					"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.\\n" +
-					"\\n" +
-					"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\\n" +
-					"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n" +
-					"\\n");
+					"Lorem ipsum dolor `sit` amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n" +
+					"ut labore et dolore magna `aliqua`. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n" +
+					"laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.\n" +
+					"\n" +
+					"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\n" +
+					"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 	}
 }
