@@ -114,7 +114,7 @@ public final class JavaDocParser {
 		for (Entry<String, String> replacement : replacements.entrySet()) {
 			convertedString = convertedString.replaceAll(replacement.getKey(), replacement.getValue());
 		}
-		return convertedString;
+		return convertedString.trim();
 	}
 
 	public void addReplacement(final String regex, final String replacement){
