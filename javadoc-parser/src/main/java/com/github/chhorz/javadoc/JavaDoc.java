@@ -17,8 +17,9 @@
  */
 package com.github.chhorz.javadoc;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.github.chhorz.javadoc.tags.Tag;
 
@@ -49,7 +50,7 @@ public class JavaDoc {
 		return tags.stream()
 			.filter(tagClass::isInstance)
 			.map(tagClass::cast)
-			.collect(Collectors.toList());
+			.collect(toList());
 	}
 
 	@Override

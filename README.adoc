@@ -48,4 +48,4 @@ firstAuthor.getAuthorName();
 _tbd_
 
 == License
-Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
+Javadoc Parser is open source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].

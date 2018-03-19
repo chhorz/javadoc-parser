@@ -57,9 +57,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:git:git@github.com:chhorz/spring-boot-monitor.git</connection>
-		<developerConnection>scm:git:git@github.com:chhorz/spring-boot-monitor.git</developerConnection>
-		<url>https://github.com/chhorz/spring-boot-monitor</url>
+		<connection>scm:git:git@github.com:chhorz/javadoc-parser.git</connection>
+		<developerConnection>scm:git:git@github.com:chhorz/javadoc-parser.git</developerConnection>
+		<url>https://github.com/chhorz/javadoc-parser</url>
 	</scm>
 
 	<profiles>
