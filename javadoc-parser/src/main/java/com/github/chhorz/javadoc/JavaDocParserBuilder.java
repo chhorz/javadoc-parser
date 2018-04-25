@@ -66,6 +66,7 @@ public class JavaDocParserBuilder {
 	}
 
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
+		javaDocParser.addReplacement("\\{@summary ([^\\{\\}]+)\\}([\\s.,:;-])?", "$1$2");
 		if (OutputType.ASCIIDOC.equals(outputType)) {
 			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
 			javaDocParser.addReplacement("\\{@literal ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");

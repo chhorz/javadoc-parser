@@ -30,12 +30,18 @@ import com.github.chhorz.javadoc.tags.Tag;
  */
 public class JavaDoc {
 
+	private String summary;
 	private String description;
 	private List<Tag> tags;
 
-	public JavaDoc(final String description, final List<Tag> tags) {
+	public JavaDoc(final String summary, final String description, final List<Tag> tags) {
+		this.summary = summary;
 		this.description = description;
 		this.tags = tags;
+	}
+
+	public String getSummary() {
+		return summary;
 	}
 
 	public String getDescription() {
@@ -48,14 +54,14 @@ public class JavaDoc {
 
 	public <T extends Tag> List<T> getTags(final Class<T> tagClass) {
 		return tags.stream()
-			.filter(tagClass::isInstance)
-			.map(tagClass::cast)
-			.collect(toList());
+				.filter(tagClass::isInstance)
+				.map(tagClass::cast)
+				.collect(toList());
 	}
 
 	@Override
 	public String toString() {
-		return String.format("JavaDoc [description=%s, tags=%s]", description, tags);
+		return String.format("JavaDoc [summary=%s, description=%s, tags=%s]", summary, description, tags);
 	}
 
 }

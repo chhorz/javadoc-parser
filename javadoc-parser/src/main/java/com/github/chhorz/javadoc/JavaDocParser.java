@@ -17,6 +17,8 @@
  */
 package com.github.chhorz.javadoc;
 
+import static java.util.stream.Collectors.joining;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +27,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.tags.Tag;
@@ -41,15 +42,41 @@ public final class JavaDocParser {
 	private Map<String, String> replacements = new HashMap<>();
 
 	public JavaDoc parse(final String javaDocString) {
+		String summary = "";
 		String description = "";
 		List<Tag> tags = new ArrayList<>();
 
 		if (javaDocString != null && !javaDocString.isEmpty()) {
-			description = performReplacements(parseDescription(javaDocString));
+			final String rawDescription = parseDescription(javaDocString);
+
+			summary = performReplacements(parseSummary(rawDescription));
+			description = performReplacements(rawDescription);
 			tags = parseTags(javaDocString);
 		}
 
-		return new JavaDoc(description, tags);
+		return new JavaDoc(summary, description, tags);
+	}
+
+	private String parseSummary(final String description) {
+		if (description.isEmpty()) {
+			return "";
+		} else if (description.contains("@summary")) {
+			Pattern summaryPattern = Pattern.compile("\\{@summary ([^\\{\\}]+)\\}([\\s.,:;-])?");
+			Matcher summaryMatcher = summaryPattern.matcher(description);
+
+			if (summaryMatcher.find()) {
+				return summaryMatcher.group(1);
+			} else {
+				return "";
+			}
+
+		} else {
+			if (description.contains(".")) {
+				return description.substring(0, description.indexOf('.') + 1);
+			} else {
+				return description;
+			}
+		}
 	}
 
 	private String parseDescription(final String javaDocString) {
@@ -72,7 +99,7 @@ public final class JavaDocParser {
 				.map(tag -> tag.getTagName())
 				.map(tag -> String.format("@%s", tag))
 				// .map(tag -> Pattern.quote(tag))
-				.collect(Collectors.joining("|", "(?=", "|$)"));
+				.collect(joining("|", "(?=", "|$)"));
 
 		for (Tag tag : tags) {
 
