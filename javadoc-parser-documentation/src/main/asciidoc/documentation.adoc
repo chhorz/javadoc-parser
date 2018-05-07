@@ -4,8 +4,8 @@
 :source-highlighter: highlightjs
 
 == About
-This library can be used to parse Javadoc information from an plain java string.
-The parser can be created by the following fluent api:
+This library can be used to parse Javadoc information from a plain java string.
+The parser can be created by the following fluent API:
 
 [source,java]
 ----
@@ -27,8 +27,8 @@ List<AuthorTag> authors = javaDoc.getTags(AuthorTag.class); // <2>
 AuthorTag authorTag = authors.get(0);
 String authorName = authorTag.getAuthorName(); // <3>
 ----
-<1> Parsing input string into Pojo
-<2> Reading a specifict tag from `JavaDoc` object
+<1> Parsing input string into a java object
+<2> Reading a specific tag from `JavaDoc` object
 <3> Getting information from the current tag
 
 == Output format
@@ -63,7 +63,7 @@ public class CustomTag extends Tag { //<1>
 }
 ----
 <1> custom tags need to extend `com.github.chhorz.javadoc.tags.Tag`
-<2> super contstructor has to be called with tag name and tag segments
+<2> super constructor has to be called with tag name and tag segments
 
 After the creation of the custom Javadoc tag, the tag has to be registered at the parser.
 

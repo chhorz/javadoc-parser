@@ -26,9 +26,9 @@ import com.github.chhorz.javadoc.tags.CategoryTag;
 
 /**
  * Test class to validate parsing of the {@code @category} tag.
- * 
+ *
  * @author chhorz
- * 
+ *
  */
 @DisplayName("Tests for JavaDoc category tag")
 class CategoryParserTest extends AbstractParserTest {
@@ -40,16 +40,19 @@ class CategoryParserTest extends AbstractParserTest {
 		assertThat(javaDoc.getTags(CategoryTag.class))
 			.hasSize(1)
 			.extracting(CategoryTag::getCategoryName)
-			.contains("some-category");	
+			.contains("some-category");
 	}
 
 	@Test
 	void multipleCategories() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
+		System.out.println(javaDoc);
+		System.out.println(javaDoc.getTags(CategoryTag.class));
+
 		assertThat(javaDoc.getTags(CategoryTag.class))
 			.hasSize(2)
 			.extracting(CategoryTag::getCategoryName)
-			.contains("some-category", "another-category");	
+			.contains("some-category", "another-category");
 	}
 }

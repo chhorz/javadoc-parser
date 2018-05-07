@@ -24,9 +24,11 @@ package com.github.chhorz.javadoc;
  */
 public enum OutputType {
 
-	PLAIN,
+
 	ASCIIDOC,
-	MARKDOWN;
-	
+	HTML,
+	MARKDOWN,
+	PLAIN;
+
 
 }

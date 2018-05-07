@@ -62,7 +62,9 @@ abstract class AbstractParserTest {
 			"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\n" +
 			"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n" +
 			"\n" +
-			"@param test Lorem ipsum\n" +
+			"@param test \n" +
+			"           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n" +
+			"           ut labore et dolore magna aliqua.\n" +
 			"@since 0.1\n" +
 			"@category some-category\n" +
 			"@category another-category\n" +

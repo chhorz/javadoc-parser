@@ -72,6 +72,9 @@ public class JavaDocParserBuilder {
 			javaDocParser.addReplacement("\\{@literal ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
 		} else if (OutputType.MARKDOWN.equals(outputType)) {
 			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
+		} else if (OutputType.HTML.equals(outputType)) {
+			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "<pre>$1</pre>$2");
+			javaDocParser.addReplacement("\\{@literal ([^\\{\\}]+)\\}([\\s.,:;-])?", "<i>$1</i>$2");
 		}
 		return this;
 	}

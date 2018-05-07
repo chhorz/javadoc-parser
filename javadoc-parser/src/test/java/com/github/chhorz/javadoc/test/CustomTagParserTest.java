@@ -28,16 +28,17 @@ import com.github.chhorz.javadoc.JavaDocParser;
 import com.github.chhorz.javadoc.JavaDocParserBuilder;
 import com.github.chhorz.javadoc.OutputType;
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
+import com.github.chhorz.javadoc.tags.AuthorTag;
 import com.github.chhorz.javadoc.test.tags.CustomTag;
 
 /**
  * Test class to validate parsing of a custom tag.
- * 
+ *
  * @author chhorz
- * 
+ *
  */
 @DisplayName("Tests for JavaDoc category tag")
-class CustomTagParserTest {
+class CustomTagParserTest extends AbstractParserTest {
 
 	// @formatter:off
 	final String simpleJavaDoc =
@@ -66,7 +67,7 @@ class CustomTagParserTest {
 			.extracting(CustomTag::getValue)
 			.contains("this is the custom tag value");
 	}
-	
+
 	@Test
 	void duplicateTags(){
 		assertThatThrownBy(() -> JavaDocParserBuilder.withBasicTags()
@@ -75,6 +76,16 @@ class CustomTagParserTest {
 						.build())
 			.isInstanceOf(DuplicateTagException.class)
 			.hasMessage("The parser contains a tag '@custom'.");
+	}
+
+	@Test
+	void basicTagWithUnknown() {
+		javaDoc = basicPlainParser.parse(simpleJavaDoc);
+
+		assertThat(javaDoc.getTags(AuthorTag.class))
+			.hasSize(1)
+			.extracting(AuthorTag::getAuthorName)
+			.contains("name");
 	}
 
 }

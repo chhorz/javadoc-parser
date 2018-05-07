@@ -27,9 +27,9 @@ import com.github.chhorz.javadoc.tags.ParamTag;
 
 /**
  * Test class to validate parsing of the {@code @param} tag.
- * 
+ *
  * @author chhorz
- * 
+ *
  */
 @DisplayName("Tests for JavaDoc param tag")
 class ParamParserTest extends AbstractParserTest {
@@ -51,6 +51,8 @@ class ParamParserTest extends AbstractParserTest {
 		assertThat(javaDoc.getTags(ParamTag.class))
 			.hasSize(1)
 			.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
-			.contains(tuple("test", "Lorem ipsum"));
+				.contains(tuple("test",
+						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n"
+								+ "           ut labore et dolore magna aliqua."));
 	}
 }

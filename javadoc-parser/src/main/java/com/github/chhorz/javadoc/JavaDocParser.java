@@ -18,15 +18,17 @@
 package com.github.chhorz.javadoc;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Stream.concat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.tags.Tag;
@@ -95,10 +97,11 @@ public final class JavaDocParser {
 	private List<Tag> parseTags(final String javaDocString) {
 		List<Tag> tagList = new ArrayList<>();
 
-		String allTagNames = tags.stream()
+		Stream<String> tagNamesStream = tags.stream()
 				.map(tag -> tag.getTagName())
-				.map(tag -> String.format("@%s", tag))
-				// .map(tag -> Pattern.quote(tag))
+				.map(tag -> String.format("@%s", tag));
+
+		String allTagNames = concat(tagNamesStream, Stream.of("[^{]@\\S+"))
 				.collect(joining("|", "(?=", "|$)"));
 
 		for (Tag tag : tags) {
@@ -109,11 +112,12 @@ public final class JavaDocParser {
 			}
 			String parts = sb.toString();
 
-			Pattern pattern = Pattern.compile(".*@" + tag.getTagName() + parts + "\\s*" + allTagNames);
+			Pattern pattern = Pattern.compile("@" + tag.getTagName() + parts + "\\s*" + allTagNames, Pattern.DOTALL);
 			Matcher matcher = pattern.matcher(javaDocString);
 			// System.out.println(pattern);
 
-			while (matcher.find()) {
+			int start = 0;
+			while (matcher.find(start)) {
 				Tag currentTag;
 				try {
 					currentTag = tag.getClass().newInstance();
@@ -124,11 +128,13 @@ public final class JavaDocParser {
 
 				for (String segmentName : tag.getSegmentNames()) {
 					currentTag.putValue(segmentName, performReplacements(matcher.group(segmentName)));
-					// System.out.println("segmentName=" + segmentName + ", found=" + tag.getValues().get(segmentName));
+					// System.out.println("segmentName=" + segmentName + ", found=" + currentTag.getValues().get(segmentName));
 				}
 
 				// System.out.println("Tag:" + currentTag);
 				tagList.add(currentTag);
+
+				start = matcher.end();
 			}
 		}
 
