@@ -33,7 +33,37 @@ String authorName = authorTag.getAuthorName(); // <3>
 
 == Output format
 In the future different output-formats will be supported.
-Currently only `OutputType.PLAIN` is working.
+At the moment the following output-formats with replacements can be used:
+[cols="4*",options="header"]
+|===
+| Javadoc | Asciidoc | Markdown | HTML
+
+| {@summary ...}
+| ...
+| ...
+| ...
+
+| {@code ...}
+| \``...``
+| \``...``
+| <pre>...</pre>
+
+| {@link ...}
+3+| Currently no format replacement.
+
+| {@linkplain ...}
+3+| Currently no format replacement.
+
+| {@literal ...}
+| `\_..._`
+| `\_..._`
+| <i>...</i>
+
+| {@value ...}
+| \``...``
+| \``...``
+| <pre>...</pre>
+|===
 
 [[extendibility]]
 == Extendibility

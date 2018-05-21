@@ -32,7 +32,7 @@ import com.github.chhorz.javadoc.tags.ThrowsTag;
 import com.github.chhorz.javadoc.tags.VersionTag;
 
 /**
- *
+ * {@
  * @author chhorz
  *
  */
@@ -41,8 +41,10 @@ public class JavaDocParserBuilder {
 	private static final String BASE_INLINE_PATTERN = "\\{@%s ([^\\{\\}]+)\\}([\\s.,:;-])?";
 	private static final String INLINE_SUMMARY_PATTERN = String.format(BASE_INLINE_PATTERN, "summary");
 	private static final String INLINE_CODE_PATTERN = String.format(BASE_INLINE_PATTERN, "code");
-	// private static final String INLINE_LINK_PATTERN = String.format(BASE_INLINE_PATTERN, "link");
+	private static final String INLINE_LINK_PATTERN = String.format(BASE_INLINE_PATTERN, "link");
+	private static final String INLINE_LINKPLAIN_PATTERN = String.format(BASE_INLINE_PATTERN, "linkplain");
 	private static final String INLINE_LITERAL_PATTERN = String.format(BASE_INLINE_PATTERN, "literal");
+	private static final String INLINE_VALUE_PATTERN = String.format(BASE_INLINE_PATTERN, "value");
 
 	private JavaDocParser javaDocParser;
 
@@ -75,13 +77,22 @@ public class JavaDocParserBuilder {
 		javaDocParser.addReplacement(INLINE_SUMMARY_PATTERN, "$1$2");
 		if (OutputType.ASCIIDOC.equals(outputType)) {
 			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
-			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "`$1`$2");
+			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
+			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
+			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "_$1_$2");
+			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "`$1`$2");
 		} else if (OutputType.MARKDOWN.equals(outputType)) {
 			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
+			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
+			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
 			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "_$1_$2");
+			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "`$1`$2");
 		} else if (OutputType.HTML.equals(outputType)) {
 			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "<pre>$1</pre>$2");
+			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
+			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
 			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "<i>$1</i>$2");
+			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "<pre>$1</pre>$2");
 		}
 		return this;
 	}

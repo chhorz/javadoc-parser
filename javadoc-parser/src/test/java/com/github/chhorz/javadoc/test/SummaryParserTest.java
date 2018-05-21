@@ -72,7 +72,7 @@ class SummaryParserTest extends AbstractParserTest {
 		assertThat(javaDoc)
 			.hasFieldOrPropertyWithValue("summary",
 					"Lorem ipsum dolor `sit` amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n" +
-					"ut labore et dolore magna `aliqua`.");
+					"ut labore et dolore magna _aliqua_.");
 	}
 
 	@Test

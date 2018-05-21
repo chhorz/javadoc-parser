@@ -111,8 +111,8 @@
 					<artifactId>license-maven-plugin</artifactId>
 					<version>${license.maven.plugin.version}</version>
 					<configuration>
-                        <header>${basedir}/../LICENSE.txt</header>
-                        <strictCheck>true</strictCheck>
+						<header>${basedir}/../LICENSE.txt</header>
+						<strictCheck>true</strictCheck>
 						<excludes>
 							<exclude>**/*.adoc</exclude>
 							<exclude>**/LICENSE.txt</exclude>
