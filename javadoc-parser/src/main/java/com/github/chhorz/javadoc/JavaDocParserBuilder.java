@@ -38,6 +38,12 @@ import com.github.chhorz.javadoc.tags.VersionTag;
  */
 public class JavaDocParserBuilder {
 
+	private static final String BASE_INLINE_PATTERN = "\\{@%s ([^\\{\\}]+)\\}([\\s.,:;-])?";
+	private static final String INLINE_SUMMARY_PATTERN = String.format(BASE_INLINE_PATTERN, "summary");
+	private static final String INLINE_CODE_PATTERN = String.format(BASE_INLINE_PATTERN, "code");
+	// private static final String INLINE_LINK_PATTERN = String.format(BASE_INLINE_PATTERN, "link");
+	private static final String INLINE_LITERAL_PATTERN = String.format(BASE_INLINE_PATTERN, "literal");
+
 	private JavaDocParser javaDocParser;
 
 	private JavaDocParserBuilder() {
@@ -66,15 +72,16 @@ public class JavaDocParserBuilder {
 	}
 
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
-		javaDocParser.addReplacement("\\{@summary ([^\\{\\}]+)\\}([\\s.,:;-])?", "$1$2");
+		javaDocParser.addReplacement(INLINE_SUMMARY_PATTERN, "$1$2");
 		if (OutputType.ASCIIDOC.equals(outputType)) {
-			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
-			javaDocParser.addReplacement("\\{@literal ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
+			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
+			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "`$1`$2");
 		} else if (OutputType.MARKDOWN.equals(outputType)) {
-			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "`$1`$2");
+			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
+			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "_$1_$2");
 		} else if (OutputType.HTML.equals(outputType)) {
-			javaDocParser.addReplacement("\\{@code ([^\\{\\}]+)\\}([\\s.,:;-])?", "<pre>$1</pre>$2");
-			javaDocParser.addReplacement("\\{@literal ([^\\{\\}]+)\\}([\\s.,:;-])?", "<i>$1</i>$2");
+			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "<pre>$1</pre>$2");
+			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "<i>$1</i>$2");
 		}
 		return this;
 	}
