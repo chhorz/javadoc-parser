@@ -88,7 +88,7 @@ public class JavaDocParserBuilder {
 			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "_$1_$2");
 			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "`$1`$2");
 		} else if (OutputType.HTML.equals(outputType)) {
-			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "<pre>$1</pre>$2");
+			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "<code>$1</code>$2");
 			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
 			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
 			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "<i>$1</i>$2");
