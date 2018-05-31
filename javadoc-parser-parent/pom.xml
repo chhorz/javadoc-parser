@@ -26,10 +26,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+	<name>Javadoc Parser</name>
+	<description>Java library for parsing information from a structured Javadoc string.</description>
+	<url>https://github.com/chhorz/javadoc-parser</url>
 	<inceptionYear>2018</inceptionYear>
 
 	<properties>
-        <!-- Common -->
+		<!-- Common -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.source.version>1.8</java.source.version>
@@ -116,6 +119,9 @@
 						<excludes>
 							<exclude>**/*.adoc</exclude>
 							<exclude>**/LICENSE.txt</exclude>
+							<exclude>build/**</exclude>
+							<exclude>.gitattributes</exclude>
+							<exclude>.gitignore</exclude>
 						</excludes>
 					</configuration>
 					<executions>
@@ -226,6 +232,5 @@
 			</build>
 		</profile>
 	</profiles>
-
 
 </project>
