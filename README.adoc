@@ -45,7 +45,7 @@ firstAuthor.getAuthorName();
 ----
 
 == Snapshots
-_tbd_
+_The snapshot repo will be added soon._
 
 == License
 Javadoc Parser is open source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
