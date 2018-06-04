@@ -1,23 +1,12 @@
-<!--
-
-
-       Copyright 2018 the original author or authors.
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-            http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
-
-
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<!-- Copyright 2018 the original author or authors. Licensed under the Apache 
+	License, Version 2.0 (the "License"); you may not use this file except in 
+	compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -72,9 +61,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git@github.com:chhorz/spring-boot-monitor.git</connection>
-		<developerConnection>scm:git:git@github.com:chhorz/spring-boot-monitor.git</developerConnection>
-		<url>https://github.com/chhorz/spring-boot-monitor</url>
+		<connection>scm:git:git@github.com:chhorz/javadoc-parser.git</connection>
+		<developerConnection>scm:git:git@github.com:chhorz/javadoc-parser.git</developerConnection>
+		<url>https://github.com/chhorz/javadoc-parser</url>
 	</scm>
 
 	<distributionManagement>
@@ -191,25 +180,15 @@
 	</build>
 
 	<profiles>
+
 		<profile>
-			<id>release</id>
+			<id>sign</id>
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>${nexus.staging.maven.plugin.version}</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
-					</plugin>
-					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>${maven.gpg.plugin.version}</version>
+						<version>1.6</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -220,17 +199,84 @@
 							</execution>
 						</executions>
 					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>build-extras</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
+<!-- 		<profile> -->
+<!-- 			<id>release</id> -->
+<!-- 			<build> -->
+<!-- 				<plugins> -->
+<!-- 					<plugin> -->
+<!-- 						<groupId>org.sonatype.plugins</groupId> -->
+<!-- 						<artifactId>nexus-staging-maven-plugin</artifactId> -->
+<!-- 						<version>${nexus.staging.maven.plugin.version}</version> -->
+<!-- 						<extensions>true</extensions> -->
+<!-- 						<configuration> -->
+<!-- 							<serverId>ossrh</serverId> -->
+<!-- 							<nexusUrl>https://oss.sonatype.org/</nexusUrl> -->
+<!-- 							<autoReleaseAfterClose>true</autoReleaseAfterClose> -->
+<!-- 						</configuration> -->
+<!-- 					</plugin> -->
+<!-- 					<plugin> -->
+<!-- 						<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 						<artifactId>maven-gpg-plugin</artifactId> -->
+<!-- 						<version>${maven.gpg.plugin.version}</version> -->
+<!-- 						<executions> -->
+<!-- 							<execution> -->
+<!-- 								<id>sign-artifacts</id> -->
+<!-- 								<phase>verify</phase> -->
+<!-- 								<goals> -->
+<!-- 									<goal>sign</goal> -->
+<!-- 								</goals> -->
+<!-- 							</execution> -->
+<!-- 						</executions> -->
+<!-- 					</plugin> -->
+<!-- 					<plugin> -->
+<!-- 						<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 						<artifactId>maven-source-plugin</artifactId> -->
+<!-- 					</plugin> -->
+<!-- 					<plugin> -->
+<!-- 						<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 						<artifactId>maven-javadoc-plugin</artifactId> -->
+<!-- 					</plugin> -->
+<!-- 				</plugins> -->
+<!-- 			</build> -->
+<!-- 		</profile> -->
 	</profiles>
 
 </project>

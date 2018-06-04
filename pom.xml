@@ -62,19 +62,19 @@
 		<url>https://github.com/chhorz/javadoc-parser</url>
 	</scm>
 
-	<profiles>
-		<profile>
-			<id>distribution</id>
-			<activation>
-				<property>
-					<name>skipDistribution</name>
-					<value>!true</value>
-				</property>
-			</activation>
-			<modules>
-				<module>javadoc-parser-documentation</module>
-			</modules>
-		</profile>
-	</profiles>
+<!-- 	<profiles> -->
+<!-- 		<profile> -->
+<!-- 			<id>distribution</id> -->
+<!-- 			<activation> -->
+<!-- 				<property> -->
+<!-- 					<name>skipDistribution</name> -->
+<!-- 					<value>!true</value> -->
+<!-- 				</property> -->
+<!-- 			</activation> -->
+<!-- 			<modules> -->
+<!-- 				<module>javadoc-parser-documentation</module> -->
+<!-- 			</modules> -->
+<!-- 		</profile> -->
+<!-- 	</profiles> -->
 
 </project>
