@@ -46,17 +46,17 @@ public final class JavaDocParser {
 	public JavaDoc parse(final String javaDocString) {
 		String summary = "";
 		String description = "";
-		List<Tag> tags = new ArrayList<>();
+		List<Tag> parsedTags = new ArrayList<>();
 
 		if (javaDocString != null && !javaDocString.isEmpty()) {
 			final String rawDescription = parseDescription(javaDocString);
 
 			summary = performReplacements(parseSummary(rawDescription));
 			description = performReplacements(rawDescription);
-			tags = parseTags(javaDocString);
+			parsedTags = parseTags(javaDocString);
 		}
 
-		return new JavaDoc(summary, description, tags);
+		return new JavaDoc(summary, description, parsedTags);
 	}
 
 	private String parseSummary(final String description) {
