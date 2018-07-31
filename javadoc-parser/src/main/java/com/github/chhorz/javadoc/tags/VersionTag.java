@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class VersionTag extends Tag {
+public class VersionTag extends StructuredTag {
 
 	private static final String TAG_NAME = "version";
 

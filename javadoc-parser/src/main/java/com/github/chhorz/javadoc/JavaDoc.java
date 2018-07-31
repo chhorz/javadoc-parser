@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
-import com.github.chhorz.javadoc.tags.Tag;
+import com.github.chhorz.javadoc.tags.StructuredTag;
 
 /**
  *
@@ -32,9 +32,9 @@ public class JavaDoc {
 
 	private String summary;
 	private String description;
-	private List<Tag> tags;
+	private List<StructuredTag> tags;
 
-	public JavaDoc(final String summary, final String description, final List<Tag> tags) {
+	public JavaDoc(final String summary, final String description, final List<StructuredTag> tags) {
 		this.summary = summary;
 		this.description = description;
 		this.tags = tags;
@@ -48,11 +48,11 @@ public class JavaDoc {
 		return description;
 	}
 
-	public List<Tag> getTags() {
+	public List<StructuredTag> getTags() {
 		return tags;
 	}
 
-	public <T extends Tag> List<T> getTags(final Class<T> tagClass) {
+	public <T extends StructuredTag> List<T> getTags(final Class<T> tagClass) {
 		return tags.stream()
 				.filter(tagClass::isInstance)
 				.map(tagClass::cast)

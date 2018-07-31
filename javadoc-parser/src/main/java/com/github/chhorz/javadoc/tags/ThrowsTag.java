@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class ThrowsTag extends Tag {
+public class ThrowsTag extends StructuredTag {
 
 	private static final String TAG_NAME = "throws";
 

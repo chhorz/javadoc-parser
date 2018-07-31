@@ -22,7 +22,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class CategoryTag extends Tag {
+public class CategoryTag extends StructuredTag {
 
 	private static final String TAG_NAME = "category";
 

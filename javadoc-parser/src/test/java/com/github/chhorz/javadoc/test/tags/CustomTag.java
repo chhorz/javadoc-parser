@@ -17,7 +17,7 @@
  */
 package com.github.chhorz.javadoc.test.tags;
 
-import com.github.chhorz.javadoc.tags.Tag;
+import com.github.chhorz.javadoc.tags.StructuredTag;
 
 /**
  * Custom tag to test extendibility of the javadoc parser.
@@ -25,7 +25,7 @@ import com.github.chhorz.javadoc.tags.Tag;
  * @author chhorz
  *
  */
-public class CustomTag extends Tag {
+public class CustomTag extends StructuredTag {
 
 	private static final String TAG_NAME = "custom";
 

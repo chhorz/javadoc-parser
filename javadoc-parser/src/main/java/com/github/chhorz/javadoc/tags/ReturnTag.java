@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class ReturnTag extends Tag {
+public class ReturnTag extends StructuredTag {
 
 	private static final String TAG_NAME = "return";
 

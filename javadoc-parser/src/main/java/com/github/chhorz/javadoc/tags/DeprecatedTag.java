@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class DeprecatedTag extends Tag {
+public class DeprecatedTag extends StructuredTag {
 
 	private static final String TAG_NAME = "deprecated";
 

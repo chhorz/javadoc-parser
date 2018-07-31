@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class ParamTag extends Tag {
+public class ParamTag extends StructuredTag {
 
 	private static final String TAG_NAME = "param";
 

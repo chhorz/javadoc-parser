@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class ExceptionTag extends Tag {
+public class ExceptionTag extends StructuredTag {
 
 	private static final String TAG_NAME = "exception";
 

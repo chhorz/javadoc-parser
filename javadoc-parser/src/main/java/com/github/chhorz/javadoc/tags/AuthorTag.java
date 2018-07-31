@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class AuthorTag extends Tag {
+public class AuthorTag extends StructuredTag {
 
 	private static final String TAG_NAME = "author";
 

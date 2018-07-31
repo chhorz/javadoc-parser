@@ -23,7 +23,7 @@ package com.github.chhorz.javadoc.tags;
  * @author chhorz
  *
  */
-public class SinceTag extends Tag {
+public class SinceTag extends StructuredTag {
 
 	private static final String TAG_NAME = "since";
 

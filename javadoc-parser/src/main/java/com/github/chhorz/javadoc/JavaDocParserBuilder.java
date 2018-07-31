@@ -27,7 +27,7 @@ import com.github.chhorz.javadoc.tags.ParamTag;
 import com.github.chhorz.javadoc.tags.ReturnTag;
 import com.github.chhorz.javadoc.tags.SeeTag;
 import com.github.chhorz.javadoc.tags.SinceTag;
-import com.github.chhorz.javadoc.tags.Tag;
+import com.github.chhorz.javadoc.tags.StructuredTag;
 import com.github.chhorz.javadoc.tags.ThrowsTag;
 import com.github.chhorz.javadoc.tags.VersionTag;
 
@@ -68,7 +68,7 @@ public class JavaDocParserBuilder {
 		return new JavaDocParserBuilder();
 	}
 
-	public <T extends Tag> JavaDocParserBuilder withCustomTag(final T tag) {
+	public <T extends StructuredTag> JavaDocParserBuilder withCustomTag(final T tag) {
 		javaDocParser.addTag(tag);
 		return this;
 	}
