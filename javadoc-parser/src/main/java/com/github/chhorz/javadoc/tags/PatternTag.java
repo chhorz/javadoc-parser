@@ -18,6 +18,7 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
+ * A PatternTag can be used to define a custom {@link java.util.regex.Pattern}. For this free kind of tag, more methods have to be implemented.
  *
  * @author chhorz
  *
@@ -35,20 +36,6 @@ public abstract class PatternTag extends Tag {
 	public String getTagName() {
 		return name;
 	}
-
-	// public List<String> getSegmentNames() {
-	// return segmentNames;
-	// }
-	//
-	// public Map<String, String> getValues() {
-	// return values;
-	// }
-	//
-	// public void putValue(final String segmentName, final String segmentValue) {
-	// if (values.containsKey(segmentName)) {
-	// values.put(segmentName, segmentValue != null ? segmentValue : "");
-	// }
-	// }
 
 	@Override
 	public String createPattern(final String allTagNames) {

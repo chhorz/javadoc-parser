@@ -16,7 +16,7 @@ JavaDocParser parser = JavaDocParserBuilder
 ----
 
 All `Tags` that are registered as basic tags can be found in the package `com.github.chhorz.javadoc.tags.*`.
-The creation of custom tags is described <<extendibility,here>>.
+The creation of custom tags is described <<extensibility,here>>.
 
 [source,java]
 ----
@@ -65,8 +65,8 @@ At the moment the following output-formats with replacements can be used:
 | <pre>...</pre>
 |===
 
-[[extendibility]]
-== Extendibility
+[[extensibility]]
+== Extensibility
 To extend the basic functionality of the Javadoc parser, the creation of an custom tag might be a good start.
 All internal used basic Javadoc tags have the same structure.
 
@@ -75,7 +75,7 @@ All internal used basic Javadoc tags have the same structure.
 /**
  * @custom tagValue1 tagValue2
  */
-public class CustomTag extends Tag { //<1>
+public class CustomTag extends StructuredTag { //<1>
 
     private static final String TAG_NAME = "custom";
     private static final String TAG_VALUE_1 = "tagValue1";

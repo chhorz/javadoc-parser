@@ -37,7 +37,7 @@ import com.github.chhorz.javadoc.test.tags.CustomTag;
  * @author chhorz
  *
  */
-@DisplayName("Tests for JavaDoc category tag")
+@DisplayName("Tests for custom Javadoc tag")
 class CustomTagParserTest extends AbstractParserTest {
 
 	// @formatter:off
@@ -50,7 +50,7 @@ class CustomTagParserTest extends AbstractParserTest {
 			"@return the result";
 	// @formatter:on
 
-	JavaDocParser parser = JavaDocParserBuilder
+	private JavaDocParser parser = JavaDocParserBuilder
 		.withBasicTags()
 		.withCustomTag(new CustomTag())
 		.withOutputType(OutputType.PLAIN)

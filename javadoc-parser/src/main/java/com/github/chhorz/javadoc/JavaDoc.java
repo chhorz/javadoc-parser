@@ -21,9 +21,10 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
-import com.github.chhorz.javadoc.tags.StructuredTag;
+import com.github.chhorz.javadoc.tags.Tag;
 
 /**
+ * This Javadoc object holds the parsed information.
  *
  * @author chhorz
  *
@@ -32,27 +33,48 @@ public class JavaDoc {
 
 	private String summary;
 	private String description;
-	private List<StructuredTag> tags;
+	private List<Tag> tags;
 
-	public JavaDoc(final String summary, final String description, final List<StructuredTag> tags) {
+	public JavaDoc(final String summary, final String description, final List<Tag> tags) {
 		this.summary = summary;
 		this.description = description;
 		this.tags = tags;
 	}
 
+	/**
+	 * The summary is either defined by the new tag {@summary ...} or the first sentence of the textual description.
+	 *
+	 * @return the summary of the textual description
+	 */
 	public String getSummary() {
 		return summary;
 	}
 
+	/**
+	 * The Javadoc description is the whole text until the first tag.
+	 *
+	 * @return the complete textual description
+	 */
 	public String getDescription() {
 		return description;
 	}
 
-	public List<StructuredTag> getTags() {
+	/**
+	 * This method returns all parsed {@link Tag}s
+	 *
+	 * @return a list of all tags
+	 */
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public <T extends StructuredTag> List<T> getTags(final Class<T> tagClass) {
+	/**
+	 * This method returns a list of all tags from the given class.
+	 *
+	 * @param tagClass	a class to filter the output
+	 * @return a list of tags from the given class
+	 */
+	public <T extends Tag> List<T> getTags(final Class<T> tagClass) {
 		return tags.stream()
 				.filter(tagClass::isInstance)
 				.map(tagClass::cast)

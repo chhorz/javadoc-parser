@@ -20,7 +20,7 @@ package com.github.chhorz.javadoc.test.tags;
 import com.github.chhorz.javadoc.tags.StructuredTag;
 
 /**
- * Custom tag to test extendibility of the javadoc parser.
+ * Custom tag to test extensibility of the javadoc parser.
  * 
  * @author chhorz
  *

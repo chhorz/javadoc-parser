@@ -19,20 +19,10 @@ package com.github.chhorz.javadoc;
 
 import java.util.stream.Stream;
 
-import com.github.chhorz.javadoc.tags.AuthorTag;
-import com.github.chhorz.javadoc.tags.CategoryTag;
-import com.github.chhorz.javadoc.tags.DeprecatedTag;
-import com.github.chhorz.javadoc.tags.ExceptionTag;
-import com.github.chhorz.javadoc.tags.ParamTag;
-import com.github.chhorz.javadoc.tags.ReturnTag;
-import com.github.chhorz.javadoc.tags.SeeTag;
-import com.github.chhorz.javadoc.tags.SinceTag;
-import com.github.chhorz.javadoc.tags.StructuredTag;
-import com.github.chhorz.javadoc.tags.ThrowsTag;
-import com.github.chhorz.javadoc.tags.VersionTag;
+import com.github.chhorz.javadoc.tags.*;
 
 /**
- * {@
+ *
  * @author chhorz
  *
  */
@@ -68,20 +58,14 @@ public class JavaDocParserBuilder {
 		return new JavaDocParserBuilder();
 	}
 
-	public <T extends StructuredTag> JavaDocParserBuilder withCustomTag(final T tag) {
+	public <T extends Tag> JavaDocParserBuilder withCustomTag(final T tag) {
 		javaDocParser.addTag(tag);
 		return this;
 	}
 
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
 		javaDocParser.addReplacement(INLINE_SUMMARY_PATTERN, "$1$2");
-		if (OutputType.ASCIIDOC.equals(outputType)) {
-			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
-			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
-			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
-			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "_$1_$2");
-			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "`$1`$2");
-		} else if (OutputType.MARKDOWN.equals(outputType)) {
+		if (OutputType.ASCIIDOC.equals(outputType) || OutputType.MARKDOWN.equals(outputType)) {
 			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
 			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
 			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");

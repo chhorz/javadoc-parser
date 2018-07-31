@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
-import com.github.chhorz.javadoc.tags.StructuredTag;
+import com.github.chhorz.javadoc.tags.Tag;
 
 /**
  *
@@ -40,13 +40,13 @@ import com.github.chhorz.javadoc.tags.StructuredTag;
  */
 public final class JavaDocParser {
 
-	private List<StructuredTag> tags = new ArrayList<>();
+	private List<Tag> tags = new ArrayList<>();
 	private Map<String, String> replacements = new HashMap<>();
 
 	public JavaDoc parse(final String javaDocString) {
 		String summary = "";
 		String description = "";
-		List<StructuredTag> parsedTags = new ArrayList<>();
+		List<Tag> parsedTags = new ArrayList<>();
 
 		if (javaDocString != null && !javaDocString.isEmpty()) {
 			final String rawDescription = parseDescription(javaDocString);
@@ -63,7 +63,7 @@ public final class JavaDocParser {
 		if (description.isEmpty()) {
 			return "";
 		} else if (description.contains("@summary")) {
-			Pattern summaryPattern = Pattern.compile("\\{@summary ([^\\{\\}]+)\\}([\\s.,:;-])?");
+			Pattern summaryPattern = Pattern.compile("\\{@summary ([^{}]+)}([\\s.,:;-])?");
 			Matcher summaryMatcher = summaryPattern.matcher(description);
 
 			if (summaryMatcher.find()) {
@@ -94,8 +94,8 @@ public final class JavaDocParser {
 		return stringBuilder.toString().trim();
 	}
 
-	private List<StructuredTag> parseTags(final String javaDocString) {
-		List<StructuredTag> tagList = new ArrayList<>();
+	private List<Tag> parseTags(final String javaDocString) {
+		List<Tag> tagList = new ArrayList<>();
 
 		Stream<String> tagNamesStream = tags.stream()
 				.map(tag -> tag.getTagName())
@@ -104,14 +104,14 @@ public final class JavaDocParser {
 		String allTagNames = concat(tagNamesStream, Stream.of("[^{]@\\S+"))
 				.collect(joining("|", "(?=", "|$)"));
 
-		for (StructuredTag tag : tags) {
+		for (Tag tag : tags) {
 			Pattern pattern = Pattern.compile(tag.createPattern(allTagNames), Pattern.DOTALL);
 			Matcher matcher = pattern.matcher(javaDocString);
-			System.out.println(pattern);
+			// System.out.println(pattern);
 
 			int start = 0;
 			while (matcher.find(start)) {
-				StructuredTag currentTag;
+				Tag currentTag;
 				try {
 					currentTag = tag.getClass().newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
@@ -143,7 +143,7 @@ public final class JavaDocParser {
 		return convertedString.trim();
 	}
 
-	public void addReplacement(final String regex, final String replacement){
+	void addReplacement(final String regex, final String replacement){
 		Objects.requireNonNull(regex, "The given regex must not be null!");
 		Objects.requireNonNull(replacement, "The given replacement must not be null!");
 
@@ -151,12 +151,10 @@ public final class JavaDocParser {
 			throw new IllegalArgumentException("The given regex must not be empty!");
 		}
 
-		if (regex != null && !regex.isEmpty() && replacement != null) {
-			replacements.put(regex, replacement);
-		}
+		replacements.put(regex, replacement);
 	}
 
-	public void addTag(final StructuredTag tag) {
+	void addTag(final Tag tag) {
 		Objects.requireNonNull(tag, "The given tag must not be null!");
 
 		// check that each tag is only registered once

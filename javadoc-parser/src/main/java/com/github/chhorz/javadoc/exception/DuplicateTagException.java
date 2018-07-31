@@ -17,7 +17,7 @@
  */
 package com.github.chhorz.javadoc.exception;
 
-import com.github.chhorz.javadoc.tags.StructuredTag;
+import com.github.chhorz.javadoc.tags.Tag;
 
 /**
  * A exception that is thrown if more than one tags of one type should be registered within one parser.
@@ -29,7 +29,7 @@ public class DuplicateTagException extends RuntimeException {
 	
 	public static final long serialVersionUID = 1l;
 	
-	public DuplicateTagException(final StructuredTag tag){
+	public DuplicateTagException(final Tag tag){
 		super(String.format("The parser contains a tag '@%s'.", tag.getTagName()));
 	}
 	

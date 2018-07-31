@@ -4,6 +4,8 @@
 .settings
 
 # IntelliJ
+.idea
+*.iml
 
 # Build
 /**/target/
