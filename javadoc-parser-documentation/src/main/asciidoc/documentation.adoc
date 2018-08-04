@@ -70,12 +70,21 @@ At the moment the following output-formats with replacements can be used:
 To extend the basic functionality of the Javadoc parser, the creation of an custom tag might be a good start.
 All internal used basic Javadoc tags have the same structure.
 
+[WARNING]
+====
+The parsing of custom should be tested with unit tests.
+====
+
+=== StructuredTag
+This structured tags contain a list of segments separated with spaces.
+Only the last segment can contain multiple words.
+
 [source,java]
 ----
 /**
  * @custom tagValue1 tagValue2
  */
-public class CustomTag extends StructuredTag { //<1>
+public class CustomTag extends StructuredTag { // <1>
 
     private static final String TAG_NAME = "custom";
     private static final String TAG_VALUE_1 = "tagValue1";
@@ -92,7 +101,7 @@ public class CustomTag extends StructuredTag { //<1>
     // ...
 }
 ----
-<1> custom tags need to extend `com.github.chhorz.javadoc.tags.Tag`
+<1> custom tags need to extend `com.github.chhorz.javadoc.tags.StructuredTag`
 <2> super constructor has to be called with tag name and tag segments
 
 After the creation of the custom Javadoc tag, the tag has to be registered at the parser.
@@ -108,10 +117,60 @@ JavaDocParser parser = JavaDocParserBuilder
 
 Getting the custom tag date from the Javadoc works as shown above.
 
-[WARNING]
-====
-The parsing of custom should be tested with unit tests.
-====
+=== PatternTag
+The `PatternTag` works similar to the `StructuredTag` but it is more flexible.
+For tags of this kind, the Regex must be defined separately.
+It is usable in more use-cases but more methods have to be implemented.
+
+This example is based on the unit test for an `CustomPatternTag`.
+
+[source,java]
+----
+/**
+ * @custom number otherValue
+ */
+public class CustomPatternTag extends PatternTag { // <1>
+
+    private static final String TAG_NAME = "custom";
+
+    private static final String NUMBER = "number";
+    private static final String OTHER_VALUE = "otherValue";
+
+    private String number;
+    private String otherValue;
+
+    public CustomPatternTag() {
+        super(TAG_NAME, "\\s+?(?<number>\\d+?)\\s+?(?<otherValue>.+?)\\s*"); // <2>
+    }
+
+    public Long getNumber(){
+        return Long.parseLong(number);
+    }
+
+    public String getOtherValue(){
+        return otherValue;
+    }
+
+    @Override
+    public List<String> getSegmentNames() {
+        return Arrays.asList(NUMBER, OTHER_VALUE);
+    }
+
+    @Override
+    public void putValue(String segmentName, String value) {
+        switch (segmentName) {
+            case NUMBER:
+                this.number = value;
+            case OTHER_VALUE:
+                this.otherValue = value;
+        }
+    }
+}
+----
+<1> custom tags need to extend `com.github.chhorz.javadoc.tags.PatternTag`
+<2> super constructor has to be called with tag name and custom regular expression
+
+The registration on the `JavaDocParser` works the same way as for `StructuredTag`s.
 
 == License
 Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
