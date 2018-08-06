@@ -19,6 +19,7 @@ package com.github.chhorz.javadoc;
 
 import static java.util.stream.Collectors.toList;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.github.chhorz.javadoc.tags.Tag;
@@ -65,17 +66,17 @@ public class JavaDoc {
 	 * @return a list of all tags
 	 */
 	public List<Tag> getTags() {
-		return tags;
+		return tags == null ? Collections.emptyList() : tags;
 	}
 
 	/**
 	 * This method returns a list of all tags from the given class.
 	 *
-	 * @param tagClass	a class to filter the output
+	 * @param tagClass    a class to filter the output
 	 * @return a list of tags from the given class
 	 */
 	public <T extends Tag> List<T> getTags(final Class<T> tagClass) {
-		return tags.stream()
+		return tags == null ? Collections.emptyList() : tags.stream()
 				.filter(tagClass::isInstance)
 				.map(tagClass::cast)
 				.collect(toList());
