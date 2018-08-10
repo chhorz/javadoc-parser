@@ -170,7 +170,7 @@ public class CustomPatternTag extends PatternTag { // <1>
 <1> custom tags need to extend `com.github.chhorz.javadoc.tags.PatternTag`
 <2> super constructor has to be called with tag name and custom regular expression
 
-The registration on the `JavaDocParser` works the same way as for `StructuredTag`s.
+The registration on the `JavaDocParser` works the same way as for `StructuredTag`.
 
 == License
-Spring Boot Monitor is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
+Javadoc Parser is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
