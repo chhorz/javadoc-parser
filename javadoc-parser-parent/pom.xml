@@ -32,28 +32,12 @@
 	<url>https://github.com/chhorz/javadoc-parser</url>
 	<inceptionYear>2018</inceptionYear>
 
-	<properties>
-		<!-- Common -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.source.version>1.8</java.source.version>
-		<java.target.version>1.8</java.target.version>
-
-		<!-- dependency version -->
-		<assertj.core.version>3.9.1</assertj.core.version>
-		<junit.jupiter.version>5.2.0</junit.jupiter.version>
-		<junit.platform.surefire.provider.version>1.2.0</junit.platform.surefire.provider.version>
-
-		<!-- plugin versions -->
-		<license.maven.plugin.version>3.0</license.maven.plugin.version>
-		<maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
-		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
-		<maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
-		<maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
-		<maven.source.plugin.version>2.4</maven.source.plugin.version>
-		<maven.surefire.plugin.version>2.21.0</maven.surefire.plugin.version>
-		<nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
-	</properties>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
 	<developers>
 		<developer>
@@ -64,13 +48,6 @@
 			</roles>
 		</developer>
 	</developers>
-
-	<licenses>
-		<license>
-			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
 
 	<scm>
 		<connection>scm:git:git@github.com:chhorz/javadoc-parser.git</connection>
@@ -89,12 +66,33 @@
 		</repository>
 	</distributionManagement>
 
+	<properties>
+		<!-- Common -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
+
+		<!-- dependency version -->
+		<assertj.core.version>3.9.1</assertj.core.version>
+		<junit.jupiter.version>5.4.1</junit.jupiter.version>
+
+		<!-- plugin versions -->
+		<license.maven.plugin.version>3.0</license.maven.plugin.version>
+		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
+		<maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
+		<maven.source.plugin.version>2.4</maven.source.plugin.version>
+		<maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+		<nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- Test -->
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-api</artifactId>
+				<artifactId>junit-jupiter</artifactId>
 				<version>${junit.jupiter.version}</version>
 				<scope>test</scope>
 			</dependency>
@@ -185,21 +183,10 @@
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven.surefire.plugin.version}</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.junit.platform</groupId>
-							<artifactId>junit-platform-surefire-provider</artifactId>
-							<version>${junit.platform.surefire.provider.version}</version>
-						</dependency>
-						<dependency>
-							<groupId>org.junit.jupiter</groupId>
-							<artifactId>junit-jupiter-engine</artifactId>
-							<version>${junit.jupiter.version}</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
