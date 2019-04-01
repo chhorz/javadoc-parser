@@ -12,7 +12,17 @@ To get the parsing mechanism work properly the Javadoc comment has to follow a s
 The structure should be as close as possible to the link:http://www.oracle.com/technetwork/articles/java/index-137868.html[Writers Guide] from Oracle.
 
 == Usage
-The project is currently not available from a central repository.
+The project is available from maven central repository:
+
+[source,xml]
+----
+<dependency>
+  <groupId>com.github.chhorz</groupId>
+  <artifactId>javadoc-parser</artifactId>
+  <version>0.1.0.M1</version>
+</dependency>
+----
+
 If you would like to use it, clone the repository and build it locally.
 Deploying to an public repository is one of the next steps that will be done.
 

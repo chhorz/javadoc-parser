@@ -24,7 +24,7 @@
 
 	<groupId>com.github.chhorz</groupId>
 	<artifactId>javadoc-parser-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0.M1</version>
 	<packaging>pom</packaging>
 
 	<name>Javadoc Parser</name>
@@ -116,7 +116,7 @@
 					<configuration>
 						<serverId>ossrh</serverId>
 						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						<autoReleaseAfterClose>false</autoReleaseAfterClose>
 					</configuration>
 				</plugin>
 				<plugin>
