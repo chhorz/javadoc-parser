@@ -23,7 +23,7 @@
 
 	<parent>
 		<groupId>com.github.chhorz</groupId>
-		<artifactId>javadoc-parser-aggregator</artifactId>
+		<artifactId>javadoc-parser-parent</artifactId>
 		<version>0.1.0.M2</version>
 	</parent>
 
