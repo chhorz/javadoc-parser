@@ -24,10 +24,10 @@
 
 	<groupId>com.github.chhorz</groupId>
 	<artifactId>javadoc-parser-parent</artifactId>
-	<version>0.1.0.M2</version>
+	<version>0.1.0.M3</version>
 	<packaging>pom</packaging>
 
-	<name>Javadoc Parser</name>
+	<name>Javadoc Parser Parent</name>
 	<description>Java library for parsing information from a structured Javadoc string.</description>
 	<url>https://github.com/chhorz/javadoc-parser</url>
 	<inceptionYear>2018</inceptionYear>

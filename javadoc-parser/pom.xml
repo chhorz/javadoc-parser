@@ -25,10 +25,11 @@
 	<parent>
 		<groupId>com.github.chhorz</groupId>
 		<artifactId>javadoc-parser-parent</artifactId>
-		<version>0.1.0.M2</version>
+		<version>0.1.0.M3</version>
 	</parent>
 
 	<artifactId>javadoc-parser</artifactId>
+	<name>Javadoc Parser</name>
 
 	<dependencies>
 		<!-- Test -->
