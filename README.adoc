@@ -19,7 +19,7 @@ The project is available from maven central repository:
 <dependency>
   <groupId>com.github.chhorz</groupId>
   <artifactId>javadoc-parser</artifactId>
-  <version>0.1.0.M1</version>
+  <version>0.1.0.M3</version>
 </dependency>
 ----
 
