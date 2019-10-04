@@ -136,6 +136,7 @@
 							<exclude>**/*.adoc</exclude>
 							<exclude>**/LICENSE.txt</exclude>
 							<exclude>build/**</exclude>
+							<exclude>.github/**</exclude>
 							<exclude>.gitattributes</exclude>
 							<exclude>.gitignore</exclude>
 						</excludes>
