@@ -43,7 +43,7 @@ public class JavaDoc {
 	}
 
 	/**
-	 * The summary is either defined by the new tag {@summary ...} or the first sentence of the textual description.
+	 * The summary is either defined by the new tag {(at)summary ...} or the first sentence of the textual description.
 	 *
 	 * @return the summary of the textual description
 	 */
