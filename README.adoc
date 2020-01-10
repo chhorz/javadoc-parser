@@ -19,12 +19,11 @@ The project is available from maven central repository:
 <dependency>
   <groupId>com.github.chhorz</groupId>
   <artifactId>javadoc-parser</artifactId>
-  <version>0.1.0.M3</version>
+  <version>${javadoc-parser.version}</version>
 </dependency>
 ----
 
-If you would like to use it, clone the repository and build it locally.
-Deploying to an public repository is one of the next steps that will be done.
+Information about the latest published version is available on the link:https://github.com/chhorz/javadoc-parser/releases[Github Releases] page.
 
 === Javadoc comment structure
 _work in progress_
@@ -55,7 +54,17 @@ firstAuthor.getAuthorName();
 ----
 
 == Snapshots
-_The snapshot repo will be added soon._
+Snapshots are available from the Sonatype OSS Snapshots repository.
+To configure the repository for your project to use the latest snapshot versions you have to add the following repository to your maven pom:
+[source,xml]
+----
+<repositories>
+    <repository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+</repositories>
+----
 
 == License
 Javadoc Parser is open source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
