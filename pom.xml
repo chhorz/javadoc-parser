@@ -83,7 +83,6 @@
 		<junit-jupiter.version>5.5.2</junit-jupiter.version>
 
 		<!-- plugin versions -->
-		<license-maven-plugin.version>3.0</license-maven-plugin.version>
 		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
 		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
@@ -123,32 +122,6 @@
 						<nexusUrl>https://oss.sonatype.org</nexusUrl>
 						<autoReleaseAfterClose>false</autoReleaseAfterClose>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>com.mycila</groupId>
-					<artifactId>license-maven-plugin</artifactId>
-					<version>${license-maven-plugin.version}</version>
-					<configuration>
-						<header>${basedir}/../LICENSE.txt</header>
-						<strictCheck>true</strictCheck>
-						<excludes>
-							<exclude>**/*.adoc</exclude>
-							<exclude>.mvn/**</exclude>
-							<exclude>**/LICENSE.txt</exclude>
-							<exclude>.github/**</exclude>
-							<exclude>.gitattributes</exclude>
-							<exclude>.gitignore</exclude>
-							<exclude>mvnw</exclude>
-							<exclude>mvnw.cmd</exclude>
-						</excludes>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>check</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -199,13 +172,6 @@
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.mycila</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<configuration>
-					<header>LICENSE.txt</header>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
