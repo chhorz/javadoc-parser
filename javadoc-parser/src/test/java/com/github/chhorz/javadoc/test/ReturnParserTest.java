@@ -39,7 +39,7 @@ class ReturnParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc.getTags(ReturnTag.class))
 			.hasSize(1)
-			.extracting(ReturnTag::getDesrcription)
+			.extracting(ReturnTag::getDescription)
 			.contains("the result");
 	}
 
@@ -49,7 +49,7 @@ class ReturnParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc.getTags(ReturnTag.class))
 			.hasSize(1)
-			.extracting(ReturnTag::getDesrcription)
+			.extracting(ReturnTag::getDescription)
 			.contains("the result");
 	}
 }

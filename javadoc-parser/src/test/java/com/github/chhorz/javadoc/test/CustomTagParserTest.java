@@ -75,7 +75,7 @@ class CustomTagParserTest extends AbstractParserTest {
 						.withCustomTag(new CustomTag())
 						.build())
 			.isInstanceOf(DuplicateTagException.class)
-			.hasMessage("The parser contains a tag '@custom'.");
+			.hasMessage("The parser already contains a tag with name '@custom'.");
 	}
 
 	@Test

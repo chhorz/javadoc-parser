@@ -33,7 +33,7 @@ public class ReturnTag extends StructuredTag {
 		super(TAG_NAME, DESCRIPTION);
 	}
 
-	public String getDesrcription() {
+	public String getDescription() {
 		return getValues().get(DESCRIPTION);
 	}
 

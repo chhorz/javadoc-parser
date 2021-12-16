@@ -25,8 +25,8 @@ package com.github.chhorz.javadoc.tags;
  */
 public abstract class PatternTag extends Tag {
 
-	private String name;
-	private String pattern;
+	private final String name;
+	private final String pattern;
 
 	public PatternTag(final String name, final String pattern) {
 		this.name = name;

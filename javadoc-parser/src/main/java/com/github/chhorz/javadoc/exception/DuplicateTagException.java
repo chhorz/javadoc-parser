@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2021 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,17 +20,17 @@ package com.github.chhorz.javadoc.exception;
 import com.github.chhorz.javadoc.tags.Tag;
 
 /**
- * A exception that is thrown if more than one tags of one type should be registered within one parser.
+ * An exception that is thrown if more than one tags of one type should be registered within one parser.
  * 
  * @author chhorz
  * 
  */
 public class DuplicateTagException extends RuntimeException {
 	
-	public static final long serialVersionUID = 1l;
+	public static final long serialVersionUID = -9189775321623694189L;
 	
 	public DuplicateTagException(final Tag tag){
-		super(String.format("The parser contains a tag '@%s'.", tag.getTagName()));
+		super(String.format("The parser already contains a tag with name '@%s'.", tag.getTagName()));
 	}
 	
 }

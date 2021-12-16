@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2021 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 import com.github.chhorz.javadoc.tags.*;
 
 /**
+ * Fluent builder to create a {@link JavaDocParser} instance.
  *
  * @author chhorz
  *
@@ -36,33 +37,51 @@ public class JavaDocParserBuilder {
 	private static final String INLINE_LITERAL_PATTERN = String.format(BASE_INLINE_PATTERN, "literal");
 	private static final String INLINE_VALUE_PATTERN = String.format(BASE_INLINE_PATTERN, "value");
 
-	private JavaDocParser javaDocParser;
+	private final JavaDocParser javaDocParser;
 
 	private JavaDocParserBuilder() {
 		this.javaDocParser = new JavaDocParser();
 
 		Stream.of(new AuthorTag(),
-			     new CategoryTag(),
-			     new DeprecatedTag(),
-			     new ExceptionTag(),
-			     new ParamTag(),
-			     new ReturnTag(),
-			     new SeeTag(),
-			     new SinceTag(),
-			     new ThrowsTag(),
-			     new VersionTag())
-			.forEach(javaDocParser::addTag);
+						new CategoryTag(),
+						new DeprecatedTag(),
+						new ExceptionTag(),
+						new ParamTag(),
+						new ReturnTag(),
+						new SeeTag(),
+						new SinceTag(),
+						new ThrowsTag(),
+						new VersionTag())
+				.forEach(javaDocParser::addTag);
 	}
 
+	/**
+	 * Create a new builder instance with common JavaDoc tags.
+	 *
+	 * @return a new builder instance
+	 */
 	public static JavaDocParserBuilder withBasicTags() {
 		return new JavaDocParserBuilder();
 	}
 
+	/**
+	 * Adds a custom JavaDoc tag to the parser instance.
+	 *
+	 * @param tag a new instance of the custom tag
+	 * @param <T> type representation of the custom tag
+	 * @return the updated builder instance
+	 */
 	public <T extends Tag> JavaDocParserBuilder withCustomTag(final T tag) {
 		javaDocParser.addTag(tag);
 		return this;
 	}
 
+	/**
+	 * Adds string replacements based on regular expressions to convert JavaDoc format into the given output format.
+	 *
+	 * @param outputType the requested output type
+	 * @return the fluent builder instance
+	 */
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
 		javaDocParser.addReplacement(INLINE_SUMMARY_PATTERN, "$1$2");
 		if (OutputType.ASCIIDOC.equals(outputType) || OutputType.MARKDOWN.equals(outputType)) {
@@ -81,11 +100,25 @@ public class JavaDocParserBuilder {
 		return this;
 	}
 
+	/**
+	 * Adds custom replacements for the output content.
+	 *
+	 * @see #withOutputType(OutputType)
+	 *
+	 * @param regex the regular expression
+	 * @param replacement the replacement string
+	 * @return the fluent builder instance
+	 */
 	public JavaDocParserBuilder withReplacement(final String regex, final String replacement) {
 		javaDocParser.addReplacement(regex, replacement);
 		return this;
 	}
 
+	/**
+	 * Create the {@link JavaDocParser} instance.
+	 *
+	 * @return a new parser instance
+	 */
 	public JavaDocParser build() {
 		return javaDocParser;
 	}

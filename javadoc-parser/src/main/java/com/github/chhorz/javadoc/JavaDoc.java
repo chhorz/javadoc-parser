@@ -32,9 +32,9 @@ import com.github.chhorz.javadoc.tags.Tag;
  */
 public class JavaDoc {
 
-	private String summary;
-	private String description;
-	private List<Tag> tags;
+	private final String summary;
+	private final String description;
+	private final List<Tag> tags;
 
 	public JavaDoc(final String summary, final String description, final List<Tag> tags) {
 		this.summary = summary;

@@ -29,9 +29,9 @@ import java.util.TreeMap;
  */
 public abstract class StructuredTag extends Tag {
 
-	private String name;
-	private List<String> segmentNames;
-	private TreeMap<String, String> values = new TreeMap<>();
+	private final String name;
+	private final List<String> segmentNames;
+	private final TreeMap<String, String> values = new TreeMap<>();
 
 	public StructuredTag(final String name, final String... segmentNames) {
 		this.name = name;

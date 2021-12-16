@@ -20,6 +20,7 @@ package com.github.chhorz.javadoc;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Stream.concat;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,8 +41,8 @@ import com.github.chhorz.javadoc.tags.Tag;
  */
 public final class JavaDocParser {
 
-	private List<Tag> tags = new ArrayList<>();
-	private Map<String, String> replacements = new HashMap<>();
+	private final List<Tag> tags = new ArrayList<>();
+	private final Map<String, String> replacements = new HashMap<>();
 
 	public JavaDoc parse(final String javaDocString) {
 		String summary = "";
@@ -98,7 +99,7 @@ public final class JavaDocParser {
 		List<Tag> tagList = new ArrayList<>();
 
 		Stream<String> tagNamesStream = tags.stream()
-				.map(tag -> tag.getTagName())
+				.map(Tag::getTagName)
 				.map(tag -> String.format("@%s", tag));
 
 		String allTagNames = concat(tagNamesStream, Stream.of("[^{]@\\S+"))
@@ -107,31 +108,27 @@ public final class JavaDocParser {
 		for (Tag tag : tags) {
 			Pattern pattern = Pattern.compile(tag.createPattern(allTagNames), Pattern.DOTALL);
 			Matcher matcher = pattern.matcher(javaDocString);
-			// System.out.println(pattern);
 
 			int start = 0;
 			while (matcher.find(start)) {
 				Tag currentTag;
 				try {
-					currentTag = tag.getClass().newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
+					currentTag = tag.getClass().getDeclaredConstructor().newInstance();
+				} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 					currentTag = tag;
 					e.printStackTrace();
 				}
 
 				for (String segmentName : tag.getSegmentNames()) {
 					currentTag.putValue(segmentName, performReplacements(matcher.group(segmentName)));
-					// System.out.println("segmentName=" + segmentName + ", found=" + currentTag.getValues().get(segmentName));
 				}
 
-				// System.out.println("Tag:" + currentTag);
 				tagList.add(currentTag);
 
 				start = matcher.end();
 			}
 		}
 
-		// System.out.println(tagList);
 		return tagList;
 	}
 
