@@ -46,7 +46,7 @@ jobs:
           server-password: MAVEN_PASSWORD
 
       - name: 'Publish snapshot'
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository == 'chhorz/oas-generator'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository == 'chhorz/javadoc-parser'
         run: ./mvnw -B clean deploy --no-transfer-progress -DskipTests=true
         env:
           MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
