@@ -1,7 +1,7 @@
 <!--
 
 
-       Copyright 2018-2020 the original author or authors.
+       Copyright 2018-2021 the original author or authors.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
 
@@ -73,24 +73,23 @@
 
 	<properties>
 		<!-- common -->
-		<maven.deploy.skip>true</maven.deploy.skip>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.source.version>1.8</java.source.version>
 		<java.target.version>1.8</java.target.version>
 
 		<!-- dependency version -->
-		<assertj.core.version>3.14.0</assertj.core.version>
-		<junit.jupiter.version>5.5.2</junit.jupiter.version>
+		<assertj-core.version>3.14.0</assertj-core.version>
+		<junit-jupiter.version>5.5.2</junit-jupiter.version>
 
 		<!-- plugin versions -->
-		<license.maven.plugin.version>3.0</license.maven.plugin.version>
-		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
-		<maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
-		<maven.javadoc.plugin.version>2.10.3</maven.javadoc.plugin.version>
-		<maven.source.plugin.version>2.4</maven.source.plugin.version>
-		<maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
-		<nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
+		<license-maven-plugin.version>3.0</license-maven-plugin.version>
+		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
+		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
+		<maven-source-plugin.version>2.4</maven-source-plugin.version>
+		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+		<nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -99,13 +98,13 @@
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter</artifactId>
-				<version>${junit.jupiter.version}</version>
+				<version>${junit-jupiter.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
-				<version>${assertj.core.version}</version>
+				<version>${assertj-core.version}</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>
@@ -117,18 +116,18 @@
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>${nexus.staging.maven.plugin.version}</version>
+					<version>${nexus-staging-maven-plugin.version}</version>
 					<extensions>true</extensions>
 					<configuration>
-						<serverId>ossrh</serverId>
-						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+						<serverId>oss.sonatype.org</serverId>
+						<nexusUrl>https://oss.sonatype.org</nexusUrl>
 						<autoReleaseAfterClose>false</autoReleaseAfterClose>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>com.mycila</groupId>
 					<artifactId>license-maven-plugin</artifactId>
-					<version>${license.maven.plugin.version}</version>
+					<version>${license-maven-plugin.version}</version>
 					<configuration>
 						<header>${basedir}/../LICENSE.txt</header>
 						<strictCheck>true</strictCheck>
@@ -152,7 +151,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven.compiler.plugin.version}</version>
+					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
 						<source>${java.source.version}</source>
 						<target>${java.target.version}</target>
@@ -161,7 +160,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>${maven.source.plugin.version}</version>
+					<version>${maven-source-plugin.version}</version>
 					<executions>
 						<execution>
 							<id>attach-sources</id>
@@ -174,7 +173,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>${maven.javadoc.plugin.version}</version>
+					<version>${maven-javadoc-plugin.version}</version>
 					<executions>
 						<execution>
 							<id>attach-javadocs</id>
@@ -189,7 +188,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${maven.surefire.plugin.version}</version>
+					<version>${maven-surefire-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -212,13 +211,13 @@
 	<profiles>
 
 		<profile>
-			<id>sign</id>
+			<id>central-deploy</id>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
+						<version>${maven-gpg-plugin.version}</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -226,6 +225,13 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
+								<configuration>
+									<!-- This is necessary for gpg to not try to use the pinentry programs -->
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>

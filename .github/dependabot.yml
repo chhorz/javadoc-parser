@@ -1,0 +1,21 @@
+# Basic dependabot.yml file with
+# minimum configuration for two package managers with custom labels
+
+version: 2
+updates:
+
+  # Maintain dependencies for Maven
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependabot: maven"
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependabot: github-actions"
