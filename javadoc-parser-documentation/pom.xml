@@ -35,10 +35,8 @@
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.6</version>
+				<version>${asciidoctor-maven-plugin.version}</version>
 				<configuration>
-					<sourceDirectory>src/main/asciidoc</sourceDirectory>
-					<backend>html</backend>
 					<embedAssets>true</embedAssets>
 					<attributes>
 						<project-version>${project.version}</project-version>
