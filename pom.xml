@@ -133,11 +133,13 @@
 						<strictCheck>true</strictCheck>
 						<excludes>
 							<exclude>**/*.adoc</exclude>
+							<exclude>.mvn/**</exclude>
 							<exclude>**/LICENSE.txt</exclude>
-							<exclude>build/**</exclude>
 							<exclude>.github/**</exclude>
 							<exclude>.gitattributes</exclude>
 							<exclude>.gitignore</exclude>
+							<exclude>mvnw</exclude>
+							<exclude>mvnw.cmd</exclude>
 						</excludes>
 					</configuration>
 					<executions>
