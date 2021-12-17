@@ -15,41 +15,52 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.chhorz.javadoc.tags.DeprecatedTag;
+import com.github.chhorz.javadoc.tags.ThrowsTag;
 
 /**
- * Test class to validate parsing of the {@code @deprecated} tag.
- * 
+ * Test class to validate parsing of the {@code @throws} tag.
+ *
  * @author chhorz
- * 
+ *
  */
-@DisplayName("Tests for JavaDoc deprecated tag")
-class DeprecatedParserTest extends AbstractParserTest {
+@DisplayName("Tests for JavaDoc throws tag")
+class ThrowsParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleTest() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
-		assertThat(javaDoc.getTags(DeprecatedTag.class))
+		assertThat(javaDoc.getTags(ThrowsTag.class))
 			.hasSize(1)
-			.extracting(DeprecatedTag::getDeprecatedNote)
-			.contains("use xyz instead");
+			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
+			.contains(tuple("NullpointerException", "when something is null"));
 	}
 
 	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
-		assertThat(javaDoc.getTags(DeprecatedTag.class))
+		assertThat(javaDoc.getTags(ThrowsTag.class))
 			.hasSize(1)
-			.extracting(DeprecatedTag::getDeprecatedNote)
-			.contains("since version 42, use xyz instead");
+			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
+			.contains(tuple("NullpointerException", "when something is null"));
+	}
+
+	@Test
+	void asciidocTest() {
+		javaDoc = basicAsciidocParser.parse(javaDocWithInlineTags);
+
+		assertThat(javaDoc.getTags(ThrowsTag.class))
+			.hasSize(1)
+			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
+			.contains(tuple("NullpointerException", "when something is `null`"));
 	}
 }

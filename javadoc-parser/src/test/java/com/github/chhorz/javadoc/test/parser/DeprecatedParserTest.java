@@ -15,41 +15,41 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.chhorz.javadoc.tags.AuthorTag;
+import com.github.chhorz.javadoc.tags.DeprecatedTag;
 
 /**
- * Test class to validate parsing of the {@code @author} tag.
+ * Test class to validate parsing of the {@code @deprecated} tag.
  * 
  * @author chhorz
  * 
  */
-@DisplayName("Tests for JavaDoc author tag")
-class AuthorParserTest extends AbstractParserTest {
+@DisplayName("Tests for JavaDoc deprecated tag")
+class DeprecatedParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleTest() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
-		assertThat(javaDoc.getTags(AuthorTag.class))
+		assertThat(javaDoc.getTags(DeprecatedTag.class))
 			.hasSize(1)
-			.extracting(AuthorTag::getAuthorName)
-			.contains("name");
+			.extracting(DeprecatedTag::getDeprecatedNote)
+			.contains("use xyz instead");
 	}
 
 	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
-		assertThat(javaDoc.getTags(AuthorTag.class))
+		assertThat(javaDoc.getTags(DeprecatedTag.class))
 			.hasSize(1)
-			.extracting(AuthorTag::getAuthorName)
-			.contains("name");
+			.extracting(DeprecatedTag::getDeprecatedNote)
+			.contains("since version 42, use xyz instead");
 	}
 }

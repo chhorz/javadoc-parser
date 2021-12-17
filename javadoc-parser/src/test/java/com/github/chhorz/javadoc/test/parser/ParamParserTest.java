@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -23,44 +23,36 @@ import static org.assertj.core.api.Assertions.tuple;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.chhorz.javadoc.tags.ThrowsTag;
+import com.github.chhorz.javadoc.tags.ParamTag;
 
 /**
- * Test class to validate parsing of the {@code @throws} tag.
+ * Test class to validate parsing of the {@code @param} tag.
  *
  * @author chhorz
  *
  */
-@DisplayName("Tests for JavaDoc throws tag")
-class ThrowsParserTest extends AbstractParserTest {
+@DisplayName("Tests for JavaDoc param tag")
+class ParamParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleTest() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
-		assertThat(javaDoc.getTags(ThrowsTag.class))
+		assertThat(javaDoc.getTags(ParamTag.class))
 			.hasSize(1)
-			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
-			.contains(tuple("NullpointerException", "when something is null"));
+			.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
+			.contains(tuple("test", "value"));
 	}
 
 	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
-		assertThat(javaDoc.getTags(ThrowsTag.class))
+		assertThat(javaDoc.getTags(ParamTag.class))
 			.hasSize(1)
-			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
-			.contains(tuple("NullpointerException", "when something is null"));
-	}
-
-	@Test
-	void asciidocTest() {
-		javaDoc = basicAsciidocParser.parse(javaDocWithInlineTags);
-
-		assertThat(javaDoc.getTags(ThrowsTag.class))
-			.hasSize(1)
-			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
-			.contains(tuple("NullpointerException", "when something is `null`"));
+			.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
+				.contains(tuple("test",
+						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n"
+								+ "           ut labore et dolore magna aliqua."));
 	}
 }

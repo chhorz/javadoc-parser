@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

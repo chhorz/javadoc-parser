@@ -15,42 +15,41 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.chhorz.javadoc.tags.ExceptionTag;
+import com.github.chhorz.javadoc.tags.ReturnTag;
 
 /**
- * Test class to validate parsing of the {@code @exception} tag.
+ * Test class to validate parsing of the {@code @return} tag.
  * 
  * @author chhorz
  * 
  */
-@DisplayName("Tests for JavaDoc exception tag")
-class ExceptionParserTest extends AbstractParserTest {
+@DisplayName("Tests for Javadoc return tag")
+class ReturnParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleTest() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
-		assertThat(javaDoc.getTags(ExceptionTag.class))
+		assertThat(javaDoc.getTags(ReturnTag.class))
 			.hasSize(1)
-			.extracting(ExceptionTag::getClassName, ExceptionTag::getDescription)
-			.contains(tuple("RuntimeException", "may occur always"));
+			.extracting(ReturnTag::getDescription)
+			.contains("the result");
 	}
 
 	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
-		assertThat(javaDoc.getTags(ExceptionTag.class))
+		assertThat(javaDoc.getTags(ReturnTag.class))
 			.hasSize(1)
-			.extracting(ExceptionTag::getClassName, ExceptionTag::getDescription)
-			.contains(tuple("RuntimeException", "may occur always"));
+			.extracting(ReturnTag::getDescription)
+			.contains("the result");
 	}
 }

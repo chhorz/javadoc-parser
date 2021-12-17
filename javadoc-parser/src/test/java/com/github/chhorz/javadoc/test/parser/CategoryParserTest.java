@@ -15,44 +15,44 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.chhorz.javadoc.tags.ParamTag;
+import com.github.chhorz.javadoc.tags.CategoryTag;
 
 /**
- * Test class to validate parsing of the {@code @param} tag.
+ * Test class to validate parsing of the {@code @category} tag.
  *
  * @author chhorz
  *
  */
-@DisplayName("Tests for JavaDoc param tag")
-class ParamParserTest extends AbstractParserTest {
+@DisplayName("Tests for JavaDoc category tag")
+class CategoryParserTest extends AbstractParserTest {
 
 	@Test
-	void simpleTest() {
+	void simpleCategory() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
-		assertThat(javaDoc.getTags(ParamTag.class))
+		assertThat(javaDoc.getTags(CategoryTag.class))
 			.hasSize(1)
-			.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
-			.contains(tuple("test", "value"));
+			.extracting(CategoryTag::getCategoryName)
+			.contains("some-category");
 	}
 
 	@Test
-	void complexTest() {
+	void multipleCategories() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
-		assertThat(javaDoc.getTags(ParamTag.class))
-			.hasSize(1)
-			.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
-				.contains(tuple("test",
-						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n"
-								+ "           ut labore et dolore magna aliqua."));
+		System.out.println(javaDoc);
+		System.out.println(javaDoc.getTags(CategoryTag.class));
+
+		assertThat(javaDoc.getTags(CategoryTag.class))
+			.hasSize(2)
+			.extracting(CategoryTag::getCategoryName)
+			.contains("some-category", "another-category");
 	}
 }

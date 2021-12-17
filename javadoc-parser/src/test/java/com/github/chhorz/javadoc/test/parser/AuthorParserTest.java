@@ -15,44 +15,41 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test;
+package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.chhorz.javadoc.tags.CategoryTag;
+import com.github.chhorz.javadoc.tags.AuthorTag;
 
 /**
- * Test class to validate parsing of the {@code @category} tag.
- *
+ * Test class to validate parsing of the {@code @author} tag.
+ * 
  * @author chhorz
- *
+ * 
  */
-@DisplayName("Tests for JavaDoc category tag")
-class CategoryParserTest extends AbstractParserTest {
+@DisplayName("Tests for JavaDoc author tag")
+class AuthorParserTest extends AbstractParserTest {
 
 	@Test
-	void simpleCategory() {
+	void simpleTest() {
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
-		assertThat(javaDoc.getTags(CategoryTag.class))
+		assertThat(javaDoc.getTags(AuthorTag.class))
 			.hasSize(1)
-			.extracting(CategoryTag::getCategoryName)
-			.contains("some-category");
+			.extracting(AuthorTag::getAuthorName)
+			.contains("name");
 	}
 
 	@Test
-	void multipleCategories() {
+	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
-		System.out.println(javaDoc);
-		System.out.println(javaDoc.getTags(CategoryTag.class));
-
-		assertThat(javaDoc.getTags(CategoryTag.class))
-			.hasSize(2)
-			.extracting(CategoryTag::getCategoryName)
-			.contains("some-category", "another-category");
+		assertThat(javaDoc.getTags(AuthorTag.class))
+			.hasSize(1)
+			.extracting(AuthorTag::getAuthorName)
+			.contains("name");
 	}
 }
