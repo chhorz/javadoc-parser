@@ -79,7 +79,7 @@
 		<java.target.version>1.8</java.target.version>
 
 		<!-- dependency version -->
-		<assertj-core.version>3.21.0</assertj-core.version>
+		<assertj-core.version>3.22.0</assertj-core.version>
 		<junit-jupiter.version>5.8.2</junit-jupiter.version>
 
 		<!-- plugin versions -->
