@@ -2,7 +2,8 @@
 :author: Christian Horz
 :icons: font
 
-image:https://travis-ci.org/chhorz/javadoc-parser.svg?branch=master["Build Status", link="https://travis-ci.org/chhorz/javadoc-parser"]
+image:https://github.com/chhorz/javadoc-parser/actions/workflows/maven.yml/badge.svg?branch=master["Java CI", link="https://github.com/chhorz/javadoc-parser/actions/workflows/maven.yml"]
+image:https://img.shields.io/maven-central/v/com.github.chhorz/javadoc-parser.svg?logo=apachemaven&label=Maven%20Central["Maven Central", link="https://search.maven.org/artifact/com.github.chhorz/javadoc-parser"]
 
 == About
 This library provides a parsing mechanism for *Javadoc* comments within java files.
