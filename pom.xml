@@ -24,7 +24,7 @@
 
 	<groupId>com.github.chhorz</groupId>
 	<artifactId>javadoc-parser-parent</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.1</version>
 	<packaging>pom</packaging>
 
 	<name>Javadoc Parser Parent</name>
