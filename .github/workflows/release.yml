@@ -1,0 +1,270 @@
+name: 'Release to Maven Central'
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version'
+        required: true
+      new_development_version:
+        description: 'Next development version'
+        required: true
+
+jobs:
+  release:
+    name: 'Release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v3
+
+      - name: 'Set up JDK'
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-package: jdk
+          java-version: 8
+          cache: 'maven'
+          server-id: oss.sonatype.org
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: 'Setup local git user'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: 'Perform deployment'
+        run: |
+          ./mvnw -B versions:set -DnewVersion=${{ github.event.inputs.release_version }}
+          ./mvnw -B clean deploy --no-transfer-progress -Pcentral-deploy -DskipTests=true
+          git add -u
+          git commit -m "Update version to ${{ github.event.inputs.release_version }}"
+          git tag v${{ github.event.inputs.release_version }}
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSS_SONATYPE_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
+      - name: 'Prepare next development version'
+        run: |
+          ./mvnw -B versions:set -DnewVersion=${{ github.event.inputs.new_development_version }}
+          git add -u
+          git commit -m "Update version to next development version ${{ github.event.inputs.new_development_version }}"
+
+      - name: 'Commit and push changes'
+        run: |
+          git push
+          git push origin v${{ github.event.inputs.release_version }}
+
+#  load_milestone:
+#    name: 'Load Milestone Data'
+#    runs-on: ubuntu-latest
+#    needs:
+#      - release
+#    outputs:
+#      milestone_number: ${{ steps.select_milestone_data.outputs.milestone_number }}
+#      milestone_title: ${{ steps.select_milestone_data.outputs.milestone_title }}
+#    steps:
+#      - name: 'Select Milestone'
+#        id: select_milestone_data
+#        uses: actions/github-script@v6
+#        with:
+#          script: |
+#            const milestones = await github.rest.issues.listMilestones({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              state: 'open'
+#            })
+#            console.log(milestones)
+#
+#            var milestone_number = 0
+#            var milestone_title = ''
+#            for (const item of milestones.data) {
+#              if (item.title === '${{ github.event.inputs.release_version }}') {
+#                milestone_number = item.number
+#                milestone_title = item.title
+#              }
+#            }
+#            console.log('Milestone number:' + milestone_number)
+#            console.log('Milestone title: ' + milestone_title)
+#
+#            core.setOutput('milestone_number', milestone_number)
+#            core.setOutput('milestone_title', milestone_title)
+#
+#  load_bug_issues:
+#    name: 'Load Bugs'
+#    runs-on: ubuntu-latest
+#    needs:
+#      - load_milestone
+#    outputs:
+#      bug_list: ${{ steps.bug_list.outputs.bug_list }}
+#    steps:
+#      - name: 'Load Bug List'
+#        id: bug_list
+#        uses: actions/github-script@v6
+#        if: ${{ needs.load_milestone.outputs.milestone_number }} > 0
+#        with:
+#          script: |
+#            // get bug labelled issues for selected milestone
+#            const bugs = await github.rest.issues.listForRepo({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              labels: ['type: bug'],
+#              milestone: ${{ needs.load_milestone.outputs.milestone_number }},
+#              state: 'closed'
+#            })
+#            console.log(bugs)
+#
+#            var bug_list
+#            if(bugs.data.length > 0) {
+#              bug_list = '#### Bugs\n'
+#              bugs.data.forEach(issue => bug_list = bug_list.concat('* ', issue.title.replaceAll('`', '\`'), ' (#', issue.number, ')\n'))
+#            } else {
+#              bug_list = ''
+#            }
+#            console.log(bug_list)
+#
+#            core.setOutput('bug_list', bug_list)
+#
+#  load_feature_issues:
+#    name: 'Load Features'
+#    runs-on: ubuntu-latest
+#    needs:
+#      - load_milestone
+#    outputs:
+#      feature_list: ${{ steps.feature_list.outputs.feature_list }}
+#    steps:
+#      - name: 'Load Feature List'
+#        id: feature_list
+#        uses: actions/github-script@v6
+#        if: ${{ needs.load_milestone.outputs.milestone_number }} > 0
+#        with:
+#          script: |
+#            // get feature labelled issues for selected milestone
+#            const features = await github.rest.issues.listForRepo({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              labels: ['type: feature'],
+#              milestone: ${{ needs.load_milestone.outputs.milestone_number }},
+#              state: 'closed'
+#            })
+#            console.log(features)
+#
+#            var feature_list
+#            if(features.data.length > 0) {
+#              feature_list = '#### Features\n'
+#              features.data.forEach(issue => feature_list = feature_list.concat('* ', issue.title.replaceAll('`', '\`'), ' (#', issue.number, ')\n'))
+#            } else {
+#              feature_list = ''
+#            }
+#            console.log(feature_list)
+#
+#            core.setOutput('feature_list', feature_list)
+#
+#  load_improvement_issues:
+#    name: 'Load Improvements'
+#    runs-on: ubuntu-latest
+#    needs:
+#      - load_milestone
+#    outputs:
+#      improvement_list: ${{ steps.improvement_list.outputs.improvement_list }}
+#    steps:
+#      - name: Load Improvement List
+#        id: improvement_list
+#        uses: actions/github-script@v6
+#        if: ${{ needs.load_milestone.outputs.milestone_number }} > 0
+#        with:
+#          script: |
+#            // get improvement labelled issues for selected milestone
+#            const improvements = await github.rest.issues.listForRepo({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              labels: ['type: improvement'],
+#              milestone: ${{ needs.load_milestone.outputs.milestone_number }},
+#              state: 'closed'
+#            })
+#            console.log(improvements)
+#
+#            var improvement_list
+#            if(improvements.data.length > 0) {
+#              improvement_list = '#### Improvements\n'
+#              improvements.data.forEach(issue => improvement_list = improvement_list.concat('* ', issue.title.replaceAll('`', '\`'), ' (#', issue.number, ')\n'))
+#            } else {
+#              improvement_list = ''
+#            }
+#            console.log(improvement_list)
+#
+#            core.setOutput('improvement_list', improvement_list)
+#
+#  create_github_release:
+#    name: 'Create Release'
+#    runs-on: ubuntu-latest
+#    needs:
+#      - load_milestone
+#      - load_bug_issues
+#      - load_feature_issues
+#      - load_improvement_issues
+#    steps:
+#      - name: Create GitHub Release
+#        id: create_github_release
+#        uses: actions/github-script@v6
+#        if: ${{ needs.load_milestone.outputs.milestone_number }} > 0
+#        with:
+#          script: |
+#            const release_notes = `
+#            The new version **${{ needs.load_milestone.outputs.milestone_title }}** of the oas-generator is available on maven central.
+#
+#            ### Dependency
+#            \`\`\`xml
+#            <dependency>
+#                <groupId>com.github.chhorz</groupId>
+#                <artifactId>oas-generator-{spring-web|jaxrs|schema|asciidoctor}</artifactId>
+#                <version>${{ needs.load_milestone.outputs.milestone_title }}</version>
+#            </dependency>
+#            \`\`\`
+#
+#            ### Reference Documentation
+#            * [GitHub Page](https://chhorz.github.io/oas-generator/documentation/reference.html)
+#
+#            ${{ needs.load_bug_issues.outputs.bug_list }}
+#            ${{ needs.load_feature_issues.outputs.feature_list }}
+#            ${{ needs.load_improvement_issues.outputs.improvement_list }}
+#            `
+#            console.log(release_notes)
+#
+#            const release_candidate = '${{ needs.load_milestone.outputs.milestone_title }}'.toLowerCase().includes('rc')
+#            console.log(release_candidate)
+#
+#            const release = await github.rest.repos.createRelease({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              tag_name: 'v${{ needs.load_milestone.outputs.milestone_title }}',
+#              name: '${{ needs.load_milestone.outputs.milestone_title }}',
+#              body: release_notes,
+#              prerelease: release_candidate
+#            })
+#            console.log(release)
+#
+#  close_milestone:
+#    name: 'Close Milestone'
+#    runs-on: ubuntu-latest
+#    needs:
+#      - load_milestone
+#      - create_github_release
+#    steps:
+#      - name: 'Close Milestone'
+#        id: close_milestone
+#        uses: actions/github-script@v6
+#        if: ${{ needs.load_milestone.outputs.milestone_number }} > 0
+#        with:
+#          script: |
+#            const milestone_update =  await github.rest.issues.updateMilestone({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              milestone_number: ${{ needs.load_milestone.outputs.milestone_number }},
+#              state: 'closed'
+#            })
+#            console.log(milestone_update)
