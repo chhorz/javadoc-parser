@@ -41,7 +41,7 @@ class ThrowsParserTest extends AbstractParserTest {
 		assertThat(javaDoc.getTags(ThrowsTag.class))
 			.hasSize(1)
 			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
-			.contains(tuple("NullpointerException", "when something is null"));
+			.contains(tuple("NullPointerException", "when something is null"));
 	}
 
 	@Test
@@ -51,7 +51,7 @@ class ThrowsParserTest extends AbstractParserTest {
 		assertThat(javaDoc.getTags(ThrowsTag.class))
 			.hasSize(1)
 			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
-			.contains(tuple("NullpointerException", "when something is null"));
+			.contains(tuple("NullPointerException", "when something is null"));
 	}
 
 	@Test
@@ -61,6 +61,6 @@ class ThrowsParserTest extends AbstractParserTest {
 		assertThat(javaDoc.getTags(ThrowsTag.class))
 			.hasSize(1)
 			.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
-			.contains(tuple("NullpointerException", "when something is `null`"));
+			.contains(tuple("NullPointerException", "when something is `null`"));
 	}
 }

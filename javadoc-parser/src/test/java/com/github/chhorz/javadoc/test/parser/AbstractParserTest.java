@@ -49,7 +49,7 @@ abstract class AbstractParserTest {
 			"@deprecated use xyz instead\n" +
 			"@version 1.2.3\n" +
 			"@see documentation in section abc\n" +
-			"@throws NullpointerException when something is null\n" +
+			"@throws NullPointerException when something is null\n" +
 			"@exception RuntimeException may occur always\n" +
 			"@param test value\n" +
 			"@return the result";
@@ -71,7 +71,7 @@ abstract class AbstractParserTest {
 			"@deprecated since version 42, use xyz instead\n" +
 			"@version 1.2.3-SNAPSHOT\n" +
 			"@see documentation in section abc at link.org\n" +
-			"@throws NullpointerException when something is null\n" +
+			"@throws NullPointerException when something is null\n" +
 			"@exception RuntimeException may occur always\n" +
 			"@author name\n" +
 			"@return the result";
@@ -84,7 +84,7 @@ abstract class AbstractParserTest {
 			"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\n" +
 			"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n" +
 			"\n" +
-			"@throws NullpointerException when something is {@code null}\n" +
+			"@throws NullPointerException when something is {@code null}\n" +
 			"@since 0.1\n" +
 			"@author name";
 
@@ -96,7 +96,7 @@ abstract class AbstractParserTest {
 			"Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat\n" +
 			"non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n" +
 			"\n" +
-			"@throws NullpointerException when something is {@code null}\n" +
+			"@throws NullPointerException when something is {@code null}\n" +
 			"@since 0.1\n" +
 			"@author name";
 	// @formatter:on
