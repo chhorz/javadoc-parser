@@ -30,7 +30,7 @@ public class AuthorTag extends StructuredTag {
 	private static final String NAME_TEXT = "nameText";
 
 	public AuthorTag() {
-		super(TAG_NAME, NAME_TEXT);
+		super(TAG_NAME, new Segment(NAME_TEXT));
 	}
 
 	public String getAuthorName() {

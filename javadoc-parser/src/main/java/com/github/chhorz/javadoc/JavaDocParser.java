@@ -119,8 +119,11 @@ public final class JavaDocParser {
 					e.printStackTrace();
 				}
 
-				for (String segmentName : tag.getSegmentNames()) {
-					currentTag.putValue(segmentName, performReplacements(matcher.group(segmentName)));
+				for (Tag.Segment segment : tag.getSegments()) {
+					String segmentText = matcher.group(segment.getName());
+					if (segment.isRequired() || segmentText != null) {
+						currentTag.putValue(segment.getName(), performReplacements(segmentText));
+					}
 				}
 
 				tagList.add(currentTag);

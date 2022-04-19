@@ -30,7 +30,7 @@ public class VersionTag extends StructuredTag {
 	private static final String VERSION_TEXT = "versionText";
 
 	public VersionTag() {
-		super(TAG_NAME, VERSION_TEXT);
+		super(TAG_NAME, new Segment(VERSION_TEXT));
 	}
 
 	public String getVersionText() {

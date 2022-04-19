@@ -32,7 +32,7 @@ public class CustomTag extends StructuredTag {
 	private static final String TAG_VALUE = "value";
 
 	public CustomTag() {
-		super(TAG_NAME, TAG_VALUE);
+		super(TAG_NAME, new Segment(TAG_VALUE));
 	}
 
 	public String getValue() {

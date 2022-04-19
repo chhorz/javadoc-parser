@@ -67,8 +67,8 @@ public class CustomPatternTag extends PatternTag {
     }
 
     @Override
-    public List<String> getSegmentNames() {
-        return Arrays.asList(NUMBER, OTHER_VALUE);
+    public List<Segment> getSegments() {
+        return Arrays.asList(new Segment(NUMBER), new Segment(OTHER_VALUE));
     }
 
     @Override

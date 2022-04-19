@@ -29,7 +29,7 @@ public class CategoryTag extends StructuredTag {
 	private static final String CATEGORY_NAME = "categoryName";
 
 	public CategoryTag() {
-		super(TAG_NAME, CATEGORY_NAME);
+		super(TAG_NAME, new Segment(CATEGORY_NAME));
 	}
 
 	public String getCategoryName() {

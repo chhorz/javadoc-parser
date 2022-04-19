@@ -44,6 +44,16 @@ class DeprecatedParserTest extends AbstractParserTest {
 	}
 
 	@Test
+	void optionalSegmentTest() {
+		javaDoc = basicPlainParser.parse(optionalSegmentsJavaDoc);
+
+		assertThat(javaDoc.getTags(DeprecatedTag.class))
+				.hasSize(1)
+				.extracting(DeprecatedTag::getDeprecatedNote)
+				.contains("");
+	}
+
+	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 

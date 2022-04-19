@@ -43,6 +43,15 @@ class ParamParserTest extends AbstractParserTest {
 			.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
 			.contains(tuple("test", "value"));
 	}
+	@Test
+	void optionalSegmentTest() {
+		javaDoc = basicPlainParser.parse(optionalSegmentsJavaDoc);
+
+		assertThat(javaDoc.getTags(ParamTag.class))
+				.hasSize(1)
+				.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
+				.contains(tuple("test", ""));
+	}
 
 	@Test
 	void complexTest() {

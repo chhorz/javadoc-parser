@@ -30,7 +30,7 @@ public class SeeTag extends StructuredTag {
 	private static final String REFERENCE = "reference";
 
 	public SeeTag() {
-		super(TAG_NAME, REFERENCE);
+		super(TAG_NAME, new Segment(REFERENCE));
 	}
 
 	public String getReference() {

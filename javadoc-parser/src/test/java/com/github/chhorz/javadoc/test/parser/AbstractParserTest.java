@@ -54,6 +54,13 @@ abstract class AbstractParserTest {
 			"@param test value\n" +
 			"@return the result";
 
+	final String optionalSegmentsJavaDoc =
+			"Test\n" +
+			"@deprecated\n" +
+			"@throws NullPointerException\n" +
+			"@exception RuntimeException\n" +
+			"@param test\n";
+
 	final String complexJavaDoc =
 			"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n" +
 			"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n" +

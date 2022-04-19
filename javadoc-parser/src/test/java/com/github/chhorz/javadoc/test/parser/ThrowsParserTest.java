@@ -45,6 +45,16 @@ class ThrowsParserTest extends AbstractParserTest {
 	}
 
 	@Test
+	void optionalSegmentTest() {
+		javaDoc = basicPlainParser.parse(optionalSegmentsJavaDoc);
+
+		assertThat(javaDoc.getTags(ThrowsTag.class))
+				.hasSize(1)
+				.extracting(ThrowsTag::getClassName, ThrowsTag::getDescription)
+				.contains(tuple("NullPointerException", ""));
+	}
+
+	@Test
 	void complexTest() {
 		javaDoc = basicPlainParser.parse(complexJavaDoc);
 

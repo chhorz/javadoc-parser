@@ -30,7 +30,7 @@ public class SinceTag extends StructuredTag {
 	private static final String SINCE_TEXT = "sinceText";
 
 	public SinceTag() {
-		super(TAG_NAME, SINCE_TEXT);
+		super(TAG_NAME, new Segment(SINCE_TEXT));
 	}
 
 	public String getSinceText() {

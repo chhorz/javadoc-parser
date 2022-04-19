@@ -30,7 +30,7 @@ public class ReturnTag extends StructuredTag {
 	private static final String DESCRIPTION = "description";
 
 	public ReturnTag() {
-		super(TAG_NAME, DESCRIPTION);
+		super(TAG_NAME, new Segment(DESCRIPTION));
 	}
 
 	public String getDescription() {

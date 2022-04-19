@@ -31,7 +31,7 @@ public class ExceptionTag extends StructuredTag {
 	private static final String DESCRIPTION = "description";
 
 	public ExceptionTag() {
-		super(TAG_NAME, CLASS_NAME, DESCRIPTION);
+		super(TAG_NAME, new Segment(CLASS_NAME), new Segment(DESCRIPTION, false));
 	}
 
 	public String getClassName() {

@@ -27,10 +27,10 @@ public class DeprecatedTag extends StructuredTag {
 
 	private static final String TAG_NAME = "deprecated";
 
-	private static final String DEPRECATED_TEXT = "deprecatedText";
+	private static final String DEPRECATED_TEXT = "deprecatedNote";
 
 	public DeprecatedTag() {
-		super(TAG_NAME, DEPRECATED_TEXT);
+		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
 	}
 
 	public String getDeprecatedNote() {

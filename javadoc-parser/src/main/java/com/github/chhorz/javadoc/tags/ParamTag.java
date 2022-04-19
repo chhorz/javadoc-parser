@@ -31,7 +31,7 @@ public class ParamTag extends StructuredTag {
 	private static final String DESCRIPTION = "description";
 
 	public ParamTag() {
-		super(TAG_NAME, PARAMETER_NAME, DESCRIPTION);
+		super(TAG_NAME, new Segment(PARAMETER_NAME), new Segment(DESCRIPTION, false));
 	}
 
 	public String getParamName() {
