@@ -50,7 +50,7 @@ class CustomTagParserTest extends AbstractParserTest {
 			"@return the result";
 	// @formatter:on
 
-	private JavaDocParser parser = JavaDocParserBuilder
+	private final JavaDocParser parser = JavaDocParserBuilder
 		.withBasicTags()
 		.withCustomTag(new CustomTag())
 		.withOutputType(OutputType.PLAIN)

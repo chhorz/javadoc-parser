@@ -24,7 +24,7 @@ The project is available from maven central repository:
 </dependency>
 ----
 
-Information about the latest published version is available on the link:https://github.com/chhorz/javadoc-parser/releases[Github Releases] page.
+Information about the latest published version is available on the link:https://github.com/chhorz/javadoc-parser/releases[GitHub Releases] page.
 
 === Javadoc comment structure
 _work in progress_

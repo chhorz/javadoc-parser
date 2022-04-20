@@ -24,12 +24,12 @@ import com.github.chhorz.javadoc.OutputType;
 
 abstract class AbstractParserTest {
 
-	JavaDocParser basicPlainParser = JavaDocParserBuilder
+	final JavaDocParser basicPlainParser = JavaDocParserBuilder
 			.withBasicTags()
 			.withOutputType(OutputType.PLAIN)
 			.build();
 
-	JavaDocParser basicAsciidocParser = JavaDocParserBuilder
+	final JavaDocParser basicAsciidocParser = JavaDocParserBuilder
 			.withBasicTags()
 			.withOutputType(OutputType.ASCIIDOC)
 			.build();

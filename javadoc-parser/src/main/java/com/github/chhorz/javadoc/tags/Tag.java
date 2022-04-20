@@ -43,7 +43,7 @@ public abstract class Tag {
 	public abstract void putValue(final String segmentName, final String value);
 
 	/**
-	 * @param allTagNames the list of all patterns will be calculated on the fly and describes the end of a sinlge tag
+	 * @param allTagNames the list of all patterns will be calculated on the fly and describes the end of a single tag
 	 *
 	 * @return the complete pattern string for this tag
 	 */

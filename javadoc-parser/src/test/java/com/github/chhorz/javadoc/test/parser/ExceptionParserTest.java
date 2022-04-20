@@ -20,7 +20,6 @@ package com.github.chhorz.javadoc.test.parser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-import com.github.chhorz.javadoc.tags.ThrowsTag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

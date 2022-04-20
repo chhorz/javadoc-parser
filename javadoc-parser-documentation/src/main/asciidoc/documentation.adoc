@@ -56,10 +56,10 @@ At the moment the following output-formats with replacements can be used:
 | <pre>...</pre>
 
 | {@link ...}
-3+| Currently no format replacement.
+3+| Currently, no format replacement.
 
 | {@linkplain ...}
-3+| Currently no format replacement.
+3+| Currently, no format replacement.
 
 | {@literal ...}
 | `\_..._`
@@ -74,7 +74,7 @@ At the moment the following output-formats with replacements can be used:
 
 [[extensibility]]
 == Extensibility
-To extend the basic functionality of the Javadoc parser, the creation of an custom tag might be a good start.
+To extend the basic functionality of the Javadoc parser, the creation of a custom tag might be a good start.
 All internal used basic Javadoc tags have the same structure.
 
 [WARNING]
