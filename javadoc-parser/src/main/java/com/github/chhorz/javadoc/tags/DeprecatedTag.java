@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#deprecated
+ * Oracle documentation <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#deprecated">@deprecated tag</a>
  *
  * @author chhorz
  *
@@ -27,14 +27,14 @@ public class DeprecatedTag extends StructuredTag {
 
 	private static final String TAG_NAME = "deprecated";
 
-	private static final String DEPRECATED_TEXT = "deprecatedNote";
+	private static final String DEPRECATED_NOTE = "deprecatedNote";
 
 	public DeprecatedTag() {
-		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
+		super(TAG_NAME, new Segment(DEPRECATED_NOTE, false));
 	}
 
 	public String getDeprecatedNote() {
-		return getValues().get(DEPRECATED_TEXT);
+		return getValues().get(DEPRECATED_NOTE);
 	}
 
 }
