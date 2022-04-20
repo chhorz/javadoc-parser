@@ -40,6 +40,8 @@
 					<embedAssets>true</embedAssets>
 					<attributes>
 						<project-version>${project.version}</project-version>
+						<stylesdir>stylesheets</stylesdir>
+						<stylesheet>javadoc-parser.css</stylesheet>
 					</attributes>
 				</configuration>
 				<executions>

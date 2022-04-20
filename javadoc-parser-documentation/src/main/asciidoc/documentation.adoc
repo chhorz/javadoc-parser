@@ -1,7 +1,14 @@
 = Javadoc parser documentation
 :author: Christian Horz
-:version: {project-version}
+:revnumber: {project-version}
+:docinfo: shared-head
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:sectanchors:
 :source-highlighter: highlightjs
+:highlightjs-theme: github
 
 == About
 This library can be used to parse Javadoc information from a plain java string.
@@ -91,7 +98,7 @@ public class CustomTag extends StructuredTag { // <1>
     private static final String TAG_VALUE_2 = "tagValue2";
 
     public CustomTag() { // <2>
-        super(TAG_NAME, TAG_VALUE_1, TAG_VALUE_2);
+        super(TAG_NAME, new Segment(TAG_VALUE_1), new Segment(TAG_VALUE_2, false));
     }
 
     public String getTagValue1() {
@@ -102,7 +109,8 @@ public class CustomTag extends StructuredTag { // <1>
 }
 ----
 <1> custom tags need to extend `com.github.chhorz.javadoc.tags.StructuredTag`
-<2> super constructor has to be called with tag name and tag segments
+<2> Super constructor has to be called with tag name and tag segments.
+Each segment consists of a name and a flag if this segment is required (Default `true`).
 
 After the creation of the custom Javadoc tag, the tag has to be registered at the parser.
 
@@ -171,6 +179,19 @@ public class CustomPatternTag extends PatternTag { // <1>
 <2> super constructor has to be called with tag name and custom regular expression
 
 The registration on the `JavaDocParser` works the same way as for `StructuredTag`.
+
+== Snapshots
+Snapshots are available from the Sonatype OSS Snapshots repository.
+To configure the repository for your project to use the latest snapshot versions you have to add the following repository to your maven pom:
+[source,xml]
+----
+<repositories>
+    <repository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+</repositories>
+----
 
 == License
 Javadoc Parser is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
