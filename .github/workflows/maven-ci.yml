@@ -3,8 +3,12 @@ name: 'Java CI'
 # on: [push, pull_request]
 
 on:
-#  push:
-#  pull_request:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - feature/**
   workflow_dispatch:
     inputs:
       force_publish_snapshot:
