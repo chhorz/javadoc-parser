@@ -1,6 +1,20 @@
 name: 'Java CI'
 
-on: [push, pull_request]
+# on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - feature/**
+  workflow_dispatch:
+    inputs:
+      force_publish_snapshot:
+        description: 'True to force publish a snapshot'
+        required: true
+        type: boolean
 
 jobs:
   test:
