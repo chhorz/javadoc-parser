@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - feature/**
+      - dependabot/**
   workflow_dispatch:
     inputs:
       force_publish_snapshot:
