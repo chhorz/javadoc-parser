@@ -22,15 +22,13 @@ import static java.util.stream.Stream.concat;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import com.github.chhorz.javadoc.replacements.Replacement;
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.tags.Tag;
 
@@ -42,7 +40,7 @@ import com.github.chhorz.javadoc.tags.Tag;
 public final class JavaDocParser {
 
 	private final List<Tag> tags = new ArrayList<>();
-	private final Map<String, String> replacements = new HashMap<>();
+	private final List<Replacement> replacements = new ArrayList<>();
 
 	public JavaDoc parse(final String javaDocString) {
 		String summary = "";
@@ -137,21 +135,15 @@ public final class JavaDocParser {
 
 	private String performReplacements(final String input) {
 		String convertedString = input;
-		for (Entry<String, String> replacement : replacements.entrySet()) {
-			convertedString = convertedString.replaceAll(replacement.getKey(), replacement.getValue());
+		for (Replacement replacement : replacements) {
+			convertedString = replacement.perform(convertedString);
 		}
 		return convertedString.trim();
 	}
 
-	void addReplacement(final String regex, final String replacement){
-		Objects.requireNonNull(regex, "The given regex must not be null!");
+	void addReplacement(final Replacement replacement){
 		Objects.requireNonNull(replacement, "The given replacement must not be null!");
-
-		if (regex.isEmpty()) {
-			throw new IllegalArgumentException("The given regex must not be empty!");
-		}
-
-		replacements.put(regex, replacement);
+		replacements.add(replacement);
 	}
 
 	void addTag(final Tag tag) {

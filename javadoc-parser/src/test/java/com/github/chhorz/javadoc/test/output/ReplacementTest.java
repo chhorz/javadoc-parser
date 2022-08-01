@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2021 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package com.github.chhorz.javadoc.test.output;
 import com.github.chhorz.javadoc.JavaDoc;
 import com.github.chhorz.javadoc.JavaDocParser;
 import com.github.chhorz.javadoc.JavaDocParserBuilder;
+import com.github.chhorz.javadoc.OutputType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReplacementTest {
 
 	@Test
-	void noReplacement(){
+	void noReplacement() {
 		// given
 		String javaDocString = "Hello world!";
 		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
@@ -46,11 +47,11 @@ class ReplacementTest {
 	}
 
 	@Test
-	void withReplacement(){
+	void withReplacement() {
 		// given
 		String javaDocString = "Hello world!";
 		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
-				.withReplacement("(world)", "*$0*")
+				.withReplacement(javaDoc -> javaDoc.replaceAll("(world)", "*$0*"))
 				.build();
 
 		// when
@@ -61,6 +62,84 @@ class ReplacementTest {
 		assertThat(javaDoc.getDescription())
 				.isNotNull()
 				.isEqualTo("Hello *world*!");
+	}
+
+	@Test
+	void snippetReplacement() {
+		// given
+		String javaDocString = "Snippet tag example.\n" +
+							   "The following code shows how to use {@code Optional.isPresent}:\n" +
+							   "{@snippet :\n" +
+							   "if (v.isPresent()) {\n" +
+							   "    System.out.println(\"v: \" + v.get());\n" +
+							   "}\n" +
+							   "}\n" +
+							   "" +
+							   "{@snippet :\n" +
+							   "if (v.isPresent()) {\n" +
+							   "    System.out.println(\"v: \" + v.get());\n" +
+							   "} else if (v.isEmpty()) {\n" +
+							   "    System.out.println(\"v: <null>\");\n" +
+							   "}\n" +
+							   "}\n" +
+							   "This is it.";
+		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+				.withOutputType(OutputType.HTML)
+				.build();
+
+		// when
+		JavaDoc javaDoc = javaDocParser.parse(javaDocString);
+
+		// then
+		assertThat(javaDoc)
+				.isNotNull()
+				.hasFieldOrPropertyWithValue("summary", "Snippet tag example.")
+				.hasFieldOrPropertyWithValue("description", "Snippet tag example.\n" +
+															"The following code shows how to use <code>Optional.isPresent</code>:\n" +
+															"<pre>\n" +
+															"if (v.isPresent()) {\n" +
+															"    System.out.println(\"v: \" + v.get());\n" +
+															"}\n" +
+															"</pre>\n" +
+															"<pre>\n" +
+															"if (v.isPresent()) {\n" +
+															"    System.out.println(\"v: \" + v.get());\n" +
+															"} else if (v.isEmpty()) {\n" +
+															"    System.out.println(\"v: <null>\");\n" +
+															"}\n" +
+															"</pre>\n" +
+															"This is it.");
+	}
+
+	@Test
+	void customReplacement(){
+		// given
+		String javaDocString = "Snippet tag example.\n" +
+							   "The following code shows how to use {@code Optional.isPresent}:\n" +
+							   "{@snippet :\n" +
+							   "if (v.isPresent()) {\n" +
+							   "    System.out.println(\"v: \" + v.get());\n" +
+							   "}\n" +
+							   "}";
+		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+				.withOutputType(OutputType.HTML)
+				.withReplacement(input -> input.replaceAll("System\\.out\\.println", "logger.info"))
+				.build();
+
+		// when
+		JavaDoc javaDoc = javaDocParser.parse(javaDocString);
+
+		// then
+		assertThat(javaDoc)
+				.isNotNull()
+				.hasFieldOrPropertyWithValue("summary", "Snippet tag example.")
+				.hasFieldOrPropertyWithValue("description", "Snippet tag example.\n" +
+															"The following code shows how to use <code>Optional.isPresent</code>:\n" +
+															"<pre>\n" +
+															"if (v.isPresent()) {\n" +
+															"    logger.info(\"v: \" + v.get());\n" +
+															"}\n" +
+															"</pre>");
 	}
 
 }

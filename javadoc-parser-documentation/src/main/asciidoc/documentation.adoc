@@ -72,6 +72,10 @@ At the moment the following output-formats with replacements can be used:
 | <pre>...</pre>
 |===
 
+These output formats define internal `Replacements` for inline Javadoc tags.
+The `JavaDocParserBuilder` supports extending the parser with custom replacements.
+The Usage is described in the <<replacements>> section.
+
 [[extensibility]]
 == Extensibility
 To extend the basic functionality of the Javadoc parser, the creation of a custom tag might be a good start.
@@ -82,7 +86,9 @@ All internal used basic Javadoc tags have the same structure.
 The parsing of custom should be tested with unit tests.
 ====
 
-=== StructuredTag
+=== Tags
+
+==== StructuredTag
 This structured tags contain a list of segments separated with spaces.
 Only the last segment can contain multiple words.
 
@@ -125,7 +131,7 @@ JavaDocParser parser = JavaDocParserBuilder
 
 Getting the custom tag date from the Javadoc works as shown above.
 
-=== PatternTag
+==== PatternTag
 The `PatternTag` works similar to the `StructuredTag` but it is more flexible.
 For tags of this kind, the Regex must be defined separately.
 It is usable in more use-cases but more methods have to be implemented.
@@ -179,6 +185,18 @@ public class CustomPatternTag extends PatternTag { // <1>
 <2> super constructor has to be called with tag name and custom regular expression
 
 The registration on the `JavaDocParser` works the same way as for `StructuredTag`.
+
+[[replacements]]
+=== Replacements
+The replacement of content within the javadoc string can be adjusted within the builder configuration.
+All replacements will be performed in the order they were added.
+
+[source,java]
+----
+JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+    .withReplacement(input -> input.replaceAll("System\\.out\\.println", "logger.info"))
+    .build();
+----
 
 == Snapshots
 Snapshots are available from the Sonatype OSS Snapshots repository.
