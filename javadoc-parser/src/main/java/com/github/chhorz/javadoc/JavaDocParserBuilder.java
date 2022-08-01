@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2021 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,7 +19,10 @@ package com.github.chhorz.javadoc;
 
 import java.util.stream.Stream;
 
+import com.github.chhorz.javadoc.replacements.*;
 import com.github.chhorz.javadoc.tags.*;
+
+import static java.lang.String.format;
 
 /**
  * Fluent builder to create a {@link JavaDocParser} instance.
@@ -28,14 +31,6 @@ import com.github.chhorz.javadoc.tags.*;
  *
  */
 public class JavaDocParserBuilder {
-
-	private static final String BASE_INLINE_PATTERN = "\\{@%s ([^\\{\\}]+)\\}([\\s.,:;-])?";
-	private static final String INLINE_SUMMARY_PATTERN = String.format(BASE_INLINE_PATTERN, "summary");
-	private static final String INLINE_CODE_PATTERN = String.format(BASE_INLINE_PATTERN, "code");
-	private static final String INLINE_LINK_PATTERN = String.format(BASE_INLINE_PATTERN, "link");
-	private static final String INLINE_LINKPLAIN_PATTERN = String.format(BASE_INLINE_PATTERN, "linkplain");
-	private static final String INLINE_LITERAL_PATTERN = String.format(BASE_INLINE_PATTERN, "literal");
-	private static final String INLINE_VALUE_PATTERN = String.format(BASE_INLINE_PATTERN, "value");
 
 	private final JavaDocParser javaDocParser;
 
@@ -83,19 +78,21 @@ public class JavaDocParserBuilder {
 	 * @return the fluent builder instance
 	 */
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
-		javaDocParser.addReplacement(INLINE_SUMMARY_PATTERN, "$1$2");
+		javaDocParser.addReplacement(new SummaryTagReplacement());
 		if (OutputType.ASCIIDOC.equals(outputType) || OutputType.MARKDOWN.equals(outputType)) {
-			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "`$1`$2");
-			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
-			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
-			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "_$1_$2");
-			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "`$1`$2");
+			javaDocParser.addReplacement(new CodeTagReplacement("`"));
+			javaDocParser.addReplacement(new SnippetTagReplacement("```"));
+			javaDocParser.addReplacement(new LinkTagReplacement());
+			javaDocParser.addReplacement(new LinkPlainTagReplacement());
+			javaDocParser.addReplacement(new LiteralTagReplacement("_"));
+			javaDocParser.addReplacement(new ValueTagReplacement("`"));
 		} else if (OutputType.HTML.equals(outputType)) {
-			javaDocParser.addReplacement(INLINE_CODE_PATTERN, "<code>$1</code>$2");
-			javaDocParser.addReplacement(INLINE_LINK_PATTERN, "$1$2");
-			javaDocParser.addReplacement(INLINE_LINKPLAIN_PATTERN, "$1$2");
-			javaDocParser.addReplacement(INLINE_LITERAL_PATTERN, "<i>$1</i>$2");
-			javaDocParser.addReplacement(INLINE_VALUE_PATTERN, "<pre>$1</pre>$2");
+			javaDocParser.addReplacement(new CodeTagReplacement("<code>", "</code>"));
+			javaDocParser.addReplacement(new SnippetTagReplacement("<pre>", "</pre>"));
+			javaDocParser.addReplacement(new LinkTagReplacement());
+			javaDocParser.addReplacement(new LinkPlainTagReplacement());
+			javaDocParser.addReplacement(new LiteralTagReplacement("<i>", "</i>"));
+			javaDocParser.addReplacement(new ValueTagReplacement("<pre>", "</pre>"));
 		}
 		return this;
 	}
@@ -105,12 +102,11 @@ public class JavaDocParserBuilder {
 	 *
 	 * @see #withOutputType(OutputType)
 	 *
-	 * @param regex the regular expression
-	 * @param replacement the replacement string
+	 * @param replacement the replacement function
 	 * @return the fluent builder instance
 	 */
-	public JavaDocParserBuilder withReplacement(final String regex, final String replacement) {
-		javaDocParser.addReplacement(regex, replacement);
+	public JavaDocParserBuilder withReplacement(final Replacement replacement) {
+		javaDocParser.addReplacement(replacement);
 		return this;
 	}
 
