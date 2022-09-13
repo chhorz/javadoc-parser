@@ -18,10 +18,10 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDCDBGG">@return tag</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#return">@return</a> tag
+ * Kotlin documentation <a href="https://kotlinlang.org/docs/kotlin-doc.html#return">@return</a> tag
  *
  * @author chhorz
- *
  */
 public class ReturnTag extends StructuredTag {
 

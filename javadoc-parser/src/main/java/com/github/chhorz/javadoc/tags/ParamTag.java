@@ -18,10 +18,10 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDHJECF">@param tag</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#param">@param</a> tag
+ * Kotlin documentation <a href="https://kotlinlang.org/docs/kotlin-doc.html#param-name">@param</a> tag
  *
  * @author chhorz
- *
  */
 public class ParamTag extends StructuredTag {
 

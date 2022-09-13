@@ -35,7 +35,7 @@ _work in progress_
 [source,java]
 ----
 JavaDocParser javaDocParser = JavaDocParserBuilder
-		.withBasicTags()
+		.withStandardJavadocTags()
 		.withOutputType(OutputType.PLAIN)
 		.build();
 
@@ -51,7 +51,7 @@ List<AuthorTag> authorTags = javaDoc.getTags(AuthorTag.class);
 
 AuthorTag firstAuthor = authorTags.get(0);
 
-firstAuthor.getAuthorName();
+firstAuthor.getNameText();
 ----
 
 == Snapshots

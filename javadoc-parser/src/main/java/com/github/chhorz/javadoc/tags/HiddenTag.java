@@ -15,28 +15,19 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test.tags;
-
-import com.github.chhorz.javadoc.tags.StructuredTag;
+package com.github.chhorz.javadoc.tags;
 
 /**
- * Custom tag to test extensibility of the javadoc parser.
- * 
- * @author chhorz
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#hidden">@hidden</a> tag
  *
+ * @author chhorz
  */
-public class CustomTag extends StructuredTag {
+public class HiddenTag extends StructuredTag {
 
-	private static final String TAG_NAME = "custom";
+	private static final String TAG_NAME = "hidden";
 
-	private static final String TAG_VALUE = "value";
-
-	public CustomTag() {
-		super(TAG_NAME, new Segment(TAG_VALUE));
-	}
-
-	public String getValue() {
-		return getValues().get(TAG_VALUE);
+	public HiddenTag() {
+		super(TAG_NAME);
 	}
 
 }

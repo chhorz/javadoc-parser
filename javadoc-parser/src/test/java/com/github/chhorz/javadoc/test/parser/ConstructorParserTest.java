@@ -15,25 +15,25 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.tags;
+package com.github.chhorz.javadoc.test.parser;
 
-/**
- * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#deprecated">@deprecated</a> tag
- *
- * @author chhorz
- */
-public class DeprecatedTag extends StructuredTag {
+import com.github.chhorz.javadoc.tags.ConstructorTag;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-	private static final String TAG_NAME = "deprecated";
+import static org.assertj.core.api.Assertions.assertThat;
 
-	private static final String DEPRECATED_TEXT = "deprecatedText";
+@DisplayName("Tests for KDoc constructor tag")
+class ConstructorParserTest extends AbstractParserTest {
 
-	public DeprecatedTag() {
-		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
-	}
+	@Test
+	void simpleTest() {
+		javaDoc = kotlinParser.parse(simpleKDoc);
 
-	public String getDeprecatedText() {
-		return getValues().get(DEPRECATED_TEXT);
+		assertThat(javaDoc.getTags(ConstructorTag.class))
+				.hasSize(1)
+				.extracting(ConstructorTag::getDescription)
+				.contains("Creates an empty group.");
 	}
 
 }

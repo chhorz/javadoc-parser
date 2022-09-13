@@ -18,10 +18,10 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDCEAHH">@exception tag</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#exception">@exception</a> tag
+ * Kotlin documentation <a href="https://kotlinlang.org/docs/kotlin-doc.html#throws-class-exception-class">@exception</a> tag
  *
  * @author chhorz
- *
  */
 public class ExceptionTag extends StructuredTag {
 

@@ -20,26 +20,30 @@ package com.github.chhorz.javadoc.tags;
 import java.util.*;
 
 /**
+ * Structured tags are base javadoc block tags of scheme:
+ * <ul>
+ * 	<li><code>@author name-text</code>
+ * 	<li><code>@param parameter-name description</code></li>
+ * </ul>
  *
  * @author chhorz
- *
  */
-public abstract class StructuredTag extends Tag {
+public abstract class StructuredTag implements BlockTag {
 
-	private final String name;
+	private final String tagName;
 	private final List<Segment> segments;
 	private final TreeMap<String, String> values = new TreeMap<>();
 
-	public StructuredTag(final String name, final Segment... segments) {
-		this.name = name;
+	public StructuredTag(final String tagName, final Segment... segments) {
+		this.tagName = tagName;
 		this.segments = Arrays.asList(segments);
 		getSegments().stream()
-				.map(Segment::getName)
+				.map(Segment::getSegmentName)
 				.forEach(segmentName -> values.put(segmentName, ""));
 	}
 
 	public String getTagName() {
-		return name;
+		return tagName;
 	}
 
 	public List<Segment> getSegments() {
@@ -60,15 +64,15 @@ public abstract class StructuredTag extends Tag {
 		StringBuilder sb = new StringBuilder();
 		getSegments().stream()
 				.map(segment -> segment.isRequired()
-						? String.format("\\s+?(?<%s>.+?)", segment.getName())
-						: String.format("\\s+?(?<%s>.+?)??", segment.getName()))
+						? String.format("\\s+?(?<%s>.+?)", segment.getSegmentName())
+						: String.format("\\s+?(?<%s>.+?)??", segment.getSegmentName()))
 				.forEach(sb::append);
-		return "@" + name + sb + "\\s*" + allTagNames;
+		return "@" + tagName + sb + "\\s*" + allTagNames;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Tag [name=%s, segments=%s]", name, segments);
+		return String.format("Tag [tagName=%s, segments=%s]", tagName, segments);
 	}
 
 }

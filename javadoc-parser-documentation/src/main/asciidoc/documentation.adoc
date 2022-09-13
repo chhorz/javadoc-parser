@@ -17,10 +17,14 @@ The parser can be created by the following fluent API:
 [source,java]
 ----
 JavaDocParser parser = JavaDocParserBuilder
-    .withBasicTags()
+    .withStandardJavadocTags()
     .withOutputType(OutputType.PLAIN)
     .build();
 ----
+
+// TODO documentation of tag groups
+// Javadoc: https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html
+// Kotlin: https://kotlinlang.org/docs/kotlin-doc.html#throws-class-exception-class
 
 All `Tags` that are registered as basic tags can be found in the package `com.github.chhorz.javadoc.tags.*`.
 The creation of custom tags is described <<extensibility,here>>.
@@ -32,11 +36,53 @@ JavaDoc javaDoc = parser.parse(inputString); //<1>
 List<AuthorTag> authors = javaDoc.getTags(AuthorTag.class); // <2>
 
 AuthorTag authorTag = authors.get(0);
-String authorName = authorTag.getAuthorName(); // <3>
+String authorName = authorTag.getNameText(); // <3>
 ----
 <1> Parsing input string into a java object
 <2> Reading a specific tag from `JavaDoc` object
 <3> Getting information from the current tag
+
+== Registered tags
+The `JavaDocParserBuilder` provides three methods to register a basic set of tags.
+
+`.withoutTags()`::
+No Tags are registered by default.
+Each one has to be added manually.
+
+`.withStandardJavadocTags()`::
+The following tags are registered according to the link:https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html[Javadoc documentation]
+* `@author`
+* `@deprecated`
+* `@exception`
+* `@hidden`
+* `@param`
+* `@provides`
+* `@return`
+* `@see`
+* `@serialData`
+* `@serialField`
+* `@serial`
+* `@since`
+* `@throws`
+* `@uses`
+* `@version`
+
+`.withStandardKDocTags()`::
+The registered KDoc tags can be found on the link:https://kotlinlang.org/docs/kotlin-doc.html#block-tags[Kotlin documentation] page.
+* `@param`
+* `@return`
+* `@constructor`
+* `@receiver`
+* `@property`
+* `@throws`
+* `@exception`
+* `@sample`
+* `@see`
+* `@author`
+* `@since`
+* `@suppress`
+* `@Deprecated`
+
 
 == Output format
 In the future different output-formats will be supported.
@@ -123,8 +169,8 @@ After the creation of the custom Javadoc tag, the tag has to be registered at th
 [source,java]
 ----
 JavaDocParser parser = JavaDocParserBuilder
-    .withBasicTags()
-    .withCustomTag(new CustomTag())
+    .withStandardJavadocTags()
+    .withTag(new CustomTag())
     .withOutputType(OutputType.PLAIN)
     .build();
 ----
@@ -193,7 +239,7 @@ All replacements will be performed in the order they were added.
 
 [source,java]
 ----
-JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+JavaDocParser javaDocParser = JavaDocParserBuilder.withStandardJavadocTags()
     .withReplacement(input -> input.replaceAll("System\\.out\\.println", "logger.info"))
     .build();
 ----

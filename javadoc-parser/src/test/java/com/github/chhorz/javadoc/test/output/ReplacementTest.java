@@ -33,7 +33,7 @@ class ReplacementTest {
 	void noReplacement() {
 		// given
 		String javaDocString = "Hello world!";
-		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+		JavaDocParser javaDocParser = JavaDocParserBuilder.withStandardJavadocTags()
 				.build();
 
 		// when
@@ -50,7 +50,7 @@ class ReplacementTest {
 	void withReplacement() {
 		// given
 		String javaDocString = "Hello world!";
-		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+		JavaDocParser javaDocParser = JavaDocParserBuilder.withStandardJavadocTags()
 				.withReplacement(javaDoc -> javaDoc.replaceAll("(world)", "*$0*"))
 				.build();
 
@@ -83,7 +83,7 @@ class ReplacementTest {
 							   "}\n" +
 							   "}\n" +
 							   "This is it.";
-		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+		JavaDocParser javaDocParser = JavaDocParserBuilder.withStandardJavadocTags()
 				.withOutputType(OutputType.HTML)
 				.build();
 
@@ -121,7 +121,7 @@ class ReplacementTest {
 							   "    System.out.println(\"v: \" + v.get());\n" +
 							   "}\n" +
 							   "}";
-		JavaDocParser javaDocParser = JavaDocParserBuilder.withBasicTags()
+		JavaDocParser javaDocParser = JavaDocParserBuilder.withStandardJavadocTags()
 				.withOutputType(OutputType.HTML)
 				.withReplacement(input -> input.replaceAll("System\\.out\\.println", "logger.info"))
 				.build();

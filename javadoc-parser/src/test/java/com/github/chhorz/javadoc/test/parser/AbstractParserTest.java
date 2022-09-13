@@ -25,13 +25,17 @@ import com.github.chhorz.javadoc.OutputType;
 abstract class AbstractParserTest {
 
 	final JavaDocParser basicPlainParser = JavaDocParserBuilder
-			.withBasicTags()
+			.withStandardJavadocTags()
 			.withOutputType(OutputType.PLAIN)
 			.build();
 
 	final JavaDocParser basicAsciidocParser = JavaDocParserBuilder
-			.withBasicTags()
+			.withStandardJavadocTags()
 			.withOutputType(OutputType.ASCIIDOC)
+			.build();
+
+	final JavaDocParser kotlinParser = JavaDocParserBuilder
+			.withStandardKDocTags()
 			.build();
 
 	JavaDoc javaDoc;
@@ -106,6 +110,15 @@ abstract class AbstractParserTest {
 			"@throws NullPointerException when something is {@code null}\n" +
 			"@since 0.1\n" +
 			"@author name";
+
+	final String simpleKDoc =
+			"A group of *members*.\n" +
+			"\n" +
+			"This class has no useful logic; it's just a documentation example.\n" +
+			"\n" +
+			"@param T the type of a member in this group.\n" +
+			"@property name the name of this group.\n" +
+			"@constructor Creates an empty group.";
 	// @formatter:on
 
 }

@@ -39,7 +39,7 @@ class DeprecatedParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc.getTags(DeprecatedTag.class))
 			.hasSize(1)
-			.extracting(DeprecatedTag::getDeprecatedNote)
+			.extracting(DeprecatedTag::getDeprecatedText)
 			.contains("use xyz instead");
 	}
 
@@ -49,7 +49,7 @@ class DeprecatedParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc.getTags(DeprecatedTag.class))
 				.hasSize(1)
-				.extracting(DeprecatedTag::getDeprecatedNote)
+				.extracting(DeprecatedTag::getDeprecatedText)
 				.contains("");
 	}
 
@@ -59,7 +59,7 @@ class DeprecatedParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc.getTags(DeprecatedTag.class))
 			.hasSize(1)
-			.extracting(DeprecatedTag::getDeprecatedNote)
+			.extracting(DeprecatedTag::getDeprecatedText)
 			.contains("since version 42, use xyz instead");
 	}
 }

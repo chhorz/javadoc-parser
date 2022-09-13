@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@ package com.github.chhorz.javadoc.test.parser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.chhorz.javadoc.JavaDocParser;
+import com.github.chhorz.javadoc.JavaDocParserBuilder;
+import com.github.chhorz.javadoc.OutputType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +38,12 @@ class CategoryParserTest extends AbstractParserTest {
 
 	@Test
 	void simpleCategory() {
+		JavaDocParser basicPlainParser = JavaDocParserBuilder
+				.withStandardJavadocTags()
+				.withTag(new CategoryTag())
+				.withOutputType(OutputType.PLAIN)
+				.build();
+
 		javaDoc = basicPlainParser.parse(simpleJavaDoc);
 
 		assertThat(javaDoc.getTags(CategoryTag.class))
@@ -45,10 +54,13 @@ class CategoryParserTest extends AbstractParserTest {
 
 	@Test
 	void multipleCategories() {
-		javaDoc = basicPlainParser.parse(complexJavaDoc);
+		JavaDocParser basicPlainParser = JavaDocParserBuilder
+				.withStandardJavadocTags()
+				.withTag(new CategoryTag())
+				.withOutputType(OutputType.PLAIN)
+				.build();
 
-		System.out.println(javaDoc);
-		System.out.println(javaDoc.getTags(CategoryTag.class));
+		javaDoc = basicPlainParser.parse(complexJavaDoc);
 
 		assertThat(javaDoc.getTags(CategoryTag.class))
 			.hasSize(2)

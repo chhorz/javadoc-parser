@@ -15,20 +15,30 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.replacements;
+package com.github.chhorz.javadoc.tags;
 
 /**
- * Documentation of javadoc tags: <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDJGIJB">Oracle</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#uses">@uses</a> tag
+ *
+ * @author chhorz
  */
-public class SnippetTagReplacement extends InlineTagReplacement{
+public class UsesTag extends StructuredTag {
 
-	private static final String TAG_NAME = "snippet";
+	private static final String TAG_NAME = "uses";
 
-	public SnippetTagReplacement(final String wrapperString) {
-		super(TAG_NAME, wrapperString);
+	private static final String SERVICE_TYPE = "serviceType";
+	private static final String DESCRIPTION = "description";
+
+	public UsesTag() {
+		super(TAG_NAME, new Segment(SERVICE_TYPE), new Segment(DESCRIPTION, false));
 	}
 
-	public SnippetTagReplacement(final String prefix, final String suffix) {
-		super(TAG_NAME, prefix, suffix);
+	public String getServiceType() {
+		return getValues().get(SERVICE_TYPE);
 	}
+
+	public String getDescription(){
+		return getValues().get(DESCRIPTION);
+	}
+
 }
