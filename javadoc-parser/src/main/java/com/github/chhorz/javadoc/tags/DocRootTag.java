@@ -18,13 +18,13 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#docroot">@docroot</a> inline tag
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#docroot">@docRoot</a> inline tag
  *
  * @author chhorz
  */
 public class DocRootTag implements InlineTag {
 
-	private static final String TAG_NAME = "docroot";
+	private static final String TAG_NAME = "docRoot";
 
 	@Override
 	public String getTagName() {
