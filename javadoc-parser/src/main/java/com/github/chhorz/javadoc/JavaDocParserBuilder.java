@@ -18,6 +18,9 @@
 package com.github.chhorz.javadoc;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.github.chhorz.javadoc.replacements.*;
 import com.github.chhorz.javadoc.tags.*;
@@ -31,6 +34,36 @@ import com.github.chhorz.javadoc.tags.*;
 public class JavaDocParserBuilder {
 
 	private final JavaDocParser javaDocParser;
+
+	public static final List<BlockTag> STANDARD_JAVADOC_TAGS = Arrays.asList(new AuthorTag(),
+			new DeprecatedTag(),
+			new ExceptionTag(),
+			new HiddenTag(),
+			new ParamTag(),
+			new ProvidesTag(),
+			new ReturnTag(),
+			new SeeTag(),
+			new SerialDataTag(),
+			new SerialFieldTag(),
+			new SerialTag(),
+			new SinceTag(),
+			new ThrowsTag(),
+			new UsesTag(),
+			new VersionTag());
+
+	public static final List<BlockTag> STANDARD_KDOC_TAGS = Arrays.asList(new ParamTag(),
+			new ReturnTag(),
+			new ConstructorTag(),
+			new ReceiverTag(),
+			new PropertyTag(),
+			new ThrowsTag(),
+			new ExceptionTag(),
+			new SampleTag(),
+			new SeeTag(),
+			new AuthorTag(),
+			new SinceTag(),
+			new SuppressTag(),
+			new DeprecatedKotlinTag());
 
 	private JavaDocParserBuilder(BlockTag... tags) {
 		this.javaDocParser = new JavaDocParser();
@@ -52,21 +85,7 @@ public class JavaDocParserBuilder {
 	 * @return a new builder instance
 	 */
 	public static JavaDocParserBuilder withStandardJavadocTags(){
-		return new JavaDocParserBuilder(new AuthorTag(),
-				new DeprecatedTag(),
-				new ExceptionTag(),
-				new HiddenTag(),
-				new ParamTag(),
-				new ProvidesTag(),
-				new ReturnTag(),
-				new SeeTag(),
-				new SerialDataTag(),
-				new SerialFieldTag(),
-				new SerialTag(),
-				new SinceTag(),
-				new ThrowsTag(),
-				new UsesTag(),
-				new VersionTag());
+		return new JavaDocParserBuilder(STANDARD_JAVADOC_TAGS.toArray(new BlockTag[]{}));
 	}
 
 	/**
@@ -75,19 +94,19 @@ public class JavaDocParserBuilder {
 	 * @return a new builder instance
 	 */
 	public static JavaDocParserBuilder withStandardKDocTags(){
-		return new JavaDocParserBuilder(new ParamTag(),
-				new ReturnTag(),
-				new ConstructorTag(),
-				new ReceiverTag(),
-				new PropertyTag(),
-				new ThrowsTag(),
-				new ExceptionTag(),
-				new SampleTag(),
-				new SeeTag(),
-				new AuthorTag(),
-				new SinceTag(),
-				new SuppressTag(),
-				new DeprecatedKotlinTag());
+		return new JavaDocParserBuilder(STANDARD_KDOC_TAGS.toArray(new BlockTag[]{}));
+	}
+
+	/**
+	 * Creates a new builder instance with all known block tags of {@link #STANDARD_JAVADOC_TAGS} and {@link #STANDARD_KDOC_TAGS}.
+	 *
+	 * @return a new builder instance
+	 */
+	public static JavaDocParserBuilder withAllKnownTags(){
+		Set<BlockTag> tags = new HashSet<>();
+		tags.addAll(STANDARD_JAVADOC_TAGS);
+		tags.addAll(STANDARD_KDOC_TAGS);
+		return new JavaDocParserBuilder(tags.toArray(new BlockTag[]{}));
 	}
 
 	/**
