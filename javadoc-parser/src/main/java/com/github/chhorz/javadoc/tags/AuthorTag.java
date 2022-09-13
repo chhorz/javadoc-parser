@@ -18,10 +18,10 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDCBAHA">@author tag</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#author">@author</a> tag
+ * Kotlin documentation <a href="https://kotlinlang.org/docs/kotlin-doc.html#author">@author</a> tag
  *
  * @author chhorz
- *
  */
 public class AuthorTag extends StructuredTag {
 
@@ -33,7 +33,7 @@ public class AuthorTag extends StructuredTag {
 		super(TAG_NAME, new Segment(NAME_TEXT));
 	}
 
-	public String getAuthorName() {
+	public String getNameText() {
 		return getValues().get(NAME_TEXT);
 	}
 

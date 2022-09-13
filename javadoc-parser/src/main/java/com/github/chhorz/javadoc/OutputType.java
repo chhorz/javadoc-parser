@@ -21,7 +21,6 @@ package com.github.chhorz.javadoc;
  * Supported output types for the parsed JavaDoc content.
  *
  * @author chhorz
- *
  */
 public enum OutputType {
 

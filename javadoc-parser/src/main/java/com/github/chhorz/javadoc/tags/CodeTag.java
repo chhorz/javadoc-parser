@@ -15,20 +15,20 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.replacements;
+package com.github.chhorz.javadoc.tags;
 
 /**
- * Documentation of javadoc tags: <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDJGIJB">Oracle</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#code">@code</a> inline tag
+ *
+ * @author chhorz
  */
-public class ValueTagReplacement extends InlineTagReplacement{
+public class CodeTag implements InlineTag {
 
-	private final static String TAG_NAME = "value";
+	private static final String TAG_NAME = "code";
 
-	public ValueTagReplacement(String wrapperString) {
-		super(TAG_NAME, wrapperString);
+	@Override
+	public String getTagName() {
+		return TAG_NAME;
 	}
 
-	public ValueTagReplacement(String prefix, String suffix) {
-		super(TAG_NAME, prefix, suffix);
-	}
 }

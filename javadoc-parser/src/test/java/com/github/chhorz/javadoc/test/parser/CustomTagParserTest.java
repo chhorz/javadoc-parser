@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import com.github.chhorz.javadoc.JavaDocParserBuilder;
 import com.github.chhorz.javadoc.OutputType;
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.tags.AuthorTag;
-import com.github.chhorz.javadoc.test.tags.CustomTag;
+import com.github.chhorz.javadoc.test.parser.tags.CustomTag;
 
 /**
  * Test class to validate parsing of a custom tag.
@@ -51,8 +51,8 @@ class CustomTagParserTest extends AbstractParserTest {
 	// @formatter:on
 
 	private final JavaDocParser parser = JavaDocParserBuilder
-		.withBasicTags()
-		.withCustomTag(new CustomTag())
+		.withStandardJavadocTags()
+		.withTag(new CustomTag())
 		.withOutputType(OutputType.PLAIN)
 		.build();
 
@@ -70,9 +70,9 @@ class CustomTagParserTest extends AbstractParserTest {
 
 	@Test
 	void duplicateTags(){
-		assertThatThrownBy(() -> JavaDocParserBuilder.withBasicTags()
-						.withCustomTag(new CustomTag())
-						.withCustomTag(new CustomTag())
+		assertThatThrownBy(() -> JavaDocParserBuilder.withStandardJavadocTags()
+						.withTag(new CustomTag())
+						.withTag(new CustomTag())
 						.build())
 			.isInstanceOf(DuplicateTagException.class)
 			.hasMessage("The parser already contains a tag with name '@custom'.");
@@ -84,7 +84,7 @@ class CustomTagParserTest extends AbstractParserTest {
 
 		assertThat(javaDoc.getTags(AuthorTag.class))
 			.hasSize(1)
-			.extracting(AuthorTag::getAuthorName)
+			.extracting(AuthorTag::getNameText)
 			.contains("name");
 	}
 

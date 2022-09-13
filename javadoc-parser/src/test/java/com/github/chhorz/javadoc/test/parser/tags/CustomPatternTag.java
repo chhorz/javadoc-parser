@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.test.tags;
+package com.github.chhorz.javadoc.test.parser.tags;
 
 import com.github.chhorz.javadoc.tags.PatternTag;
 

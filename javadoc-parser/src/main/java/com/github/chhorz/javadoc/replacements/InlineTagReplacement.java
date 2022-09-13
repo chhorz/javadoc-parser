@@ -17,23 +17,25 @@
  */
 package com.github.chhorz.javadoc.replacements;
 
+import com.github.chhorz.javadoc.tags.InlineTag;
+
 import static java.lang.String.format;
 
-public abstract class InlineTagReplacement implements Replacement {
+public class InlineTagReplacement implements Replacement {
 
-	private final String inlineTag;
+	private final InlineTag inlineTag;
 	private final String prefix;
 	private final String suffix;
 
-	public InlineTagReplacement(final String inlineTag) {
+	public InlineTagReplacement(final InlineTag inlineTag) {
 		this(inlineTag, "", "");
 	}
 
-	public InlineTagReplacement(final String inlineTag, final String wrapperString) {
+	public InlineTagReplacement(final InlineTag inlineTag, final String wrapperString) {
 		this(inlineTag, wrapperString, wrapperString);
 	}
 
-	public InlineTagReplacement(final String inlineTag, final String prefix, final String suffix) {
+	public InlineTagReplacement(final InlineTag inlineTag, final String prefix, final String suffix) {
 		this.inlineTag = inlineTag;
 		this.prefix = prefix;
 		this.suffix = suffix;
@@ -43,7 +45,7 @@ public abstract class InlineTagReplacement implements Replacement {
 	public String perform(final String input) {
 		String output = input;
 
-		int tagStartIndex = output.indexOf("{@" + inlineTag);
+		int tagStartIndex = output.indexOf("{@" + inlineTag.getTagName());
 		int tagEndIndex = tagStartIndex;
 		while (tagStartIndex > 0) {
 			int bracketCount = 0;
@@ -64,10 +66,11 @@ public abstract class InlineTagReplacement implements Replacement {
 			}
 
 			String completeTag = output.substring(tagStartIndex, tagEndIndex + 1);
-			String tagReplacement = completeTag.substring(0, completeTag.length() - 1).replaceFirst("\\{@"+inlineTag+"\\s+:?", "");
+			String tagReplacement = completeTag.substring(0, completeTag.length() - 1)
+					.replaceFirst("\\{@" + inlineTag.getTagName() + "\\s+:?", "");
 			output = output.replace(completeTag, format("%s%s%s", prefix, tagReplacement, suffix));
 
-			tagStartIndex = output.indexOf("{@" + inlineTag);
+			tagStartIndex = output.indexOf("{@" + inlineTag.getTagName());
 			tagEndIndex = tagStartIndex;
 		}
 

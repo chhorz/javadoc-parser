@@ -15,25 +15,21 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.tags;
+package com.github.chhorz.javadoc.exception;
+
+import static java.lang.String.format;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#deprecated">@deprecated</a> tag
+ * This exception will be thrown if the group name is not valid (<a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#groupname">Documentation</a>)
  *
  * @author chhorz
  */
-public class DeprecatedTag extends StructuredTag {
+public class InvalidCapturingGroupName extends RuntimeException {
 
-	private static final String TAG_NAME = "deprecated";
+	private static final long serialVersionUID = 4020993298788475547L;
 
-	private static final String DEPRECATED_TEXT = "deprecatedText";
-
-	public DeprecatedTag() {
-		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
-	}
-
-	public String getDeprecatedText() {
-		return getValues().get(DEPRECATED_TEXT);
+	public InvalidCapturingGroupName(String groupName) {
+		super(format("The group name '%s' is not valid. Please refer to the java capturing group documentation.", groupName));
 	}
 
 }

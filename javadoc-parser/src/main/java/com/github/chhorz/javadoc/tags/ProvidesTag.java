@@ -18,22 +18,27 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#deprecated">@deprecated</a> tag
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#provides">@provides</a> tag
  *
  * @author chhorz
  */
-public class DeprecatedTag extends StructuredTag {
+public class ProvidesTag extends StructuredTag {
 
-	private static final String TAG_NAME = "deprecated";
+	private static final String TAG_NAME = "provides";
 
-	private static final String DEPRECATED_TEXT = "deprecatedText";
+	private static final String SERVICE_TYPE = "serviceType";
+	private static final String DESCRIPTION = "description";
 
-	public DeprecatedTag() {
-		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
+	public ProvidesTag() {
+		super(TAG_NAME, new Segment(SERVICE_TYPE), new Segment(DESCRIPTION, false));
 	}
 
-	public String getDeprecatedText() {
-		return getValues().get(DEPRECATED_TEXT);
+	public String getServiceType() {
+		return getValues().get(SERVICE_TYPE);
+	}
+
+	public String getDescription() {
+		return getValues().get(DESCRIPTION);
 	}
 
 }

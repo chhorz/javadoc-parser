@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,30 +21,30 @@ package com.github.chhorz.javadoc.tags;
  * A PatternTag can be used to define a custom {@link java.util.regex.Pattern}. For this free kind of tag, more methods have to be implemented.
  *
  * @author chhorz
- *
  */
-public abstract class PatternTag extends Tag {
+public abstract class PatternTag implements BlockTag {
 
-	private final String name;
+	private final String tagName;
 	private final String pattern;
 
-	public PatternTag(final String name, final String pattern) {
-		this.name = name;
+	public PatternTag(final String tagName, final String pattern) {
+		this.tagName = tagName;
 		this.pattern = pattern;
 	}
 
+	@Override
 	public String getTagName() {
-		return name;
+		return tagName;
 	}
 
 	@Override
 	public String createPattern(final String allTagNames) {
-		return "@" + name + pattern + "\\s*" + allTagNames;
+		return "@" + tagName + pattern + "\\s*" + allTagNames;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Tag [name=%s, pattern=%s]", name, pattern);
+		return String.format("Tag [tagName=%s, pattern=%s]", tagName, pattern);
 	}
 
 }

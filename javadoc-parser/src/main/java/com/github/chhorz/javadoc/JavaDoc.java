@@ -1,6 +1,6 @@
 /**
  *
- *    Copyright 2018-2020 the original author or authors.
+ *    Copyright 2018-2022 the original author or authors.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.Collections;
 import java.util.List;
 
+import com.github.chhorz.javadoc.tags.BlockTag;
 import com.github.chhorz.javadoc.tags.Tag;
 
 /**
@@ -34,9 +35,9 @@ public class JavaDoc {
 
 	private final String summary;
 	private final String description;
-	private final List<Tag> tags;
+	private final List<BlockTag> tags;
 
-	public JavaDoc(final String summary, final String description, final List<Tag> tags) {
+	public JavaDoc(final String summary, final String description, final List<BlockTag> tags) {
 		this.summary = summary;
 		this.description = description;
 		this.tags = tags;
@@ -65,7 +66,7 @@ public class JavaDoc {
 	 *
 	 * @return a list of all tags
 	 */
-	public List<Tag> getTags() {
+	public List<BlockTag> getTags() {
 		return tags == null ? Collections.emptyList() : tags;
 	}
 

@@ -15,17 +15,30 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.replacements;
+package com.github.chhorz.javadoc.tags;
 
 /**
- * Documentation of javadoc tags: <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDJGIJB">Oracle</a>
+ * Kotlin documentation <a href="https://kotlinlang.org/docs/kotlin-doc.html#property-name">@property</a> tag
+ *
+ * @author chhorz
  */
-public class LinkPlainTagReplacement extends InlineTagReplacement{
+public class PropertyTag extends StructuredTag {
 
-	private static final String TAG_NAME = "linkplain";
+	private static final String TAG_NAME = "property";
 
-	public LinkPlainTagReplacement() {
-		super(TAG_NAME);
+	private static final String PROPERTY_NAME = "propertyName";
+	private static final String DESCRIPTION = "description";
+
+	public PropertyTag() {
+		super(TAG_NAME, new Segment(PROPERTY_NAME), new Segment(DESCRIPTION, false));
+	}
+
+	public String getPropertyName() {
+		return getValues().get(PROPERTY_NAME);
+	}
+
+	public String getParamDescription() {
+		return getValues().get(DESCRIPTION);
 	}
 
 }

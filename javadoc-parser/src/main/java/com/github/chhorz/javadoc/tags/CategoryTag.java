@@ -18,9 +18,9 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
+ * This tag is not an official javadoc tag but was proposed <a href="https://www.oracle.com/java/technologies/javase/proposed-javadoc-tags.html">here</a>
  *
  * @author chhorz
- *
  */
 public class CategoryTag extends StructuredTag {
 

@@ -17,12 +17,10 @@
  */
 package com.github.chhorz.javadoc;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import com.github.chhorz.javadoc.replacements.*;
 import com.github.chhorz.javadoc.tags.*;
-
-import static java.lang.String.format;
 
 /**
  * Fluent builder to create a {@link JavaDocParser} instance.
@@ -34,39 +32,72 @@ public class JavaDocParserBuilder {
 
 	private final JavaDocParser javaDocParser;
 
-	private JavaDocParserBuilder() {
+	private JavaDocParserBuilder(BlockTag... tags) {
 		this.javaDocParser = new JavaDocParser();
-
-		Stream.of(new AuthorTag(),
-						new CategoryTag(),
-						new DeprecatedTag(),
-						new ExceptionTag(),
-						new ParamTag(),
-						new ReturnTag(),
-						new SeeTag(),
-						new SinceTag(),
-						new ThrowsTag(),
-						new VersionTag())
-				.forEach(javaDocParser::addTag);
+		Arrays.asList(tags).forEach(javaDocParser::addTag);
 	}
 
 	/**
-	 * Create a new builder instance with common JavaDoc tags.
+	 * Create a new builder instance without any javadoc tags.
 	 *
 	 * @return a new builder instance
 	 */
-	public static JavaDocParserBuilder withBasicTags() {
+	public static JavaDocParserBuilder withoutTags(){
 		return new JavaDocParserBuilder();
 	}
 
 	/**
-	 * Adds a custom JavaDoc tag to the parser instance.
+	 * Adds all tags from the official <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html">Oracle documentation</a>.
+	 *
+	 * @return a new builder instance
+	 */
+	public static JavaDocParserBuilder withStandardJavadocTags(){
+		return new JavaDocParserBuilder(new AuthorTag(),
+				new DeprecatedTag(),
+				new ExceptionTag(),
+				new HiddenTag(),
+				new ParamTag(),
+				new ProvidesTag(),
+				new ReturnTag(),
+				new SeeTag(),
+				new SerialDataTag(),
+				new SerialFieldTag(),
+				new SerialTag(),
+				new SinceTag(),
+				new ThrowsTag(),
+				new UsesTag(),
+				new VersionTag());
+	}
+
+	/**
+	 * Adds all tags from the official <a href="https://kotlinlang.org/docs/kotlin-doc.html">Kotlin documentation</a>.
+	 *
+	 * @return a new builder instance
+	 */
+	public static JavaDocParserBuilder withStandardKDocTags(){
+		return new JavaDocParserBuilder(new ParamTag(),
+				new ReturnTag(),
+				new ConstructorTag(),
+				new ReceiverTag(),
+				new PropertyTag(),
+				new ThrowsTag(),
+				new ExceptionTag(),
+				new SampleTag(),
+				new SeeTag(),
+				new AuthorTag(),
+				new SinceTag(),
+				new SuppressTag(),
+				new DeprecatedKotlinTag());
+	}
+
+	/**
+	 * Adds a javadoc tag to the parser instance.
 	 *
 	 * @param tag a new instance of the custom tag
 	 * @param <T> type representation of the custom tag
 	 * @return the updated builder instance
 	 */
-	public <T extends Tag> JavaDocParserBuilder withCustomTag(final T tag) {
+	public <T extends BlockTag> JavaDocParserBuilder withTag(final T tag) {
 		javaDocParser.addTag(tag);
 		return this;
 	}
@@ -78,21 +109,21 @@ public class JavaDocParserBuilder {
 	 * @return the fluent builder instance
 	 */
 	public JavaDocParserBuilder withOutputType(final OutputType outputType) {
-		javaDocParser.addReplacement(new SummaryTagReplacement());
+		javaDocParser.addReplacement(new InlineTagReplacement(new SummaryTag()));
 		if (OutputType.ASCIIDOC.equals(outputType) || OutputType.MARKDOWN.equals(outputType)) {
-			javaDocParser.addReplacement(new CodeTagReplacement("`"));
-			javaDocParser.addReplacement(new SnippetTagReplacement("```"));
-			javaDocParser.addReplacement(new LinkTagReplacement());
-			javaDocParser.addReplacement(new LinkPlainTagReplacement());
-			javaDocParser.addReplacement(new LiteralTagReplacement("_"));
-			javaDocParser.addReplacement(new ValueTagReplacement("`"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new CodeTag(), "`"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new SnippetTag(), "```"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new LinkTag()));
+			javaDocParser.addReplacement(new InlineTagReplacement(new LinkPlainTag()));
+			javaDocParser.addReplacement(new InlineTagReplacement(new LiteralTag(), "_"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new ValueTag(), "`"));
 		} else if (OutputType.HTML.equals(outputType)) {
-			javaDocParser.addReplacement(new CodeTagReplacement("<code>", "</code>"));
-			javaDocParser.addReplacement(new SnippetTagReplacement("<pre>", "</pre>"));
-			javaDocParser.addReplacement(new LinkTagReplacement());
-			javaDocParser.addReplacement(new LinkPlainTagReplacement());
-			javaDocParser.addReplacement(new LiteralTagReplacement("<i>", "</i>"));
-			javaDocParser.addReplacement(new ValueTagReplacement("<pre>", "</pre>"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new CodeTag(), "<code>", "</code>"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new SnippetTag(), "<pre>", "</pre>"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new LinkTag()));
+			javaDocParser.addReplacement(new InlineTagReplacement(new LinkPlainTag()));
+			javaDocParser.addReplacement(new InlineTagReplacement(new LiteralTag(), "<i>", "</i>"));
+			javaDocParser.addReplacement(new InlineTagReplacement(new ValueTag(), "<pre>", "</pre>"));
 		}
 		return this;
 	}

@@ -18,17 +18,17 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#deprecated">@deprecated</a> tag
+ * <a href="https://kotlinlang.org/docs/kotlin-doc.html#kdoc-syntax">Kotlin documentation</a>
  *
  * @author chhorz
  */
-public class DeprecatedTag extends StructuredTag {
+public class DeprecatedKotlinTag extends StructuredTag {
 
-	private static final String TAG_NAME = "deprecated";
+	private static final String TAG_NAME = "Deprecated";
 
 	private static final String DEPRECATED_TEXT = "deprecatedText";
 
-	public DeprecatedTag() {
+	public DeprecatedKotlinTag() {
 		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
 	}
 

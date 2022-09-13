@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 
 import com.github.chhorz.javadoc.replacements.Replacement;
 import com.github.chhorz.javadoc.exception.DuplicateTagException;
+import com.github.chhorz.javadoc.tags.BlockTag;
 import com.github.chhorz.javadoc.tags.Tag;
 
 /**
@@ -39,13 +40,13 @@ import com.github.chhorz.javadoc.tags.Tag;
  */
 public final class JavaDocParser {
 
-	private final List<Tag> tags = new ArrayList<>();
+	private final List<BlockTag> tags = new ArrayList<>();
 	private final List<Replacement> replacements = new ArrayList<>();
 
 	public JavaDoc parse(final String javaDocString) {
 		String summary = "";
 		String description = "";
-		List<Tag> parsedTags = new ArrayList<>();
+		List<BlockTag> parsedTags = new ArrayList<>();
 
 		if (javaDocString != null && !javaDocString.isEmpty()) {
 			final String rawDescription = parseDescription(javaDocString);
@@ -93,8 +94,8 @@ public final class JavaDocParser {
 		return stringBuilder.toString().trim();
 	}
 
-	private List<Tag> parseTags(final String javaDocString) {
-		List<Tag> tagList = new ArrayList<>();
+	private List<BlockTag> parseTags(final String javaDocString) {
+		List<BlockTag> tagList = new ArrayList<>();
 
 		Stream<String> tagNamesStream = tags.stream()
 				.map(Tag::getTagName)
@@ -103,13 +104,13 @@ public final class JavaDocParser {
 		String allTagNames = concat(tagNamesStream, Stream.of("[^{]@\\S+"))
 				.collect(joining("|", "(?=", "|$)"));
 
-		for (Tag tag : tags) {
+		for (BlockTag tag : tags) {
 			Pattern pattern = Pattern.compile(tag.createPattern(allTagNames), Pattern.DOTALL);
 			Matcher matcher = pattern.matcher(javaDocString);
 
 			int start = 0;
 			while (matcher.find(start)) {
-				Tag currentTag;
+				BlockTag currentTag;
 				try {
 					currentTag = tag.getClass().getDeclaredConstructor().newInstance();
 				} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -117,10 +118,10 @@ public final class JavaDocParser {
 					e.printStackTrace();
 				}
 
-				for (Tag.Segment segment : tag.getSegments()) {
-					String segmentText = matcher.group(segment.getName());
+				for (BlockTag.Segment segment : tag.getSegments()) {
+					String segmentText = matcher.group(segment.getSegmentName());
 					if (segment.isRequired() || segmentText != null) {
-						currentTag.putValue(segment.getName(), performReplacements(segmentText));
+						currentTag.putValue(segment.getSegmentName(), performReplacements(segmentText));
 					}
 				}
 
@@ -146,7 +147,7 @@ public final class JavaDocParser {
 		replacements.add(replacement);
 	}
 
-	void addTag(final Tag tag) {
+	void addTag(final BlockTag tag) {
 		Objects.requireNonNull(tag, "The given tag must not be null!");
 
 		// check that each tag is only registered once

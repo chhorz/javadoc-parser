@@ -15,25 +15,28 @@
  *  limitations under the License.
  *
  */
-package com.github.chhorz.javadoc.tags;
+package com.github.chhorz.javadoc.test.parser.tags;
+
+import com.github.chhorz.javadoc.tags.StructuredTag;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#deprecated">@deprecated</a> tag
- *
+ * Custom tag to test extensibility of the javadoc parser.
+ * 
  * @author chhorz
+ *
  */
-public class DeprecatedTag extends StructuredTag {
+public class CustomTag extends StructuredTag {
 
-	private static final String TAG_NAME = "deprecated";
+	private static final String TAG_NAME = "custom";
 
-	private static final String DEPRECATED_TEXT = "deprecatedText";
+	private static final String TAG_VALUE = "value";
 
-	public DeprecatedTag() {
-		super(TAG_NAME, new Segment(DEPRECATED_TEXT, false));
+	public CustomTag() {
+		super(TAG_NAME, new Segment(TAG_VALUE));
 	}
 
-	public String getDeprecatedText() {
-		return getValues().get(DEPRECATED_TEXT);
+	public String getValue() {
+		return getValues().get(TAG_VALUE);
 	}
 
 }

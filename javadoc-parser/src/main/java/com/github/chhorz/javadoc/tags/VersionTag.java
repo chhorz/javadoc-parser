@@ -18,10 +18,9 @@
 package com.github.chhorz.javadoc.tags;
 
 /**
- * Oracle documentation <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDCHBAE">@version tag</a>
+ * Oracle documentation <a href="https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html#version">@version</a> tag
  *
  * @author chhorz
- *
  */
 public class VersionTag extends StructuredTag {
 
