@@ -17,10 +17,7 @@
  */
 package com.github.chhorz.javadoc;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.github.chhorz.javadoc.replacements.*;
 import com.github.chhorz.javadoc.tags.*;
@@ -64,6 +61,8 @@ public class JavaDocParserBuilder {
 			new SinceTag(),
 			new SuppressTag());
 
+	public static final List<BlockTag> UNOFFICIAL_TAGS  = Collections.singletonList(new CategoryTag());
+
 	private JavaDocParserBuilder(BlockTag... tags) {
 		this.javaDocParser = new JavaDocParser();
 		Arrays.asList(tags).forEach(javaDocParser::addTag);
@@ -105,6 +104,7 @@ public class JavaDocParserBuilder {
 		Set<BlockTag> tags = new HashSet<>();
 		tags.addAll(STANDARD_JAVADOC_TAGS);
 		tags.addAll(STANDARD_KDOC_TAGS);
+		tags.addAll(UNOFFICIAL_TAGS);
 		return new JavaDocParserBuilder(tags.toArray(new BlockTag[]{}));
 	}
 
