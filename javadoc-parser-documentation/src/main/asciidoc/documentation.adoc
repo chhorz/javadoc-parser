@@ -44,13 +44,15 @@ String authorName = authorTag.getNameText(); // <3>
 
 == Registered tags
 The `JavaDocParserBuilder` provides three methods to register a basic set of tags.
+This mechanism is used to register block tags (e.g. `@author`).
+Inline tags (e.g. `{@link ...}`) are used in a different manner and will only be replaced by an output type specific syntax.
 
 `.withoutTags()`::
 No Tags are registered by default.
 Each one has to be added manually.
 
 `.withStandardJavadocTags()`::
-The following tags are registered according to the link:https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html[Javadoc documentation]
+The following block tags are registered according to the link:https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html[Javadoc documentation]
 * `@author`
 * `@deprecated`
 * `@exception`
@@ -68,7 +70,7 @@ The following tags are registered according to the link:https://docs.oracle.com/
 * `@version`
 
 `.withStandardKDocTags()`::
-The registered KDoc tags can be found on the link:https://kotlinlang.org/docs/kotlin-doc.html#block-tags[Kotlin documentation] page.
+The registered KDoc block tags can be found on the link:https://kotlinlang.org/docs/kotlin-doc.html#block-tags[Kotlin documentation] page.
 * `@param`
 * `@return`
 * `@constructor`
@@ -81,7 +83,6 @@ The registered KDoc tags can be found on the link:https://kotlinlang.org/docs/ko
 * `@author`
 * `@since`
 * `@suppress`
-* `@Deprecated`
 
 
 == Output format
