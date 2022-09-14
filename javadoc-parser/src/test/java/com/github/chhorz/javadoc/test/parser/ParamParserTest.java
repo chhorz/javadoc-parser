@@ -20,6 +20,7 @@ package com.github.chhorz.javadoc.test.parser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
+import com.github.chhorz.javadoc.JavaDoc;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -63,5 +64,15 @@ class ParamParserTest extends AbstractParserTest {
 				.contains(tuple("test",
 						"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt\n"
 								+ "           ut labore et dolore magna aliqua."));
+	}
+
+	@Test
+	void kDocTest(){
+		JavaDoc kDoc = kotlinParser.parse(simpleKDoc);
+
+		assertThat(kDoc.getTags(ParamTag.class))
+				.hasSize(1)
+				.extracting(ParamTag::getParamName, ParamTag::getParamDescription)
+				.contains(tuple("T", "the type of a member in this group."));
 	}
 }

@@ -62,8 +62,7 @@ public class JavaDocParserBuilder {
 			new SeeTag(),
 			new AuthorTag(),
 			new SinceTag(),
-			new SuppressTag(),
-			new DeprecatedKotlinTag());
+			new SuppressTag());
 
 	private JavaDocParserBuilder(BlockTag... tags) {
 		this.javaDocParser = new JavaDocParser();

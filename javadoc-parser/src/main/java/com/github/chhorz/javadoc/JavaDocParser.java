@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import com.github.chhorz.javadoc.replacements.Replacement;
-import com.github.chhorz.javadoc.exception.DuplicateTagException;
 import com.github.chhorz.javadoc.tags.BlockTag;
 import com.github.chhorz.javadoc.tags.Tag;
 
@@ -151,11 +150,10 @@ public final class JavaDocParser {
 		Objects.requireNonNull(tag, "The given tag must not be null!");
 
 		// check that each tag is only registered once
-		if (tags.stream().anyMatch(t -> t.getClass().equals(tag.getClass()))){
-			throw new DuplicateTagException(tag);
+		if (tags.stream().noneMatch(t -> t.getClass().equals(tag.getClass()))){
+			// add tag
+			tags.add(tag);
 		}
-		// add tag
-		tags.add(tag);
 	}
 
 }
