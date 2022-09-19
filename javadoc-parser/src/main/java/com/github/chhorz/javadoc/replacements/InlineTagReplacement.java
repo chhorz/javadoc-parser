@@ -47,7 +47,7 @@ public class InlineTagReplacement implements Replacement {
 
 		int tagStartIndex = output.indexOf("{@" + inlineTag.getTagName());
 		int tagEndIndex = tagStartIndex;
-		while (tagStartIndex > 0) {
+		while (tagStartIndex >= 0) {
 			int bracketCount = 0;
 			for (int i = tagStartIndex; i < output.length(); i++) {
 				char c = output.charAt(i);
