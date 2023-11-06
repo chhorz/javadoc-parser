@@ -80,7 +80,7 @@
 
 		<!-- dependency version -->
 		<assertj-core.version>3.24.2</assertj-core.version>
-		<junit-jupiter.version>5.10.0</junit-jupiter.version>
+		<junit-jupiter.version>5.10.1</junit-jupiter.version>
 
 		<!-- plugin versions -->
 		<asciidoctor-maven-plugin.version>2.2.4</asciidoctor-maven-plugin.version>
