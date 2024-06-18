@@ -1,6 +1,5 @@
 = Javadoc Parser
-:author: Christian Horz
-:icons: font
+:toc:
 
 image:https://github.com/chhorz/javadoc-parser/actions/workflows/maven-ci.yml/badge.svg?branch=master["Java CI", link="https://github.com/chhorz/javadoc-parser/actions/workflows/maven-ci.yml"]
 image:https://img.shields.io/maven-central/v/com.github.chhorz/javadoc-parser.svg?logo=apachemaven&label=Maven%20Central["Maven Central", link="https://search.maven.org/artifact/com.github.chhorz/javadoc-parser"]
@@ -24,12 +23,11 @@ The project is available from maven central repository:
 </dependency>
 ----
 
-Information about the latest published version is available on the link:https://github.com/chhorz/javadoc-parser/releases[GitHub Releases] page.
-
 === Javadoc comment structure
-_work in progress_
+The structure should be as close as possible to the link:http://www.oracle.com/technetwork/articles/java/index-137868.html[Writers Guide] from Oracle.
 
 === Parser configuration
+The parser can be created by the following fluent API:
 
 .Parsing
 [source,java]
@@ -42,16 +40,224 @@ JavaDocParser javaDocParser = JavaDocParserBuilder
 JavaDoc javaDoc = javaDocParser.parse("Javadoc as String");
 ----
 
+All `Tags` that are registered as basic tags can be found in the package `com.github.chhorz.javadoc.tags.*`.
+The creation of custom tags is described <<extensibility,here>>.
+
 === Retrieving data
 
 .Getting data
 [source,java]
 ----
-List<AuthorTag> authorTags = javaDoc.getTags(AuthorTag.class);
+JavaDoc javaDoc = parser.parse(inputString); // <1>
 
-AuthorTag firstAuthor = authorTags.get(0);
+List<AuthorTag> authors = javaDoc.getTags(AuthorTag.class); // <2>
 
-firstAuthor.getNameText();
+AuthorTag authorTag = authors.getFirst();
+String authorName = authorTag.getNameText(); // <3>
+----
+<1> Parsing input string into a java object
+<2> Reading a specific tag from `JavaDoc` object
+<3> Getting information from the current tag
+
+=== Registered tags
+The `JavaDocParserBuilder` provides three methods to register a basic set of tags.
+This mechanism is used to register block tags (e.g. `@author`).
+Inline tags (e.g. `{@link ...}`) are used in a different manner and will only be replaced by an output type specific syntax.
+
+`.withoutTags()`::
+No Tags are registered by default.
+Each one has to be added manually.
+
+`.withStandardJavadocTags()`::
+The following block tags are registered according to the link:https://docs.oracle.com/en/java/javase/18/docs/specs/javadoc/doc-comment-spec.html[Javadoc documentation]
+* `@author`
+* `@deprecated`
+* `@exception`
+* `@hidden`
+* `@param`
+* `@provides`
+* `@return`
+* `@see`
+* `@serialData`
+* `@serialField`
+* `@serial`
+* `@since`
+* `@throws`
+* `@uses`
+* `@version`
+
+`.withStandardKDocTags()`::
+The registered KDoc block tags can be found on the link:https://kotlinlang.org/docs/kotlin-doc.html#block-tags[Kotlin documentation] page.
+* `@param`
+* `@return`
+* `@constructor`
+* `@receiver`
+* `@property`
+* `@throws`
+* `@exception`
+* `@sample`
+* `@see`
+* `@author`
+* `@since`
+* `@suppress`
+
+=== Output format
+In the future different output-formats will be supported.
+At the moment the following output-formats with replacements can be used:
+[cols="4*",options="header"]
+|===
+| Javadoc | Asciidoc | Markdown | HTML
+
+| {@summary ...}
+| ...
+| ...
+| ...
+
+| {@code ...}
+| \``...``
+| \``...``
+| <pre>...</pre>
+
+| {@link ...}
+3+| Currently, no format replacement.
+
+| {@linkplain ...}
+3+| Currently, no format replacement.
+
+| {@literal ...}
+| `\_..._`
+| `\_..._`
+| <i>...</i>
+
+| {@value ...}
+| \``...``
+| \``...``
+| <pre>...</pre>
+|===
+
+These output formats define internal `Replacements` for inline Javadoc tags.
+The `JavaDocParserBuilder` supports extending the parser with custom replacements.
+The Usage is described in the <<replacements>> section.
+[[extensibility]]
+== Extensibility
+To extend the basic functionality of the Javadoc parser, the creation of a custom tag might be a good start.
+All internal used basic Javadoc tags have the same structure.
+
+[WARNING]
+====
+The parsing of custom should be tested with unit tests.
+====
+
+=== Tags
+
+==== StructuredTag
+This structured tags contain a list of segments separated with spaces.
+Only the last segment can contain multiple words.
+
+[source,java]
+----
+/**
+ * @custom tagValue1 tagValue2
+ */
+public class CustomTag extends StructuredTag { // <1>
+
+    private static final String TAG_NAME = "custom";
+    private static final String TAG_VALUE_1 = "tagValue1";
+    private static final String TAG_VALUE_2 = "tagValue2";
+
+    public CustomTag() { // <2>
+        super(TAG_NAME, new Segment(TAG_VALUE_1), new Segment(TAG_VALUE_2, false));
+    }
+
+    public String getTagValue1() {
+        return getValues().get(TAG_VALUE_1);
+    }
+
+    // ...
+}
+----
+<1> custom tags need to extend `com.github.chhorz.javadoc.tags.StructuredTag`
+<2> Super constructor has to be called with tag name and tag segments.
+Each segment consists of a name and a flag if this segment is required (Default `true`).
+
+After the creation of the custom Javadoc tag, the tag has to be registered at the parser.
+
+[source,java]
+----
+JavaDocParser parser = JavaDocParserBuilder
+    .withStandardJavadocTags()
+    .withTag(new CustomTag())
+    .withOutputType(OutputType.PLAIN)
+    .build();
+----
+
+Getting the custom tag date from the Javadoc works as shown above.
+
+==== PatternTag
+The `PatternTag` works similar to the `StructuredTag` but it is more flexible.
+For tags of this kind, the Regex must be defined separately.
+It is usable in more use-cases but more methods have to be implemented.
+
+This example is based on the unit test for an `CustomPatternTag`.
+
+[source,java]
+----
+/**
+ * @custom number otherValue
+ */
+public class CustomPatternTag extends PatternTag { // <1>
+
+    private static final String TAG_NAME = "custom";
+
+    private static final String NUMBER = "number";
+    private static final String OTHER_VALUE = "otherValue";
+
+    private String number;
+    private String otherValue;
+
+    public CustomPatternTag() {
+        super(TAG_NAME, "\\s+?(?<number>\\d+?)\\s+?(?<otherValue>.+?)\\s*"); // <2>
+    }
+
+    public Long getNumber(){
+        return Long.parseLong(number);
+    }
+
+    public String getOtherValue(){
+        return otherValue;
+    }
+
+    @Override
+    public List<String> getSegmentNames() {
+        return Arrays.asList(NUMBER, OTHER_VALUE);
+    }
+
+    @Override
+    public void putValue(String segmentName, String value) {
+        switch (segmentName) {
+            case NUMBER:
+                this.number = value;
+            case OTHER_VALUE:
+                this.otherValue = value;
+        }
+    }
+}
+----
+<1> custom tags need to extend `com.github.chhorz.javadoc.tags.PatternTag`
+<2> super constructor has to be called with tag name and custom regular expression
+
+The registration on the `JavaDocParser` works the same way as for `StructuredTag`.
+
+[[replacements]]
+=== Replacements
+The replacement of content within the javadoc string can be adjusted within the builder configuration.
+All replacements will be performed in the order they were added.
+
+[source,java]
+----
+JavaDocParser javaDocParser = JavaDocParserBuilder.withStandardJavadocTags()
+    .withReplacement(input -> input.replaceAll("System\\.out\\.println", "logger.info"))
+    .build();
 ----
 
 == Snapshots
@@ -68,4 +274,4 @@ To configure the repository for your project to use the latest snapshot versions
 ----
 
 == License
-Javadoc Parser is open source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].
+Javadoc Parser is Open Source software released under the link:http://www.apache.org/licenses/LICENSE-2.0.txt[Apache 2.0 license].

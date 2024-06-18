@@ -41,7 +41,6 @@
 
 	<modules>
 		<module>javadoc-parser</module>
-		<module>javadoc-parser-documentation</module>
 	</modules>
 
 	<developers>
@@ -83,7 +82,6 @@
 		<junit-jupiter.version>5.10.2</junit-jupiter.version>
 
 		<!-- plugin versions -->
-		<asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
 		<maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
 		<maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
 		<maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
